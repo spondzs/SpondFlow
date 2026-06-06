@@ -1,0 +1,1125 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>SpondFlow</title>
+
+  <style>
+    :root {
+      --blue1: #2d6cdf;
+      --blue2: #4e8cff;
+      --bg: #f3f5fb;
+      --card: #ffffff;
+      --text: #1e1f24;
+      --muted: #6f7482;
+      --line: #e6e8ef;
+      --yellow2: #fff4c7;
+      --btn: #f4f5f9;
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html, body {
+      width: 100%;
+      min-height: 100%;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      color: var(--text);
+      font-size: 17px;
+      line-height: 1.45;
+      padding-bottom: env(safe-area-inset-bottom);
+    }
+
+    .app {
+      width: 100%;
+      max-width: none;
+      margin: 0 auto;
+      min-height: 100vh;
+      background: var(--bg);
+    }
+
+    .topbar {
+      background: linear-gradient(135deg, var(--blue1), var(--blue2));
+      color: #fff;
+      padding: 16px 16px 18px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      box-shadow: 0 4px 16px rgba(45, 108, 223, .18);
+    }
+    
+    .title {
+      font-size: 20px;
+      font-weight: 800;
+      flex: 1;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    
+    .line-badge {
+      width: 48px;
+      height: 48px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.95);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex: 0 0 auto;
+      overflow: hidden;
+      border: 1px solid rgba(0,0,0,.05);
+      box-shadow: 0 2px 8px rgba(0,0,0,.08);
+    }
+    
+    .line-badge img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    
+    #profileFallback {
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .content {
+      padding: 16px 16px 28px;
+    }
+
+    .search-wrap {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+      box-shadow: 0 2px 10px rgba(27, 39, 94, .04);
+    }
+
+    .search-icon {
+      font-size: 20px;
+      line-height: 1;
+      color: #7a8191;
+      flex: 0 0 auto;
+    }
+
+    .search-input {
+      border: 0;
+      outline: none;
+      width: 100%;
+      font-size: 17px;
+      background: transparent;
+      color: var(--text);
+    }
+
+    .summary {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--yellow2);
+      border: 1px solid #f3e19c;
+      border-radius: 18px;
+      padding: 16px;
+      margin-bottom: 16px;
+      font-size: 17px;
+      font-weight: 800;
+      color: #4f4300;
+    }
+
+    .summary .arrow {
+      margin-left: auto;
+      font-size: 22px;
+      line-height: 1;
+      color: #9a8740;
+    }
+
+    .status {
+      color: var(--muted);
+      font-size: 14px;
+      margin: 0 2px 16px;
+      min-height: 20px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 18px;
+      margin-bottom: 16px;
+      box-shadow: 0 6px 18px rgba(27, 39, 94, .06);
+    }
+
+    .row1 {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      margin-bottom: 10px;
+    }
+    
+    .cust-name {
+      font-size: 20px;
+      font-weight: 800;
+      word-break: break-word;
+      line-height: 1.35;
+      color: #1e1f24;
+    }
+    
+    .quote-no {
+      color: #3f5fae;
+      font-size: 15px;
+      font-weight: 600;
+      word-break: break-word;
+      line-height: 1.3;
+      letter-spacing: .1px;
+    }
+
+    .meta {
+      font-size: 15px;
+      margin-bottom: 14px;
+      color: #2d313b;
+    }
+
+    .meta b {
+      font-size: 18px;
+      color: #111318;
+    }
+
+    .item-list {
+      margin: 0 0 14px;
+      padding: 12px 14px;
+      background: #f8f9fc;
+      border: 1px solid #eceff5;
+      border-radius: 14px;
+    }
+
+    .item-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      font-size: 15px;
+      padding: 6px 0;
+      color: #2f3441;
+    }
+
+    .item-row + .item-row {
+      border-top: 1px dashed #e3e7ef;
+    }
+
+    .item-model {
+      flex: 1;
+      word-break: break-word;
+      line-height: 1.35;
+    }
+
+    .item-qty {
+      font-weight: 700;
+      color: #23469a;
+      white-space: nowrap;
+    }
+
+    .btn-row {
+      display: flex;
+      gap: 10px;
+    }
+
+    .btn {
+      border: 1px solid var(--line);
+      background: var(--btn);
+      border-radius: 14px;
+      padding: 14px;
+      font-size: 16px;
+      font-weight: 700;
+      min-height: 54px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      cursor: pointer;
+      user-select: none;
+      color: #3b3f49;
+    }
+
+    .btn:active {
+      transform: scale(.97);
+    }
+
+    .btn-copy {
+      flex: 1;
+    }
+
+    .btn-share {
+      min-width: 120px;
+      background: linear-gradient(180deg, #ffe98f, #ffd84a);
+      border-color: #e2c54c;
+      color: #513d00;
+      font-weight: 800;
+    }
+
+    .empty {
+      text-align: center;
+      color: var(--muted);
+      padding: 30px 16px;
+      font-size: 16px;
+    }
+
+    .debug-toolbar {
+      display: flex;
+      justify-content: flex-end;
+      margin: 0 2px 10px;
+    }
+
+    .debug-toolbar {
+      opacity: 0.6;
+    }
+    
+    .debug-toolbar:hover {
+      opacity: 1;
+    }
+    
+    .debug-toggle {
+      border: 1px solid var(--line);
+      background: #fff;
+      color: #666;
+      border-radius: 10px;
+      padding: 6px 10px;
+      font-size: 12px;
+      cursor: pointer;
+    }
+    
+    #debugBox {
+      display: none;
+      font-size: 12px;
+      color: #666;
+      padding: 10px 12px;
+      margin: 0 0 16px;
+      white-space: pre-wrap;
+      line-height: 1.4;
+      background: #f7f8fb;
+      border: 1px dashed #d9dee8;
+      border-radius: 12px;
+    }
+    
+    #debugBox.show {
+      display: block;
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 24px;
+      transform: translateX(-50%) translateY(20px);
+      min-width: 180px;
+      max-width: calc(100vw - 32px);
+      background: rgba(30, 31, 36, 0.92);
+      color: #fff;
+      padding: 12px 16px;
+      border-radius: 14px;
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 1.4;
+      text-align: center;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, .18);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .18s ease, transform .18s ease;
+      z-index: 9999;
+    }
+    
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+    
+    .toast.success {
+      background: rgba(32, 135, 74, 0.95);
+    }
+    
+    .toast.error {
+      background: rgba(196, 49, 49, 0.95);
+    }
+    
+    .toast.warn {
+      background: rgba(166, 113, 0, 0.95);
+    }
+
+    .loading-screen {
+      position: fixed;
+      inset: 0;
+      background: #f3f5fb;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 99999;
+      transition: opacity .35s ease, visibility .35s ease;
+    }
+    
+    .loading-screen.hide {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+    
+    .loading-inner {
+      width: min(320px, calc(100vw - 40px));
+      text-align: center;
+      padding: 20px;
+    }
+    
+    .loading-mascot {
+      width: 110px;
+      height: 110px;
+      object-fit: contain;
+      animation: caffeFloat 1.6s ease-in-out infinite;
+      filter: drop-shadow(0 8px 18px rgba(45, 108, 223, .12));
+    }
+    
+    .loading-title {
+      margin-top: 12px;
+      font-size: 24px;
+      font-weight: 800;
+      color: #2d6cdf;
+    }
+    
+    .loading-text {
+      margin-top: 8px;
+      font-size: 15px;
+      color: #6f7482;
+      min-height: 22px;
+    }
+    
+    .loading-bar {
+      margin-top: 18px;
+      width: 100%;
+      height: 10px;
+      border-radius: 999px;
+      background: #dfe6f7;
+      overflow: hidden;
+      box-shadow: inset 0 1px 3px rgba(0, 0, 0, .05);
+    }
+    
+    .loading-bar-fill {
+      width: 0%;
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #2d6cdf, #4e8cff);
+      transition: width .28s ease;
+    }
+    
+    .loading-percent {
+      margin-top: 8px;
+      font-size: 14px;
+      font-weight: 700;
+      color: #5f6b85;
+    }
+    
+    @keyframes caffeFloat {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    .sales-name {
+      color: #5f6b85;
+      font-size: 13px;
+      font-weight: 600;
+      line-height: 1.3;
+      letter-spacing: .1px;
+    }
+
+    .new-order-card {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 14px;
+      background: linear-gradient(135deg, #5c74f2 0%, #6b82fa 55%, #8aa0ff 100%);
+      border: 1px solid rgba(92, 116, 242, .20);
+      border-radius: 22px;
+      padding: 18px 18px;
+      margin-bottom: 16px;
+      box-shadow:
+        0 10px 24px rgba(79, 102, 228, .18),
+        inset 0 1px 0 rgba(255,255,255,.10);
+    }
+    
+    .new-order-copy {
+      flex: 1;
+      min-width: 0;
+      padding-right: 6px;
+    }
+    
+    .new-order-title {
+      color: #ffffff;
+      font-size: 20px;
+      font-weight: 800;
+      line-height: 1.2;
+      letter-spacing: .1px;
+      margin-bottom: 4px;
+    }
+    
+    .new-order-subtitle {
+      color: rgba(255,255,255,.9);
+      font-size: 14px;
+      line-height: 1.35;
+    }
+    
+    .new-order-btn.compact {
+      flex: 0 0 auto;
+      border: 0;
+      outline: none;
+      border-radius: 14px;
+      background: rgba(255,255,255,.95);
+      color: #5c74f2;
+      font-size: 19px;
+      font-weight: 800;
+      min-width: 128px;
+      min-height: 54px;
+      padding: 0 18px;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,.06);
+      border: 1px solid rgba(92,116,242,.10);
+    }
+    
+    .new-order-btn.compact:active {
+      transform: scale(.97);
+    }
+    
+    .new-order-btn.compact.loading {
+      background: rgba(255,255,255,.88);
+      color: #7a86bb;
+    }
+    
+    @media (max-width: 560px) {
+      .new-order-card {
+        align-items: flex-start;
+      }
+    
+      .new-order-btn.compact {
+        min-width: 116px;
+        min-height: 52px;
+        padding: 0 14px;
+        font-size: 15px;
+      }
+    
+      .new-order-title {
+        font-size: 18px;
+      }
+    
+      .new-order-subtitle {
+        font-size: 13px;
+      }
+    }
+  </style>
+
+  <script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+</head>
+
+<body>
+  <div id="loadingScreen" class="loading-screen">
+    <div class="loading-inner">
+      <img src="Caffe.PNG" alt="NongCaffe" class="loading-mascot">
+      <div class="loading-title">น้องกาแฟ ☕️</div>
+      <div id="loadingText" class="loading-text">กำลังเตรียมออเดอร์ให้นะครับ...</div>
+  
+      <div class="loading-bar">
+        <div id="loadingBarFill" class="loading-bar-fill"></div>
+      </div>
+  
+      <div id="loadingPercent" class="loading-percent">0%</div>
+    </div>
+  </div>
+  <div class="app">
+    <div class="topbar">
+      <div class="title">รวมออเดอร์สินค้า~</div>
+    
+      <div class="line-badge" id="profileBadge">
+        <img src="Caffe.PNG" alt="NongCaffe">
+      </div>
+    </div>
+
+    <div class="content">
+      <div id="newOrderCard" class="new-order-card">
+        <div class="new-order-copy">
+          <div class="new-order-title">+ สร้างออเดอร์กับกาแฟ ☕️</div>
+          <div class="new-order-subtitle">แตะเลือกลูกค้าและสินค้า แล้วเปิดใบเสนอราคาได้เลย~</div>
+        </div>
+        <button id="newOrderBtn" class="new-order-btn compact" type="button">#สั่งของ</button>
+      </div>
+      <div class="search-wrap">
+        <div class="search-icon">⌕</div>
+        <input id="searchBox" class="search-input" placeholder="ค้นหา QuoteNo / ลูกค้า">
+      </div>
+
+      <div id="summaryBox" class="summary">
+        <div>⚠</div>
+        <div id="summaryText">พบ 0 ใบเสนอราคารอการยืนยัน</div>
+        <div class="arrow">›</div>
+      </div>
+
+      <div id="list"></div>
+      
+      <div class="debug-toolbar">
+        <button id="debugToggleBtn" class="debug-toggle">Debug</button>
+      </div>
+      
+      <div id="debugBox"></div>
+      <div id="status" class="status"></div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast"></div>
+
+  <script>
+    var API_BASE = 'https://script.google.com/macros/s/AKfycbw4jAzjWors_9dwQx1bI2RpVzm56icKOcTDYutQZIindgZb3f67MqoduccqgFnM6TzgaA/exec';
+    var LIFF_ID = '2009366271-c0TDpvSW';
+
+    var ALL_DATA = [];
+    var LIFF_READY = false;
+    var LINE_USER_ID = '';
+
+    var TOAST_TIMER = null;
+
+    function setLoadingProgress(percent, text) {
+      var p = Math.max(0, Math.min(100, Number(percent || 0)));
+      var bar = document.getElementById('loadingBarFill');
+      var label = document.getElementById('loadingPercent');
+      var txt = document.getElementById('loadingText');
+    
+      if (bar) bar.style.width = p + '%';
+      if (label) label.textContent = p + '%';
+      if (txt && text) txt.textContent = text;
+    }
+    
+    function hideLoadingScreen() {
+      var el = document.getElementById('loadingScreen');
+      if (el) el.classList.add('hide');
+    }
+    
+    function showLoadingError(text) {
+      setLoadingProgress(100, text || 'โหลดไม่สำเร็จ');
+    }
+
+    function showToast(message, type, ms) {
+      var el = document.getElementById('toast');
+      if (!el) return;
+    
+      el.textContent = String(message || '');
+      el.className = 'toast show';
+    
+      if (type) {
+        el.classList.add(type);
+      }
+    
+      clearTimeout(TOAST_TIMER);
+      TOAST_TIMER = setTimeout(function () {
+        el.className = 'toast';
+      }, ms || 1600);
+    }
+
+    function debugLog(msg) {
+      var el = document.getElementById('debugBox');
+      if (!el) return;
+      el.textContent += '\n' + String(msg || '');
+    }
+
+    var DEBUG_VISIBLE = false;
+
+    function setDebugVisible(show) {
+      DEBUG_VISIBLE = !!show;
+    
+      var box = document.getElementById('debugBox');
+      var btn = document.getElementById('debugToggleBtn');
+    
+      if (!box || !btn) return;
+    
+      if (DEBUG_VISIBLE) {
+        box.classList.add('show');
+        btn.textContent = 'ซ่อน Debug';
+      } else {
+        box.classList.remove('show');
+        btn.textContent = 'แสดง Debug';
+      }
+    }
+
+    function fmtNumber(n) {
+      try {
+        return Number(n || 0).toLocaleString('th-TH');
+      } catch (err) {
+        return String(n || 0);
+      }
+    }
+
+    function setStatus(msg) {
+      var s = document.getElementById('status');
+      if (s) s.textContent = msg;
+    }
+
+    function setSummary(count) {
+      document.getElementById('summaryText').textContent =
+        'กาแฟเจอ ' + count + ' ออเดอร์ที่รอคอนเฟิร์มนะครับ ☕️';
+    }
+
+    function escapeHtml(str) {
+      return String(str || '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    function copyText(text) {
+      var s = String(text || '');
+      if (!s) return;
+    
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(s).then(function () {
+          showToast('คัดลอกแล้ว ✅', 'success', 1200);
+        }).catch(function () {
+          fallbackCopy(s);
+        });
+      } else {
+        fallbackCopy(s);
+      }
+    }
+
+    function fallbackCopy(s) {
+      var ta = document.createElement('textarea');
+      ta.value = s;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      ta.remove();
+    
+      showToast('คัดลอกแล้ว ✅', 'success', 1200);
+    }
+
+    function flashButton(btn, text, ms) {
+      if (!btn) return;
+    
+      var oldText = btn.dataset.oldText || btn.textContent;
+      btn.dataset.oldText = oldText;
+    
+      btn.textContent = text;
+      btn.disabled = true;
+    
+      setTimeout(function () {
+        btn.textContent = oldText;
+        btn.disabled = false;
+      }, ms || 1000);
+    }
+
+    function loadJsonp(action, params) {
+      params = params || {};
+
+      return new Promise(function(resolve, reject) {
+        var cbName = '__jsonp_cb_' + Date.now() + '_' + Math.floor(Math.random() * 100000);
+        var script = document.createElement('script');
+        var qs = 'action=' + encodeURIComponent(action) + '&callback=' + encodeURIComponent(cbName);
+
+        Object.keys(params).forEach(function(key) {
+          qs += '&' + encodeURIComponent(key) + '=' + encodeURIComponent(params[key]);
+        });
+
+        window[cbName] = function(data) {
+          try {
+            resolve(data);
+          } finally {
+            cleanup();
+          }
+        };
+
+        function cleanup() {
+          try { delete window[cbName]; } catch (e) { window[cbName] = undefined; }
+          if (script.parentNode) script.parentNode.removeChild(script);
+        }
+
+        script.onerror = function() {
+          cleanup();
+          reject(new Error('JSONP load error: ' + action));
+        };
+
+        script.src = API_BASE + '?' + qs;
+        document.body.appendChild(script);
+
+        setTimeout(function() {
+          if (window[cbName]) {
+            cleanup();
+            reject(new Error('JSONP timeout: ' + action));
+          }
+        }, 10000);
+      });
+    }
+
+    async function ensureLiffReady() {
+      if (LIFF_READY) return true;
+    
+      setLoadingProgress(20, 'กำลังเชื่อมต่อ LINE...');
+    
+      if (!window.liff) {
+        throw new Error('ไม่พบ LIFF SDK');
+      }
+    
+      await liff.init({
+        liffId: LIFF_ID,
+        withLoginOnExternalBrowser: true
+      });
+    
+      setLoadingProgress(40, 'กำลังเข้าสู่ระบบ...');
+    
+      if (!liff.isLoggedIn()) {
+      liff.login({ redirectUri: window.location.href });
+      return false;
+    }
+    
+      var profile = await liff.getProfile();
+      LINE_USER_ID = String((profile && profile.userId) || '').trim();
+    
+      LIFF_READY = true;
+    
+      setLoadingProgress(55, 'ตรวจสอบตัวตนสำเร็จ');
+      return true;
+    }
+
+    function getQueryParam_(name, fallback) {
+      var u = new URL(window.location.href);
+      return u.searchParams.get(name) || fallback || '';
+    }
+    
+    function isQuoteDirectShareMode_() {
+      var mode = String(getQueryParam_('mode', '')).toLowerCase();
+      var quoteNo = String(getQueryParam_('quoteNo', '')).trim();
+      return mode === 'quote' && !!quoteNo;
+    }
+    
+    function hideMainAppForDirectShare_() {
+      var app = document.querySelector('.app');
+      if (app) app.style.display = 'none';
+    }
+    
+    function showMainApp_() {
+      var app = document.querySelector('.app');
+      if (app) app.style.display = '';
+    }
+    
+    async function directShareQuoteFromLiff_() {
+      var quoteNo = String(getQueryParam_('quoteNo', '')).trim();
+    
+      if (!quoteNo) {
+        throw new Error('ไม่พบเลขใบเสนอราคา quoteNo');
+      }
+    
+      hideMainAppForDirectShare_();
+    
+      setLoadingProgress(12, 'กำลังเตรียมใบเสนอราคา...');
+      debugLog('direct quote share mode');
+      debugLog('quoteNo = ' + quoteNo);
+    
+      await ensureLiffReady();
+    
+      if (!LINE_USER_ID) {
+        throw new Error('LINE userId not found');
+      }
+    
+      if (!liff.isInClient()) {
+        throw new Error('กรุณาเปิดผ่าน LINE');
+      }
+    
+      setLoadingProgress(45, 'กำลังโหลดใบเสนอราคา...');
+    
+      var msg = await loadJsonp('get_quote_share_payload', {
+        quoteNo: quoteNo,
+        lineUserId: LINE_USER_ID
+      });
+    
+      debugLog('quote payload = ' + JSON.stringify(msg).slice(0, 500));
+    
+      if (msg && msg.ok === false) {
+        throw new Error(msg.error || 'โหลด payload ไม่สำเร็จ');
+      }
+    
+      if (!liff.isApiAvailable('shareTargetPicker')) {
+        throw new Error('อุปกรณ์นี้ยังไม่รองรับการแชร์ผ่าน LINE');
+      }
+    
+      setLoadingProgress(75, 'กำลังเปิดรายชื่อผู้รับ...');
+    
+      var result = await liff.shareTargetPicker(msg);
+    
+      if (result) {
+        setLoadingProgress(100, 'แชร์ใบเสนอราคาเรียบร้อยครับ ✅');
+    
+        setTimeout(function () {
+          if (liff.isInClient()) {
+            liff.closeWindow();
+          }
+        }, 900);
+    
+        return;
+      }
+    
+      setLoadingProgress(100, 'ยกเลิกการแชร์แล้วครับ');
+      showToast('ยกเลิกการแชร์', 'warn', 1400);
+    }
+
+    function render() {
+      var keyword = String(document.getElementById('searchBox').value || '').trim().toLowerCase();
+      var list = document.getElementById('list');
+      var safeData = Array.isArray(ALL_DATA) ? ALL_DATA : [];
+    
+      var filtered = safeData.filter(function (x) {
+        if (!keyword) return true;
+        return (
+          String(x.quoteNo || '').toLowerCase().indexOf(keyword) >= 0 ||
+          String(x.customerName || '').toLowerCase().indexOf(keyword) >= 0 ||
+          String(x.customerNo || '').toLowerCase().indexOf(keyword) >= 0
+        );
+      });
+    
+      setSummary(filtered.length);
+      setStatus('');
+      list.innerHTML = '';
+    
+      if (!filtered.length) {
+        list.innerHTML = '<div class="empty">ไม่มีใบเสนอราคาค้างคอนเฟิร์ม</div>';
+        return;
+      }
+    
+      filtered.forEach(function (x) {
+        var quoteNo = escapeHtml(x.quoteNo || '-');
+        var customer = escapeHtml(x.customerName || x.customerNo || '-');
+        var qty = fmtNumber(x.sumQty || 0);
+        var total = fmtNumber(x.sumTotal || 0);
+    
+        var itemsHtml = '';
+        if (x.items && x.items.length) {
+          itemsHtml = '<div class="item-list">';
+          x.items.forEach(function (it) {
+            var itemQty = Number(it.qty || 0);
+            itemsHtml +=
+              '<div class="item-row">' +
+                '<span class="item-model">' + escapeHtml(it.modelBase || '-') + '</span>' +
+                '<span class="item-qty">' + fmtNumber(itemQty) + ' เครื่อง</span>' +
+              '</div>';
+          });
+          itemsHtml += '</div>';
+        }
+    
+        var card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML =
+          '<div class="row1">' +
+            '<div class="cust-name">' + customer + '</div>' +
+            '<div class="quote-no">' + quoteNo + '</div>' +
+            '<div class="sales-name">Sales: ' + escapeHtml(x.salesName || '-') + '</div>' +
+          '</div>' +
+          '<div class="meta">' + qty + ' เครื่อง | <b>' + total + '</b> บาท</div>' +
+          itemsHtml +
+          '<div class="btn-row">' +
+            '<button class="btn btn-copy" type="button">📋 คัดลอกเลข PO</button>' +
+            '<button class="btn btn-share" type="button">🔗 แชร์ใบเสนอราคา</button>' +
+          '</div>';
+    
+        var btns = card.getElementsByTagName('button');
+    
+        btns[0].onclick = function () {
+          copyText(x.quoteNo || '');
+          flashButton(btns[0], 'คัดลอกแล้ว ✅', 5000);
+        };
+    
+        btns[1].onclick = async function () {
+          var oldText = btns[1].dataset.oldText || btns[1].textContent;
+          btns[1].dataset.oldText = oldText;
+    
+          try {
+            btns[1].textContent = 'Loading...';
+            btns[1].disabled = true;
+    
+            await ensureLiffReady();
+    
+            if (!LINE_USER_ID) {
+              throw new Error('LINE userId not found');
+            }
+    
+            var msg = await loadJsonp('get_quote_share_payload', {
+              quoteNo: x.quoteNo,
+              lineUserId: LINE_USER_ID
+            });
+    
+            if (msg && msg.ok === false) {
+              throw new Error(msg.error || 'โหลด payload ไม่สำเร็จ');
+            }
+    
+            if (!window.liff || !LIFF_READY) {
+              showToast('LIFF ยังไม่พร้อม', 'warn', 1800);
+              btns[1].textContent = oldText;
+              btns[1].disabled = false;
+              return;
+            }
+    
+            if (!liff.isInClient()) {
+              showToast('กรุณาเปิดผ่าน LINE', 'warn', 1800);
+              btns[1].textContent = oldText;
+              btns[1].disabled = false;
+              return;
+            }
+    
+            if (!liff.isApiAvailable('shareTargetPicker')) {
+              showToast('อุปกรณ์นี้ยังไม่รองรับการแชร์ผ่าน LINE', 'warn', 1800);
+              btns[1].textContent = oldText;
+              btns[1].disabled = false;
+              return;
+            }
+    
+            var result = await liff.shareTargetPicker(msg);
+    
+            if (result) {
+              showToast('แชร์ใบเสนอราคาแล้ว ✅', 'success', 1500);
+              flashButton(btns[1], 'แชร์แล้ว ✅', 1200);
+            } else {
+              showToast('ยกเลิกการแชร์', 'warn', 1200);
+              btns[1].textContent = oldText;
+              btns[1].disabled = false;
+            }
+    
+          } catch (err) {
+            console.error(err);
+            showToast('แชร์ไม่สำเร็จ', 'error', 1800);
+            debugLog('share error: ' + (err && err.message ? err.message : err));
+            btns[1].textContent = oldText;
+            btns[1].disabled = false;
+          }
+        };
+    
+        list.appendChild(card);
+      });
+    }
+
+    async function loadData() {
+      try {
+        debugLog('เริ่ม loadData');
+        debugLog('กำลังเรียก list_open_quotes');
+    
+        setLoadingProgress(60, 'กำลังตรวจสอบสิทธิ์...');
+    
+        await ensureLiffReady();
+    
+        if (!LINE_USER_ID) {
+          throw new Error('LINE userId not found');
+        }
+    
+        setLoadingProgress(75, 'กำลังโหลดรายการออเดอร์...');
+    
+        var data = await loadJsonp('list_open_quotes', {
+          lineUserId: LINE_USER_ID
+        });
+    
+        debugLog('list_open_quotes success');
+        debugLog('raw type = ' + Object.prototype.toString.call(data));
+        debugLog('raw data = ' + JSON.stringify(data));
+    
+        if (data && data.ok === false) {
+          throw new Error(data.error || 'โหลดข้อมูลไม่สำเร็จ');
+        }
+    
+        ALL_DATA = Array.isArray(data) ? data : [];
+        debugLog('จำนวนข้อมูล = ' + ALL_DATA.length);
+    
+        setLoadingProgress(92, 'กำลังจัดหน้าจอ...');
+        render();
+    
+        setLoadingProgress(100, 'พร้อมใช้งานแล้ว');
+    
+      } catch (err) {
+        console.error(err);
+        ALL_DATA = [];
+        render();
+        showToast('โหลดข้อมูลไม่สำเร็จ', 'error', 1800);
+        debugLog('list_open_quotes failure');
+        debugLog(err && err.message ? err.message : String(err));
+        showLoadingError('โหลดข้อมูลไม่สำเร็จ');
+        throw err;
+      }
+    }
+
+    document.getElementById('newOrderBtn').addEventListener('click', async function () {
+      var btn = document.getElementById('newOrderBtn');
+      var oldText = btn.textContent;
+    
+      try {
+        btn.textContent = 'Loading...';
+        btn.disabled = true;
+        btn.classList.add('loading');
+    
+        await ensureLiffReady();
+    
+        window.location.href = 'https://liff.line.me/2009366271-alnowbyZ';
+    
+      } catch (err) {
+        console.error(err);
+        debugLog('new order click error: ' + (err && err.message ? err.message : err));
+        showToast('เปิดหน้าใหม่ไม่สำเร็จ', 'error', 1800);
+      } finally {
+        btn.textContent = oldText;
+        btn.disabled = false;
+        btn.classList.remove('loading');
+      }
+    });
+
+    document.getElementById('searchBox').addEventListener('input', render);
+
+    document.getElementById('debugToggleBtn').addEventListener('click', function () {
+      setDebugVisible(!DEBUG_VISIBLE);
+    });
+
+    window.addEventListener('load', async function () {
+      try {
+        debugLog('window load');
+        setLoadingProgress(10, 'กำลังเปิดระบบ...');
+    
+        // ✅ โหมดใหม่: แชร์ใบเสนอราคาโดยตรง
+        // URL ตัวอย่าง:
+        // index.html?mode=quote&quoteNo=POV-2026050165
+        if (isQuoteDirectShareMode_()) {
+          await directShareQuoteFromLiff_();
+          return;
+        }
+    
+        // ✅ โหมดเดิม: หน้า list รวมออเดอร์
+        showMainApp_();
+        await loadData();
+    
+        setTimeout(function () {
+          hideLoadingScreen();
+        }, 250);
+    
+      } catch (err) {
+        console.error(err);
+    
+        debugLog('window load error: ' + (err && err.message ? err.message : err));
+    
+        showLoadingError(err && err.message ? err.message : 'โหลดไม่สำเร็จ');
+        showToast('ดำเนินการไม่สำเร็จ', 'error', 1800);
+    
+        // ถ้าเป็น direct share แล้วพัง ให้ค้างหน้า loading ไว้ให้เห็น error
+        // ถ้าเป็นหน้า list ปกติ ให้โชว์ app กลับมา
+        if (!isQuoteDirectShareMode_()) {
+          showMainApp_();
+          hideLoadingScreen();
+        }
+      }
+    });
+  </script>
+</body>
+</html>
