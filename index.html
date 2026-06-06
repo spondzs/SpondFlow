@@ -1,0 +1,957 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#f5f7fb" />
+  <title>SpondFlow Home</title>
+
+  <!-- LIFF SDK: ใช้ได้ถ้าเปิดผ่าน LINE LIFF -->
+  <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+
+  <style>
+    :root {
+      --bg: #f5f7fb;
+      --card: rgba(255, 255, 255, 0.82);
+      --card-solid: #ffffff;
+      --text: #111827;
+      --muted: #6b7280;
+      --muted2: #94a3b8;
+      --line: rgba(15, 23, 42, 0.08);
+
+      --blue: #4f6df5;
+      --blue2: #7c9cff;
+      --indigo: #5b5ff0;
+      --green: #22c55e;
+      --orange: #f97316;
+      --red: #ef4444;
+      --purple: #8b5cf6;
+      --cyan: #06b6d4;
+      --yellow: #facc15;
+
+      --radius-xl: 28px;
+      --radius-lg: 22px;
+      --radius-md: 18px;
+      --shadow: 0 18px 45px rgba(15, 23, 42, 0.11);
+      --shadow-soft: 0 10px 26px rgba(15, 23, 42, 0.08);
+      --safe-bottom: env(safe-area-inset-bottom);
+      --safe-top: env(safe-area-inset-top);
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html,
+    body {
+      margin: 0;
+      min-height: 100%;
+      background:
+        radial-gradient(circle at top left, rgba(79, 109, 245, 0.18), transparent 34%),
+        radial-gradient(circle at top right, rgba(124, 156, 255, 0.18), transparent 28%),
+        linear-gradient(180deg, #f8fbff 0%, var(--bg) 45%, #eef3fb 100%);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      color: var(--text);
+    }
+
+    body {
+      padding: calc(12px + var(--safe-top)) 14px calc(22px + var(--safe-bottom));
+      overflow-x: hidden;
+    }
+
+    button,
+    a {
+      font-family: inherit;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .app {
+      width: min(100%, 720px);
+      margin: 0 auto;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 18px;
+      overflow: hidden;
+      background: linear-gradient(135deg, #ffffff, #eef2ff);
+      box-shadow: var(--shadow-soft);
+      border: 1px solid rgba(255,255,255,0.72);
+      flex: 0 0 auto;
+    }
+
+    .avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .brand-text {
+      min-width: 0;
+    }
+
+    .brand-title {
+      margin: 0;
+      font-size: 18px;
+      font-weight: 850;
+      letter-spacing: -0.4px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .brand-subtitle {
+      margin: 2px 0 0;
+      font-size: 12px;
+      color: var(--muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .icon-btn {
+      width: 44px;
+      height: 44px;
+      border: 0;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.72);
+      box-shadow: var(--shadow-soft);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #1f2937;
+      font-size: 20px;
+      cursor: pointer;
+      border: 1px solid rgba(255,255,255,0.86);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      border-radius: 34px;
+      padding: 22px;
+      min-height: 188px;
+      background:
+        radial-gradient(circle at top right, rgba(255,255,255,0.34), transparent 38%),
+        linear-gradient(135deg, #4f6df5 0%, #6679ff 48%, #8aa6ff 100%);
+      box-shadow: var(--shadow);
+      color: white;
+      margin-bottom: 16px;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: auto -30px -68px auto;
+      width: 180px;
+      height: 180px;
+      background: rgba(255,255,255,0.14);
+      border-radius: 999px;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      top: -52px;
+      left: -48px;
+      width: 150px;
+      height: 150px;
+      background: rgba(255,255,255,0.10);
+      border-radius: 999px;
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 7px 11px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.18);
+      border: 1px solid rgba(255,255,255,0.28);
+      font-size: 12px;
+      font-weight: 700;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
+
+    .hero h1 {
+      margin: 14px 0 6px;
+      font-size: clamp(25px, 6vw, 36px);
+      line-height: 1.08;
+      letter-spacing: -1.1px;
+    }
+
+    .hero p {
+      margin: 0;
+      max-width: 460px;
+      color: rgba(255,255,255,0.84);
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    .hero-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .primary-action,
+    .secondary-action {
+      min-height: 48px;
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-weight: 800;
+      font-size: 14px;
+      border: 1px solid rgba(255,255,255,0.32);
+      cursor: pointer;
+    }
+
+    .primary-action {
+      background: #ffffff;
+      color: #3347d7;
+      box-shadow: 0 14px 28px rgba(31, 41, 55, 0.14);
+    }
+
+    .secondary-action {
+      background: rgba(255,255,255,0.16);
+      color: white;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
+
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 12px;
+      margin: 18px 2px 10px;
+    }
+
+    .section-title {
+      margin: 0;
+      font-size: 18px;
+      font-weight: 850;
+      letter-spacing: -0.3px;
+    }
+
+    .section-note {
+      font-size: 12px;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .tile {
+      position: relative;
+      overflow: hidden;
+      min-height: 138px;
+      padding: 15px;
+      border-radius: var(--radius-xl);
+      background: var(--card);
+      border: 1px solid rgba(255,255,255,0.82);
+      box-shadow: var(--shadow-soft);
+      backdrop-filter: blur(22px);
+      -webkit-backdrop-filter: blur(22px);
+      transition: transform 0.16s ease, box-shadow 0.16s ease, background 0.16s ease;
+    }
+
+    .tile:active {
+      transform: scale(0.975);
+      box-shadow: 0 8px 18px rgba(15,23,42,0.08);
+    }
+
+    .tile.disabled {
+      opacity: 0.54;
+      filter: grayscale(0.2);
+    }
+
+    .tile-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .tile-icon {
+      width: 46px;
+      height: 46px;
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      background: linear-gradient(135deg, rgba(79,109,245,0.13), rgba(124,156,255,0.18));
+      box-shadow: inset 0 0 0 1px rgba(79,109,245,0.12);
+    }
+
+    .pill {
+      padding: 5px 8px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.05);
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .tile h3 {
+      margin: 14px 0 4px;
+      font-size: 16px;
+      line-height: 1.18;
+      letter-spacing: -0.25px;
+    }
+
+    .tile p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.42;
+    }
+
+    .tile .arrow {
+      position: absolute;
+      right: 14px;
+      bottom: 12px;
+      width: 28px;
+      height: 28px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.05);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #64748b;
+      font-weight: 900;
+    }
+
+    .wide-card {
+      margin-top: 12px;
+      border-radius: var(--radius-xl);
+      padding: 15px;
+      background: rgba(255,255,255,0.78);
+      border: 1px solid rgba(255,255,255,0.86);
+      box-shadow: var(--shadow-soft);
+      backdrop-filter: blur(22px);
+      -webkit-backdrop-filter: blur(22px);
+    }
+
+    .status-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 8px;
+    }
+
+    .status-item {
+      padding: 12px 10px;
+      border-radius: 18px;
+      background: rgba(248,250,252,0.86);
+      border: 1px solid var(--line);
+    }
+
+    .status-value {
+      font-size: 18px;
+      font-weight: 900;
+      letter-spacing: -0.4px;
+      margin: 0;
+    }
+
+    .status-label {
+      margin: 2px 0 0;
+      color: var(--muted);
+      font-size: 11px;
+      white-space: nowrap;
+    }
+
+    .user-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 12px;
+      padding: 12px;
+      border-radius: 22px;
+      background: rgba(255,255,255,0.66);
+      border: 1px solid rgba(255,255,255,0.82);
+    }
+
+    .user-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    .user-dot {
+      width: 36px;
+      height: 36px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #22c55e, #86efac);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 900;
+      flex: 0 0 auto;
+    }
+
+    .user-name {
+      font-size: 13px;
+      font-weight: 850;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .user-role {
+      margin-top: 2px;
+      font-size: 11px;
+      color: var(--muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .logout-btn {
+      border: 0;
+      background: rgba(15, 23, 42, 0.05);
+      color: #475569;
+      border-radius: 999px;
+      padding: 8px 10px;
+      font-weight: 800;
+      font-size: 11px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .bottom-space {
+      height: 16px;
+    }
+
+    .toast {
+      position: fixed;
+      left: 14px;
+      right: 14px;
+      bottom: calc(14px + var(--safe-bottom));
+      z-index: 99;
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 12px 14px;
+      border-radius: 18px;
+      background: rgba(17,24,39,0.88);
+      color: white;
+      font-size: 13px;
+      line-height: 1.4;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      opacity: 0;
+      transform: translateY(16px);
+      pointer-events: none;
+      transition: 0.22s ease;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .loading {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      color: var(--muted);
+    }
+
+    .spinner {
+      width: 34px;
+      height: 34px;
+      margin: 0 auto 12px;
+      border-radius: 999px;
+      border: 3px solid rgba(79,109,245,0.16);
+      border-top-color: var(--blue);
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    @media (min-width: 560px) {
+      body {
+        padding-left: 18px;
+        padding-right: 18px;
+      }
+
+      .grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .hero-actions {
+        width: 430px;
+      }
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #101624;
+        --card: rgba(30, 41, 59, 0.74);
+        --card-solid: #111827;
+        --text: #f8fafc;
+        --muted: #cbd5e1;
+        --muted2: #94a3b8;
+        --line: rgba(255,255,255,0.08);
+      }
+
+      html,
+      body {
+        background:
+          radial-gradient(circle at top left, rgba(79, 109, 245, 0.22), transparent 34%),
+          radial-gradient(circle at top right, rgba(124, 156, 255, 0.14), transparent 28%),
+          linear-gradient(180deg, #111827 0%, #0f172a 60%, #020617 100%);
+      }
+
+      .icon-btn,
+      .wide-card,
+      .user-card,
+      .tile {
+        border-color: rgba(255,255,255,0.08);
+      }
+
+      .status-item {
+        background: rgba(15,23,42,0.55);
+      }
+
+      .pill,
+      .tile .arrow,
+      .logout-btn {
+        background: rgba(255,255,255,0.08);
+        color: #cbd5e1;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div id="loading" class="loading">
+    <div>
+      <div class="spinner"></div>
+      <div>กำลังเปิด SpondFlow...</div>
+    </div>
+  </div>
+
+  <main id="app" class="app" style="display:none;">
+    <header class="topbar">
+      <div class="brand">
+        <div class="avatar">
+          <img id="brandLogo" src="Caffe.PNG" alt="Caffe" onerror="this.style.display='none'; this.parentElement.textContent='☕';">
+        </div>
+        <div class="brand-text">
+          <h1 class="brand-title">SpondFlow</h1>
+          <p class="brand-subtitle" id="todayText">QuotationBot Home</p>
+        </div>
+      </div>
+
+      <button class="icon-btn" type="button" onclick="refreshHome()" aria-label="Refresh">↻</button>
+    </header>
+
+    <section class="hero">
+      <div class="hero-inner">
+        <div class="badge">☕ QUOTATION_BOT · Office Hub</div>
+        <h1>หน้าแรกระบบหลังบ้าน</h1>
+        <p id="welcomeText">
+          รวมทางลัดสำหรับสั่งของ ดูสต็อก ใบเสนอราคา ยอดขาย และข้อมูลหลักของระบบ
+        </p>
+
+        <div class="hero-actions">
+          <a class="primary-action" id="goOrderBtn" href="#">🛒 สั่งของ</a>
+          <a class="secondary-action" id="goStockBtn" href="#">📦 ดูสต็อก</a>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-head">
+      <h2 class="section-title">เมนูหลัก</h2>
+      <div class="section-note">แตะเพื่อเข้าใช้งาน</div>
+    </div>
+
+    <section class="grid" id="menuGrid"></section>
+
+    <section class="wide-card">
+      <div class="section-head" style="margin-top:0;">
+        <h2 class="section-title">ภาพรวมวันนี้</h2>
+        <div class="section-note">MVP preview</div>
+      </div>
+
+      <div class="status-row">
+        <div class="status-item">
+          <p class="status-value" id="statOrders">—</p>
+          <p class="status-label">ออเดอร์</p>
+        </div>
+        <div class="status-item">
+          <p class="status-value" id="statStock">—</p>
+          <p class="status-label">พร้อมขาย</p>
+        </div>
+        <div class="status-item">
+          <p class="status-value" id="statPay">—</p>
+          <p class="status-label">รับชำระ</p>
+        </div>
+      </div>
+
+      <div class="user-card">
+        <div class="user-left">
+          <div class="user-dot" id="userInitial">P</div>
+          <div style="min-width:0;">
+            <div class="user-name" id="userName">Guest</div>
+            <div class="user-role" id="userRole">เปิดผ่าน LIFF หรือ Browser</div>
+          </div>
+        </div>
+        <button class="logout-btn" type="button" onclick="logoutLine()">Logout</button>
+      </div>
+    </section>
+
+    <div class="bottom-space"></div>
+  </main>
+
+  <div id="toast" class="toast"></div>
+
+  <script>
+    const CONFIG = {
+      // ใส่ LIFF ID ของหน้า Home ทีหลังได้
+      // ถ้ายังไม่มี ปล่อยว่างไว้ หน้าเว็บยังเปิดได้ตามปกติ
+      liffId: "",
+
+      // ปรับลิงก์ตามไฟล์จริงใน GitHub Pages / LIFF
+      links: {
+        order: "./order-form.html",
+        stock: "./stock.html",
+        quotes: "./index.html",
+        ordersNew: "./orders-new.html",
+        payment: "./payment.html",
+        sales: "./sales.html",
+        products: "./products.html",
+        employees: "./employees.html",
+        settings: "./settings.html"
+      },
+
+      // ถ้าต้องการล็อกให้ใช้เฉพาะใน LINE LIFF ในอนาคต ค่อยเปลี่ยนเป็น true
+      requireLiffLogin: false
+    };
+
+    const MENUS = [
+      {
+        key: "order",
+        title: "สั่งของ",
+        desc: "เลือกสินค้าและส่งฟอร์ม #สั่งของ เข้ากลุ่ม",
+        icon: "🛒",
+        tag: "LIFF",
+        color: "blue",
+        href: CONFIG.links.order
+      },
+      {
+        key: "stock",
+        title: "ดูสต็อก",
+        desc: "เช็กโควต้าและสินค้าพร้อมขาย",
+        icon: "📦",
+        tag: "Stock",
+        color: "green",
+        href: CONFIG.links.stock
+      },
+      {
+        key: "quotes",
+        title: "ใบเสนอราคา",
+        desc: "ดูบิลเปิดค้าง / PDF / รายการใบเสนอราคา",
+        icon: "🧾",
+        tag: "Quotes",
+        color: "purple",
+        href: CONFIG.links.quotes
+      },
+      {
+        key: "payment",
+        title: "รับชำระ",
+        desc: "เช็กหนี้ รับเงิน ตัด IV และดู Payment log",
+        icon: "💰",
+        tag: "Account",
+        color: "orange",
+        href: CONFIG.links.payment
+      },
+      {
+        key: "sales",
+        title: "ยอดขาย",
+        desc: "สรุปยอดขาย รายงาน และภาพรวมรายเดือน",
+        icon: "📊",
+        tag: "Report",
+        color: "cyan",
+        href: CONFIG.links.sales
+      },
+      {
+        key: "products",
+        title: "สินค้า",
+        desc: "Catalog ราคา ประเภทสินค้า และข้อมูลรุ่น",
+        icon: "📱",
+        tag: "Catalog",
+        color: "blue",
+        href: CONFIG.links.products
+      },
+      {
+        key: "employees",
+        title: "พนักงาน",
+        desc: "สิทธิ์ผู้ใช้ Role Scope และข้อมูลพนักงาน",
+        icon: "👥",
+        tag: "Admin",
+        color: "red",
+        href: CONFIG.links.employees
+      },
+      {
+        key: "settings",
+        title: "ระบบ",
+        desc: "ตั้งค่า คลัง ราคา และเครื่องมือดูแลระบบ",
+        icon: "⚙️",
+        tag: "System",
+        color: "gray",
+        href: CONFIG.links.settings
+      }
+    ];
+
+    const COLOR_MAP = {
+      blue: ["rgba(79,109,245,0.14)", "rgba(124,156,255,0.22)"],
+      green: ["rgba(34,197,94,0.14)", "rgba(134,239,172,0.22)"],
+      orange: ["rgba(249,115,22,0.14)", "rgba(253,186,116,0.22)"],
+      purple: ["rgba(139,92,246,0.14)", "rgba(196,181,253,0.22)"],
+      cyan: ["rgba(6,182,212,0.14)", "rgba(125,211,252,0.22)"],
+      red: ["rgba(239,68,68,0.13)", "rgba(252,165,165,0.20)"],
+      gray: ["rgba(100,116,139,0.12)", "rgba(203,213,225,0.20)"]
+    };
+
+    let currentUser = {
+      name: "Guest",
+      role: "browser",
+      pictureUrl: ""
+    };
+
+    document.addEventListener("DOMContentLoaded", init);
+
+    async function init() {
+      setToday();
+      wireHeroButtons();
+      renderMenus();
+      await initLiffSafe();
+      loadMockStats();
+
+      document.getElementById("loading").style.display = "none";
+      document.getElementById("app").style.display = "block";
+    }
+
+    function setToday() {
+      const d = new Date();
+      const text = d.toLocaleDateString("th-TH", {
+        weekday: "short",
+        day: "numeric",
+        month: "short",
+        year: "numeric"
+      });
+      document.getElementById("todayText").textContent = text;
+    }
+
+    function wireHeroButtons() {
+      document.getElementById("goOrderBtn").href = CONFIG.links.order;
+      document.getElementById("goStockBtn").href = CONFIG.links.stock;
+    }
+
+    function renderMenus() {
+      const grid = document.getElementById("menuGrid");
+      grid.innerHTML = "";
+
+      MENUS.forEach(item => {
+        const a = document.createElement("a");
+        a.className = "tile";
+        a.href = item.href || "#";
+        a.dataset.key = item.key;
+
+        if (!item.href || item.href === "#") {
+          a.classList.add("disabled");
+        }
+
+        const c = COLOR_MAP[item.color] || COLOR_MAP.blue;
+
+        a.innerHTML = `
+          <div class="tile-top">
+            <div class="tile-icon" style="background:linear-gradient(135deg, ${c[0]}, ${c[1]});">${item.icon}</div>
+            <div class="pill">${item.tag}</div>
+          </div>
+          <h3>${escapeHtml(item.title)}</h3>
+          <p>${escapeHtml(item.desc)}</p>
+          <div class="arrow">›</div>
+        `;
+
+        a.addEventListener("click", function(e) {
+          if (!item.href || item.href === "#") {
+            e.preventDefault();
+            showToast("เมนูนี้ยังไม่ได้ผูกหน้าเว็บครับ");
+            return;
+          }
+        });
+
+        grid.appendChild(a);
+      });
+    }
+
+    async function initLiffSafe() {
+      if (!CONFIG.liffId) {
+        updateUserCard({
+          name: "SpondFlow User",
+          role: "Browser Preview",
+          pictureUrl: ""
+        });
+        return;
+      }
+
+      try {
+        await liff.init({ liffId: CONFIG.liffId });
+
+        if (!liff.isLoggedIn()) {
+          if (CONFIG.requireLiffLogin) {
+            liff.login();
+            return;
+          }
+
+          updateUserCard({
+            name: "Guest",
+            role: "ยังไม่ได้ Login LINE",
+            pictureUrl: ""
+          });
+          return;
+        }
+
+        const profile = await liff.getProfile();
+
+        currentUser = {
+          name: profile.displayName || "LINE User",
+          role: "LINE LIFF",
+          pictureUrl: profile.pictureUrl || ""
+        };
+
+        updateUserCard(currentUser);
+
+        // ถ้าภายหลังจะเช็กสิทธิ์จาก GAS หรือ API ให้ต่อจากตรงนี้
+        // เช่น google.script.run.withSuccessHandler(...).AUTH_liffLogin(profile.userId)
+
+      } catch (err) {
+        console.warn(err);
+        updateUserCard({
+          name: "SpondFlow User",
+          role: "LIFF init ไม่สำเร็จ / Browser mode",
+          pictureUrl: ""
+        });
+      }
+    }
+
+    function updateUserCard(user) {
+      const name = user.name || "Guest";
+      const role = user.role || "User";
+
+      document.getElementById("userName").textContent = name;
+      document.getElementById("userRole").textContent = role;
+      document.getElementById("userInitial").textContent = getInitial(name);
+
+      const welcome = document.getElementById("welcomeText");
+      welcome.textContent = "ยินดีต้อนรับ " + name + " เข้าสู่ระบบหลังบ้าน SpondFlow ครับ";
+
+      if (user.pictureUrl) {
+        const logo = document.getElementById("brandLogo");
+        if (logo) logo.src = user.pictureUrl;
+      }
+    }
+
+    function getInitial(name) {
+      const s = String(name || "").trim();
+      if (!s) return "P";
+      return s.charAt(0).toUpperCase();
+    }
+
+    function loadMockStats() {
+      // ตอนนี้ใส่ mock ไว้ก่อน
+      // วันหลังค่อยต่อ GAS/API มาเติมยอดจริง
+      document.getElementById("statOrders").textContent = "—";
+      document.getElementById("statStock").textContent = "—";
+      document.getElementById("statPay").textContent = "—";
+    }
+
+    function refreshHome() {
+      showToast("รีเฟรชหน้าแรกแล้วครับ ☕");
+      setToday();
+      loadMockStats();
+    }
+
+    function logoutLine() {
+      try {
+        if (window.liff && CONFIG.liffId && liff.isLoggedIn()) {
+          liff.logout();
+          showToast("Logout แล้วครับ");
+          setTimeout(() => location.reload(), 600);
+          return;
+        }
+      } catch (err) {}
+
+      showToast("ตอนนี้เป็น Browser mode ยังไม่มี session ให้ logout ครับ");
+    }
+
+    function showToast(msg) {
+      const el = document.getElementById("toast");
+      el.textContent = msg;
+      el.classList.add("show");
+
+      clearTimeout(window.__toastTimer);
+      window.__toastTimer = setTimeout(() => {
+        el.classList.remove("show");
+      }, 2200);
+    }
+
+    function escapeHtml(s) {
+      return String(s || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+  </script>
+</body>
+</html>
