@@ -18,7 +18,7 @@
       --muted: #6b7280;
       --muted2: #94a3b8;
       --line: rgba(15, 23, 42, 0.08);
-
+  
       --blue: #4f6df5;
       --blue2: #7c9cff;
       --indigo: #5b5ff0;
@@ -28,7 +28,7 @@
       --purple: #8b5cf6;
       --cyan: #06b6d4;
       --yellow: #facc15;
-
+  
       --radius-xl: 28px;
       --radius-lg: 22px;
       --radius-md: 18px;
@@ -37,12 +37,12 @@
       --safe-bottom: env(safe-area-inset-bottom);
       --safe-top: env(safe-area-inset-top);
     }
-
+  
     * {
       box-sizing: border-box;
       -webkit-tap-highlight-color: transparent;
     }
-
+  
     html,
     body {
       margin: 0;
@@ -54,27 +54,31 @@
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
       color: var(--text);
     }
-
+  
     body {
       padding: calc(12px + var(--safe-top)) 14px calc(22px + var(--safe-bottom));
       overflow-x: hidden;
     }
-
+  
     button,
     a {
       font-family: inherit;
     }
-
+  
     a {
       color: inherit;
       text-decoration: none;
     }
-
+  
     .app {
       width: min(100%, 720px);
       margin: 0 auto;
     }
-
+  
+    /* =========================================================
+     * TOP BAR
+     * ========================================================= */
+  
     .topbar {
       display: flex;
       align-items: center;
@@ -82,14 +86,14 @@
       gap: 12px;
       margin-bottom: 14px;
     }
-
+  
     .brand {
       display: flex;
       align-items: center;
       gap: 12px;
       min-width: 0;
     }
-
+  
     .avatar {
       width: 48px;
       height: 48px;
@@ -97,21 +101,21 @@
       overflow: hidden;
       background: linear-gradient(135deg, #ffffff, #eef2ff);
       box-shadow: var(--shadow-soft);
-      border: 1px solid rgba(255,255,255,0.72);
+      border: 1px solid rgba(255, 255, 255, 0.72);
       flex: 0 0 auto;
     }
-
+  
     .avatar img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       display: block;
     }
-
+  
     .brand-text {
       min-width: 0;
     }
-
+  
     .brand-title {
       margin: 0;
       font-size: 18px;
@@ -121,7 +125,7 @@
       overflow: hidden;
       text-overflow: ellipsis;
     }
-
+  
     .brand-subtitle {
       margin: 2px 0 0;
       font-size: 12px;
@@ -130,13 +134,13 @@
       overflow: hidden;
       text-overflow: ellipsis;
     }
-
+  
     .icon-btn {
       width: 44px;
       height: 44px;
       border: 0;
       border-radius: 18px;
-      background: rgba(255,255,255,0.72);
+      background: rgba(255, 255, 255, 0.72);
       box-shadow: var(--shadow-soft);
       display: inline-flex;
       align-items: center;
@@ -144,35 +148,40 @@
       color: #1f2937;
       font-size: 20px;
       cursor: pointer;
-      border: 1px solid rgba(255,255,255,0.86);
+      border: 1px solid rgba(255, 255, 255, 0.86);
       backdrop-filter: blur(18px);
       -webkit-backdrop-filter: blur(18px);
     }
-
+  
+    /* =========================================================
+     * HERO / DASHBOARD CARD
+     * ========================================================= */
+  
     .hero {
       position: relative;
       overflow: hidden;
       border-radius: 34px;
       padding: 22px;
-      min-height: 188px;
+      min-height: 270px;
       background:
-        radial-gradient(circle at top right, rgba(255,255,255,0.34), transparent 38%),
-        linear-gradient(135deg, #4f6df5 0%, #6679ff 48%, #8aa6ff 100%);
+        radial-gradient(circle at top right, rgba(255, 255, 255, 0.34), transparent 38%),
+        radial-gradient(circle at 88% 82%, rgba(255, 255, 255, 0.16), transparent 34%),
+        linear-gradient(135deg, #4f6df5 0%, #6679ff 46%, #8aa6ff 100%);
       box-shadow: var(--shadow);
       color: white;
       margin-bottom: 16px;
     }
-
+  
     .hero::before {
       content: "";
       position: absolute;
       inset: auto -30px -68px auto;
       width: 180px;
       height: 180px;
-      background: rgba(255,255,255,0.14);
+      background: rgba(255, 255, 255, 0.14);
       border-radius: 999px;
     }
-
+  
     .hero::after {
       content: "";
       position: absolute;
@@ -180,78 +189,129 @@
       left: -48px;
       width: 150px;
       height: 150px;
-      background: rgba(255,255,255,0.10);
+      background: rgba(255, 255, 255, 0.10);
       border-radius: 999px;
     }
-
+  
     .hero-inner {
       position: relative;
       z-index: 1;
     }
-
+  
     .badge {
       display: inline-flex;
       align-items: center;
       gap: 7px;
       padding: 7px 11px;
       border-radius: 999px;
-      background: rgba(255,255,255,0.18);
-      border: 1px solid rgba(255,255,255,0.28);
+      background: rgba(255, 255, 255, 0.18);
+      border: 1px solid rgba(255, 255, 255, 0.28);
       font-size: 12px;
       font-weight: 700;
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
     }
-
+  
     .hero h1 {
       margin: 14px 0 6px;
       font-size: clamp(25px, 6vw, 36px);
       line-height: 1.08;
       letter-spacing: -1.1px;
     }
-
+  
     .hero p {
       margin: 0;
-      max-width: 460px;
-      color: rgba(255,255,255,0.84);
+      max-width: 520px;
+      color: rgba(255, 255, 255, 0.84);
       font-size: 14px;
       line-height: 1.55;
     }
-
-    .hero-actions {
+  
+    .home-dashboard {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
+      grid-template-columns: 1.12fr 0.88fr;
+      gap: 12px;
       margin-top: 18px;
     }
-
-    .primary-action,
-    .secondary-action {
-      min-height: 48px;
-      border-radius: 18px;
+  
+    .dash-main,
+    .dash-mini {
+      border-radius: 24px;
+      background: rgba(255, 255, 255, 0.18);
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      box-shadow: 0 16px 34px rgba(30, 41, 59, 0.10);
+    }
+  
+    .dash-main {
+      padding: 16px;
+      min-height: 142px;
       display: flex;
-      align-items: center;
+      flex-direction: column;
       justify-content: center;
-      gap: 8px;
-      font-weight: 800;
-      font-size: 14px;
-      border: 1px solid rgba(255,255,255,0.32);
-      cursor: pointer;
     }
-
-    .primary-action {
-      background: #ffffff;
-      color: #3347d7;
-      box-shadow: 0 14px 28px rgba(31, 41, 55, 0.14);
+  
+    .dash-side {
+      display: grid;
+      grid-template-rows: 1fr 1fr;
+      gap: 10px;
     }
-
-    .secondary-action {
-      background: rgba(255,255,255,0.16);
-      color: white;
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
+  
+    .dash-mini {
+      padding: 12px;
+      min-height: 66px;
     }
-
+  
+    .dash-label {
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.72);
+      font-weight: 750;
+    }
+  
+    .dash-value {
+      margin-top: 6px;
+      font-size: clamp(34px, 8vw, 52px);
+      line-height: 1;
+      font-weight: 950;
+      letter-spacing: -1.8px;
+      color: #ffffff;
+    }
+  
+    .dash-sub {
+      margin-top: 8px;
+      font-size: 20px;
+      font-weight: 850;
+      color: rgba(255, 255, 255, 0.88);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  
+    .dash-mini-value {
+      margin-top: 4px;
+      font-size: 16px;
+      font-weight: 900;
+      color: #ffffff;
+      line-height: 1.15;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  
+    .dash-mini-sub {
+      margin-top: 3px;
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.72);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  
+    /* =========================================================
+     * SECTION / MENU
+     * ========================================================= */
+  
     .section-head {
       display: flex;
       align-items: end;
@@ -259,26 +319,26 @@
       gap: 12px;
       margin: 18px 2px 10px;
     }
-
+  
     .section-title {
       margin: 0;
       font-size: 18px;
       font-weight: 850;
       letter-spacing: -0.3px;
     }
-
+  
     .section-note {
       font-size: 12px;
       color: var(--muted);
       white-space: nowrap;
     }
-
+  
     .grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 12px;
     }
-
+  
     .tile {
       position: relative;
       overflow: hidden;
@@ -286,30 +346,30 @@
       padding: 15px;
       border-radius: var(--radius-xl);
       background: var(--card);
-      border: 1px solid rgba(255,255,255,0.82);
+      border: 1px solid rgba(255, 255, 255, 0.82);
       box-shadow: var(--shadow-soft);
       backdrop-filter: blur(22px);
       -webkit-backdrop-filter: blur(22px);
       transition: transform 0.16s ease, box-shadow 0.16s ease, background 0.16s ease;
     }
-
+  
     .tile:active {
       transform: scale(0.975);
-      box-shadow: 0 8px 18px rgba(15,23,42,0.08);
+      box-shadow: 0 8px 18px rgba(15, 23, 42, 0.08);
     }
-
+  
     .tile.disabled {
       opacity: 0.54;
       filter: grayscale(0.2);
     }
-
+  
     .tile-top {
       display: flex;
       align-items: flex-start;
       justify-content: space-between;
       gap: 10px;
     }
-
+  
     .tile-icon {
       width: 46px;
       height: 46px;
@@ -318,10 +378,10 @@
       align-items: center;
       justify-content: center;
       font-size: 24px;
-      background: linear-gradient(135deg, rgba(79,109,245,0.13), rgba(124,156,255,0.18));
-      box-shadow: inset 0 0 0 1px rgba(79,109,245,0.12);
+      background: linear-gradient(135deg, rgba(79, 109, 245, 0.13), rgba(124, 156, 255, 0.18));
+      box-shadow: inset 0 0 0 1px rgba(79, 109, 245, 0.12);
     }
-
+  
     .pill {
       padding: 5px 8px;
       border-radius: 999px;
@@ -331,21 +391,21 @@
       font-weight: 800;
       white-space: nowrap;
     }
-
+  
     .tile h3 {
       margin: 14px 0 4px;
       font-size: 16px;
       line-height: 1.18;
       letter-spacing: -0.25px;
     }
-
+  
     .tile p {
       margin: 0;
       color: var(--muted);
       font-size: 12px;
       line-height: 1.42;
     }
-
+  
     .tile .arrow {
       position: absolute;
       right: 14px;
@@ -360,45 +420,49 @@
       color: #64748b;
       font-weight: 900;
     }
-
+  
+    /* =========================================================
+     * WIDE CARD / PROFILE
+     * ========================================================= */
+  
     .wide-card {
       margin-top: 12px;
       border-radius: var(--radius-xl);
       padding: 15px;
-      background: rgba(255,255,255,0.78);
-      border: 1px solid rgba(255,255,255,0.86);
+      background: rgba(255, 255, 255, 0.78);
+      border: 1px solid rgba(255, 255, 255, 0.86);
       box-shadow: var(--shadow-soft);
       backdrop-filter: blur(22px);
       -webkit-backdrop-filter: blur(22px);
     }
-
+  
     .status-row {
       display: grid;
       grid-template-columns: 1fr 1fr 1fr;
       gap: 8px;
     }
-
+  
     .status-item {
       padding: 12px 10px;
       border-radius: 18px;
-      background: rgba(248,250,252,0.86);
+      background: rgba(248, 250, 252, 0.86);
       border: 1px solid var(--line);
     }
-
+  
     .status-value {
       font-size: 18px;
       font-weight: 900;
       letter-spacing: -0.4px;
       margin: 0;
     }
-
+  
     .status-label {
       margin: 2px 0 0;
       color: var(--muted);
       font-size: 11px;
       white-space: nowrap;
     }
-
+  
     .user-card {
       display: flex;
       align-items: center;
@@ -407,17 +471,17 @@
       margin-top: 12px;
       padding: 12px;
       border-radius: 22px;
-      background: rgba(255,255,255,0.66);
-      border: 1px solid rgba(255,255,255,0.82);
+      background: rgba(255, 255, 255, 0.66);
+      border: 1px solid rgba(255, 255, 255, 0.82);
     }
-
+  
     .user-left {
       display: flex;
       align-items: center;
       gap: 10px;
       min-width: 0;
     }
-
+  
     .user-dot {
       width: 36px;
       height: 36px;
@@ -430,7 +494,7 @@
       font-weight: 900;
       flex: 0 0 auto;
     }
-
+  
     .user-name {
       font-size: 13px;
       font-weight: 850;
@@ -438,7 +502,7 @@
       overflow: hidden;
       text-overflow: ellipsis;
     }
-
+  
     .user-role {
       margin-top: 2px;
       font-size: 11px;
@@ -447,7 +511,7 @@
       overflow: hidden;
       text-overflow: ellipsis;
     }
-
+  
     .logout-btn {
       border: 0;
       background: rgba(15, 23, 42, 0.05);
@@ -459,11 +523,15 @@
       cursor: pointer;
       white-space: nowrap;
     }
-
+  
     .bottom-space {
       height: 16px;
     }
-
+  
+    /* =========================================================
+     * TOAST / LOADING
+     * ========================================================= */
+  
     .toast {
       position: fixed;
       left: 14px;
@@ -474,7 +542,7 @@
       margin: 0 auto;
       padding: 12px 14px;
       border-radius: 18px;
-      background: rgba(17,24,39,0.88);
+      background: rgba(17, 24, 39, 0.88);
       color: white;
       font-size: 13px;
       line-height: 1.4;
@@ -486,12 +554,12 @@
       pointer-events: none;
       transition: 0.22s ease;
     }
-
+  
     .toast.show {
       opacity: 1;
       transform: translateY(0);
     }
-
+  
     .loading {
       min-height: 100vh;
       display: grid;
@@ -499,36 +567,74 @@
       text-align: center;
       color: var(--muted);
     }
-
+  
     .spinner {
       width: 34px;
       height: 34px;
       margin: 0 auto 12px;
       border-radius: 999px;
-      border: 3px solid rgba(79,109,245,0.16);
+      border: 3px solid rgba(79, 109, 245, 0.16);
       border-top-color: var(--blue);
       animation: spin 0.8s linear infinite;
     }
-
+  
     @keyframes spin {
-      to { transform: rotate(360deg); }
+      to {
+        transform: rotate(360deg);
+      }
     }
-
+  
+    /* =========================================================
+     * RESPONSIVE
+     * ========================================================= */
+  
     @media (min-width: 560px) {
       body {
         padding-left: 18px;
         padding-right: 18px;
       }
-
+  
       .grid {
         grid-template-columns: repeat(3, minmax(0, 1fr));
       }
-
-      .hero-actions {
-        width: 430px;
+    }
+  
+    @media (max-width: 430px) {
+      .hero {
+        padding: 20px;
+        min-height: 300px;
+      }
+  
+      .home-dashboard {
+        grid-template-columns: 1fr;
+      }
+  
+      .dash-side {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto;
+      }
+  
+      .dash-main {
+        min-height: 118px;
+      }
+  
+      .dash-mini {
+        min-height: 74px;
+      }
+  
+      .dash-value {
+        font-size: clamp(34px, 12vw, 48px);
+      }
+  
+      .dash-sub {
+        font-size: 18px;
       }
     }
-
+  
+    /* =========================================================
+     * DARK MODE
+     * ========================================================= */
+  
     @media (prefers-color-scheme: dark) {
       :root {
         --bg: #101624;
@@ -537,9 +643,9 @@
         --text: #f8fafc;
         --muted: #cbd5e1;
         --muted2: #94a3b8;
-        --line: rgba(255,255,255,0.08);
+        --line: rgba(255, 255, 255, 0.08);
       }
-
+  
       html,
       body {
         background:
@@ -547,22 +653,22 @@
           radial-gradient(circle at top right, rgba(124, 156, 255, 0.14), transparent 28%),
           linear-gradient(180deg, #111827 0%, #0f172a 60%, #020617 100%);
       }
-
+  
       .icon-btn,
       .wide-card,
       .user-card,
       .tile {
-        border-color: rgba(255,255,255,0.08);
+        border-color: rgba(255, 255, 255, 0.08);
       }
-
+  
       .status-item {
-        background: rgba(15,23,42,0.55);
+        background: rgba(15, 23, 42, 0.55);
       }
-
+  
       .pill,
       .tile .arrow,
       .logout-btn {
-        background: rgba(255,255,255,0.08);
+        background: rgba(255, 255, 255, 0.08);
         color: #cbd5e1;
       }
     }
@@ -600,9 +706,34 @@
           รวมทางลัดสำหรับสั่งของ ดูสต็อก ใบเสนอราคา ยอดขาย และข้อมูลหลักของระบบ
         </p>
 
-        <div class="hero-actions">
-          <a class="primary-action" id="goOrderBtn" href="#">🛒 สั่งของ</a>
-          <a class="secondary-action" id="goStockBtn" href="#">📦 ดูสต็อก</a>
+        <div class="home-dashboard">
+          <div class="dash-main">
+            <div class="dash-label">วันนี้ขายได้</div>
+            <div class="dash-value">
+              <span id="dashTodayQty">—</span> เครื่อง
+            </div>
+            <div class="dash-sub">
+              ฿<span id="dashTodayAmount">—</span>
+            </div>
+          </div>
+        
+          <div class="dash-side">
+            <div class="dash-mini">
+              <div class="dash-label">เดือนนี้</div>
+              <div class="dash-mini-value">
+                <span id="dashMonthQty">—</span> เครื่อง
+              </div>
+              <div class="dash-mini-sub">
+                ฿<span id="dashMonthAmount">—</span>
+              </div>
+            </div>
+        
+            <div class="dash-mini">
+              <div class="dash-label">Top วันนี้</div>
+              <div class="dash-mini-value" id="dashTopSeller">—</div>
+              <div class="dash-mini-sub" id="dashTopSellerSub">รอโหลดข้อมูล</div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -655,9 +786,9 @@
   <script>
     const CONFIG = {
       liffId: "2009366271-Rb7EZwDn",
-    
+  
       gasApiUrl: "https://script.google.com/macros/s/AKfycbw4jAzjWors_9dwQx1bI2RpVzm56icKOcTDYutQZIindgZb3f67MqoduccqgFnM6TzgaA/exec",
-    
+  
       links: {
         order: "./order.html",
         stock: "./stock.html",
@@ -669,11 +800,11 @@
         employees: "./employees.html",
         settings: "./settings.html"
       },
-    
+  
       requireLiffLogin: true,
       requireInLiffClient: true
     };
-
+  
     const MENUS = [
       {
         key: "order",
@@ -748,7 +879,7 @@
         href: CONFIG.links.settings
       }
     ];
-
+  
     const COLOR_MAP = {
       blue: ["rgba(79,109,245,0.14)", "rgba(124,156,255,0.22)"],
       green: ["rgba(34,197,94,0.14)", "rgba(134,239,172,0.22)"],
@@ -758,40 +889,42 @@
       red: ["rgba(239,68,68,0.13)", "rgba(252,165,165,0.20)"],
       gray: ["rgba(100,116,139,0.12)", "rgba(203,213,225,0.20)"]
     };
-
+  
     let currentUser = {
       name: "Guest",
       role: "browser",
       pictureUrl: ""
     };
-
+  
+    let currentIdToken = "";
+    let currentDashboard = null;
+  
     document.addEventListener("DOMContentLoaded", init);
-
+  
     async function init() {
       setToday();
-      wireHeroButtons();
       renderMenus();
-    
+  
       const ok = await initLiffSafe();
-    
-      // ❌ ถ้าไม่ผ่าน Auth / ไม่ได้เปิดใน LIFF / LIFF พัง = ห้ามเปิดหน้า app
+  
       if (!ok) return;
-    
-      loadMockStats();
+  
       showApp();
+  
+      await loadHomeDashboard();
     }
-    
+  
     function showApp() {
-      document.getElementById("loading").style.display = "none";
-      document.getElementById("app").style.display = "block";
+      setDisplay("loading", "none");
+      setDisplay("app", "block");
     }
-    
+  
     function showAccessDenied(title, detail) {
       const loading = document.getElementById("loading");
       const app = document.getElementById("app");
-    
+  
       if (app) app.style.display = "none";
-    
+  
       loading.style.display = "grid";
       loading.innerHTML = `
         <div style="
@@ -813,7 +946,7 @@
         </div>
       `;
     }
-    
+  
     async function initLiffSafe() {
       if (!CONFIG.liffId) {
         showAccessDenied(
@@ -822,12 +955,10 @@
         );
         return false;
       }
-    
+  
       try {
         await liff.init({ liffId: CONFIG.liffId });
-    
-        // ✅ ล็อกให้ใช้เฉพาะใน LINE LIFF เท่านั้น
-        // เปิดจาก Chrome / Safari / Browser ปกติ = ไม่ให้เข้า
+  
         if (CONFIG.requireInLiffClient && !liff.isInClient()) {
           showAccessDenied(
             "กรุณาเปิดผ่าน LINE เท่านั้น",
@@ -835,7 +966,7 @@
           );
           return false;
         }
-    
+  
         if (!liff.isLoggedIn()) {
           if (CONFIG.requireLiffLogin) {
             liff.login({
@@ -843,17 +974,17 @@
             });
             return false;
           }
-    
+  
           showAccessDenied(
             "ยังไม่ได้ Login LINE",
             "กรุณา Login LINE ก่อนเข้าใช้งานครับ"
           );
           return false;
         }
-    
+  
         const profile = await liff.getProfile();
         const idToken = liff.getIDToken();
-    
+  
         if (!idToken) {
           showAccessDenied(
             "ไม่พบ LINE ID Token",
@@ -861,12 +992,14 @@
           );
           return false;
         }
-    
+  
+        currentIdToken = idToken;
+  
         const auth = await callGasJsonp({
           action: "authLiff",
           idToken: idToken
         });
-    
+  
         if (!auth || !auth.ok) {
           showAccessDenied(
             "ไม่มีสิทธิ์เข้าใช้งาน",
@@ -874,7 +1007,7 @@
           );
           return false;
         }
-    
+  
         currentUser = {
           name: auth.displayName || profile.displayName || "LINE User",
           role: auth.role || "User",
@@ -883,67 +1016,167 @@
           scopes: auth.scopes || "",
           pictureUrl: profile.pictureUrl || auth.pictureUrl || ""
         };
-    
+  
         updateUserCard(currentUser);
         return true;
-    
+  
       } catch (err) {
         console.warn(err);
-    
+  
         showAccessDenied(
           "LIFF init ไม่สำเร็จ",
           (err && err.message)
             ? err.message
             : "ตรวจสอบ LIFF ID / Endpoint URL / LIFF Settings อีกครั้งครับ"
         );
-    
+  
         return false;
       }
     }
-
+  
+    async function loadHomeDashboard() {
+      setHeroDashboardLoading();
+  
+      try {
+        const res = await callGasJsonp({
+          action: "home_dashboard",
+          idToken: currentIdToken
+        });
+  
+        if (!res || !res.ok) {
+          throw new Error((res && res.message) || (res && res.error) || "home_dashboard failed");
+        }
+  
+        currentDashboard = normalizeHomeDashboard_(res);
+        renderHomeDashboard(currentDashboard);
+  
+      } catch (err) {
+        console.warn("[loadHomeDashboard]", err);
+  
+        setText("homeTodayQty", "—");
+        setText("homeTodayAmount", "โหลดข้อมูลไม่ได้");
+        setText("homeMonthQty", "—");
+        setText("homeTopSales", "เช็ก GAS action=home_dashboard");
+  
+        setText("statOrders", "—");
+        setText("statStock", "—");
+        setText("statPay", "—");
+  
+        showToast("โหลด Dashboard ไม่สำเร็จครับ เช็ก GAS action=home_dashboard");
+      }
+    }
+  
+    function normalizeHomeDashboard_(res) {
+      const src = res.dashboard || res.data || res.summary || res;
+  
+      const today = src.today || {};
+      const month = src.month || {};
+  
+      const todayRanking = Array.isArray(today.ranking) ? today.ranking : [];
+      const monthRanking = Array.isArray(month.ranking) ? month.ranking : [];
+  
+      return {
+        today: {
+          totalQty: Number(today.totalQty || 0),
+          totalAmount: Number(today.totalAmount || 0),
+          ranking: todayRanking
+        },
+        month: {
+          totalQty: Number(month.totalQty || 0),
+          totalAmount: Number(month.totalAmount || 0),
+          ranking: monthRanking
+        }
+      };
+    }
+  
+    function setHeroDashboardLoading() {
+      setText("dashTodayQty", "...");
+      setText("dashTodayAmount", "...");
+      setText("dashMonthQty", "...");
+      setText("dashMonthAmount", "...");
+      setText("dashTopSeller", "กำลังโหลด");
+      setText("dashTopSellerSub", "รอดึงยอดจาก Invoice");
+    
+      setText("statOrders", "...");
+      setText("statStock", "...");
+      setText("statPay", "...");
+    }
+  
+    function renderHomeDashboard(data) {
+      const today = data.today || {};
+      const month = data.month || {};
+    
+      const topToday = today.ranking && today.ranking.length
+        ? today.ranking[0]
+        : null;
+    
+      setText("dashTodayQty", fmtInt(today.totalQty || 0));
+      setText("dashTodayAmount", fmtCompactMoney(today.totalAmount || 0));
+    
+      setText("dashMonthQty", fmtInt(month.totalQty || 0));
+      setText("dashMonthAmount", fmtCompactMoney(month.totalAmount || 0));
+    
+      if (topToday && Number(topToday.qty || 0) > 0) {
+        setText("dashTopSeller", topToday.displayName || topToday.employeeId || "-");
+        setText(
+          "dashTopSellerSub",
+          fmtInt(topToday.qty || 0) + " เครื่อง · ฿" + fmtCompactMoney(topToday.amount || 0)
+        );
+      } else {
+        setText("dashTopSeller", "ยังไม่มีแชมป์");
+        setText("dashTopSellerSub", "วันนี้ยังไม่มียอดจากเซลล์");
+      }
+    
+      // กล่องภาพรวมด้านล่าง ถ้ายังใช้ต่อ
+      setText("statOrders", fmtInt(today.totalQty || 0));
+      setText("statStock", fmtInt(month.totalQty || 0));
+      setText("statPay", "฿" + fmtCompactMoney(today.totalAmount || 0));
+    }
+  
     function callGasJsonp(params) {
       return new Promise(function(resolve, reject) {
         const callbackName =
-          "__spondFlowAuth_" + Date.now() + "_" + Math.floor(Math.random() * 100000);
-    
+          "__spondFlow_" + Date.now() + "_" + Math.floor(Math.random() * 100000);
+  
         const query = new URLSearchParams(params || {});
         query.set("callback", callbackName);
-    
+  
         const script = document.createElement("script");
         script.src = CONFIG.gasApiUrl + "?" + query.toString();
-    
+  
         const timer = setTimeout(function() {
           cleanup();
-          reject(new Error("GAS auth timeout"));
+          reject(new Error("GAS request timeout"));
         }, 15000);
-    
+  
         function cleanup() {
           clearTimeout(timer);
+  
           try {
             delete window[callbackName];
           } catch (_) {
             window[callbackName] = undefined;
           }
-    
+  
           if (script && script.parentNode) {
             script.parentNode.removeChild(script);
           }
         }
-    
+  
         window[callbackName] = function(data) {
           cleanup();
           resolve(data);
         };
-    
+  
         script.onerror = function() {
           cleanup();
-          reject(new Error("GAS auth script load failed"));
+          reject(new Error("GAS script load failed"));
         };
-    
+  
         document.body.appendChild(script);
       });
     }
-
+  
     function setToday() {
       const d = new Date();
       const text = d.toLocaleDateString("th-TH", {
@@ -952,30 +1185,28 @@
         month: "short",
         year: "numeric"
       });
-      document.getElementById("todayText").textContent = text;
+  
+      setText("todayText", text);
     }
-
-    function wireHeroButtons() {
-      document.getElementById("goOrderBtn").href = CONFIG.links.order;
-      document.getElementById("goStockBtn").href = CONFIG.links.stock;
-    }
-
+  
     function renderMenus() {
       const grid = document.getElementById("menuGrid");
+      if (!grid) return;
+  
       grid.innerHTML = "";
-
-      MENUS.forEach(item => {
+  
+      MENUS.forEach(function(item) {
         const a = document.createElement("a");
         a.className = "tile";
         a.href = item.href || "#";
         a.dataset.key = item.key;
-
+  
         if (!item.href || item.href === "#") {
           a.classList.add("disabled");
         }
-
+  
         const c = COLOR_MAP[item.color] || COLOR_MAP.blue;
-
+  
         a.innerHTML = `
           <div class="tile-top">
             <div class="tile-icon" style="background:linear-gradient(135deg, ${c[0]}, ${c[1]});">${item.icon}</div>
@@ -985,80 +1216,121 @@
           <p>${escapeHtml(item.desc)}</p>
           <div class="arrow">›</div>
         `;
-
+  
         a.addEventListener("click", function(e) {
           if (!item.href || item.href === "#") {
             e.preventDefault();
             showToast("เมนูนี้ยังไม่ได้ผูกหน้าเว็บครับ");
-            return;
           }
         });
-
+  
         grid.appendChild(a);
       });
     }
-
+  
     function updateUserCard(user) {
       const name = user.name || "Guest";
       const role = user.role || "User";
-
-      document.getElementById("userName").textContent = name;
-      document.getElementById("userRole").textContent = role;
-      document.getElementById("userInitial").textContent = getInitial(name);
-
+  
+      setText("userName", name);
+      setText("userRole", role);
+      setText("userInitial", getInitial(name));
+  
       const welcome = document.getElementById("welcomeText");
-      welcome.textContent = "ยินดีต้อนรับ " + name + " เข้าสู่ระบบหลังบ้าน SpondFlow ครับ";
-
+      if (welcome) {
+        welcome.textContent = "ยินดีต้อนรับ " + name + " เข้าสู่ระบบหลังบ้าน SpondFlow ครับ";
+      }
+  
       if (user.pictureUrl) {
         const logo = document.getElementById("brandLogo");
         if (logo) logo.src = user.pictureUrl;
       }
     }
-
+  
     function getInitial(name) {
       const s = String(name || "").trim();
       if (!s) return "P";
       return s.charAt(0).toUpperCase();
     }
-
-    function loadMockStats() {
-      // ตอนนี้ใส่ mock ไว้ก่อน
-      // วันหลังค่อยต่อ GAS/API มาเติมยอดจริง
-      document.getElementById("statOrders").textContent = "—";
-      document.getElementById("statStock").textContent = "—";
-      document.getElementById("statPay").textContent = "—";
-    }
-
-    function refreshHome() {
-      showToast("รีเฟรชหน้าแรกแล้วครับ ☕");
+  
+    async function refreshHome() {
+      showToast("กำลังรีเฟรช Dashboard ครับ ☕");
       setToday();
-      loadMockStats();
+  
+      if (currentIdToken) {
+        await loadHomeDashboard();
+      }
     }
-
+  
     function logoutLine() {
       try {
         if (window.liff && CONFIG.liffId && liff.isLoggedIn()) {
           liff.logout();
           showToast("Logout แล้วครับ");
-          setTimeout(() => location.reload(), 600);
+          setTimeout(function() {
+            location.reload();
+          }, 600);
           return;
         }
       } catch (err) {}
-
-      showToast("ตอนนี้เป็น Browser mode ยังไม่มี session ให้ logout ครับ");
+  
+      showToast("ตอนนี้ไม่มี session ให้ logout ครับ");
     }
-
+  
     function showToast(msg) {
       const el = document.getElementById("toast");
+      if (!el) return;
+  
       el.textContent = msg;
       el.classList.add("show");
-
+  
       clearTimeout(window.__toastTimer);
-      window.__toastTimer = setTimeout(() => {
+      window.__toastTimer = setTimeout(function() {
         el.classList.remove("show");
       }, 2200);
     }
-
+  
+    function setText(id, value) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.textContent = value;
+    }
+  
+    function setDisplay(id, value) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.style.display = value;
+    }
+  
+    function fmtInt(n) {
+      return Number(n || 0).toLocaleString("th-TH", {
+        maximumFractionDigits: 0
+      });
+    }
+  
+    function fmtCompactMoney(n) {
+      const num = Number(n || 0);
+  
+      if (Math.abs(num) >= 1000000) {
+        return (num / 1000000).toLocaleString("th-TH", {
+          minimumFractionDigits: 0,
+          maximumFractionDigits: 2
+        }) + "M";
+      }
+  
+      if (Math.abs(num) >= 100000) {
+        return (num / 1000).toLocaleString("th-TH", {
+          minimumFractionDigits: 0,
+          maximumFractionDigits: 0
+        }) + "K";
+      }
+  
+      return num.toLocaleString("th-TH", {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0
+      });
+    }
+  
     function escapeHtml(s) {
       return String(s || "")
         .replace(/&/g, "&amp;")
