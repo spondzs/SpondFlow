@@ -654,15 +654,14 @@
 
   <script>
     const CONFIG = {
-      // ใส่ LIFF ID ของหน้า Home ทีหลังได้
-      // ถ้ายังไม่มี ปล่อยว่างไว้ หน้าเว็บยังเปิดได้ตามปกติ
-      liffId: "",
-
-      // ปรับลิงก์ตามไฟล์จริงใน GitHub Pages / LIFF
+      liffId: "2009366271-Hb7EzxDn",
+    
+      gasApiUrl: "https://script.google.com/macros/s/AKfycbw4jAzjWors_9dwQx1bI2RpVzm56icKOcTDYutQZIindgZb3f67MqoduccqgFnM6TzgaA/exec",
+    
       links: {
-        order: "./order-form.html",
+        order: "./order.html",
         stock: "./stock.html",
-        quotes: "./index.html",
+        quotes: "./quote.html",
         ordersNew: "./orders-new.html",
         payment: "./payment.html",
         sales: "./sales.html",
@@ -670,9 +669,8 @@
         employees: "./employees.html",
         settings: "./settings.html"
       },
-
-      // ถ้าต้องการล็อกให้ใช้เฉพาะใน LINE LIFF ในอนาคต ค่อยเปลี่ยนเป็น true
-      requireLiffLogin: false
+    
+      requireLiffLogin: true
     };
 
     const MENUS = [
@@ -861,17 +859,85 @@
         }
 
         const profile = await liff.getProfile();
+          const idToken = liff.getIDToken();
+          
+          if (!idToken) {
+            updateUserCard({
+              name: profile.displayName || "LINE User",
+              role: "ไม่พบ ID Token",
+              pictureUrl: profile.pictureUrl || ""
+            });
+          
+            showToast("ไม่พบ LINE ID Token กรุณาเปิดผ่าน LIFF ใหม่อีกครั้งครับ");
+            return;
+          }
+          
+          const auth = await callGasJsonp({
+            action: "authLiff",
+            idToken: idToken
+          });
+          
+          if (!auth || !auth.ok) {
+            updateUserCard({
+              name: profile.displayName || "LINE User",
+              role: "ไม่มีสิทธิ์เข้าใช้งาน",
+              pictureUrl: profile.pictureUrl || ""
+            });
+          
+            showToast((auth && auth.message) || "ไม่มีสิทธิ์เข้าใช้งานครับ");
+          
+            // ถ้ามี section หลัก อยากซ่อนไว้ก็ทำตรงนี้ได้
+            // document.querySelector("main").style.display = "none";
+          
+            return;
+          }
+          
+          currentUser = {
+            name: auth.displayName || profile.displayName || "LINE User",
+            role: auth.role || "User",
+            employeeId: auth.employeeId || "",
+            fullName: auth.fullName || "",
+            scopes: auth.scopes || "",
+            pictureUrl: profile.pictureUrl || auth.pictureUrl || ""
+          };
+          
+          updateUserCard(currentUser);
 
-        currentUser = {
-          name: profile.displayName || "LINE User",
-          role: "LINE LIFF",
-          pictureUrl: profile.pictureUrl || ""
-        };
-
-        updateUserCard(currentUser);
-
-        // ถ้าภายหลังจะเช็กสิทธิ์จาก GAS หรือ API ให้ต่อจากตรงนี้
-        // เช่น google.script.run.withSuccessHandler(...).AUTH_liffLogin(profile.userId)
+      function callGasJsonp(params) {
+        return new Promise(function(resolve, reject) {
+          const callbackName =
+            "__spondFlowAuth_" + Date.now() + "_" + Math.floor(Math.random() * 100000);
+      
+          const query = new URLSearchParams(params || {});
+          query.set("callback", callbackName);
+      
+          const script = document.createElement("script");
+          script.src = CONFIG.gasApiUrl + "?" + query.toString();
+      
+          const timer = setTimeout(function() {
+            cleanup();
+            reject(new Error("GAS auth timeout"));
+          }, 15000);
+      
+          function cleanup() {
+            clearTimeout(timer);
+            try { delete window[callbackName]; } catch (_) { window[callbackName] = undefined; }
+            if (script && script.parentNode) script.parentNode.removeChild(script);
+          }
+      
+          window[callbackName] = function(data) {
+            cleanup();
+            resolve(data);
+          };
+      
+          script.onerror = function() {
+            cleanup();
+            reject(new Error("GAS auth script load failed"));
+          };
+      
+          document.body.appendChild(script);
+        });
+      }
 
       } catch (err) {
         console.warn(err);
