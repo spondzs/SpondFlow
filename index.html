@@ -670,7 +670,8 @@
         settings: "./settings.html"
       },
     
-      requireLiffLogin: true
+      requireLiffLogin: true,
+      requireInLiffClient: true
     };
 
     const MENUS = [
@@ -770,11 +771,177 @@
       setToday();
       wireHeroButtons();
       renderMenus();
-      await initLiffSafe();
+    
+      const ok = await initLiffSafe();
+    
+      // ❌ ถ้าไม่ผ่าน Auth / ไม่ได้เปิดใน LIFF / LIFF พัง = ห้ามเปิดหน้า app
+      if (!ok) return;
+    
       loadMockStats();
-
+      showApp();
+    }
+    
+    function showApp() {
       document.getElementById("loading").style.display = "none";
       document.getElementById("app").style.display = "block";
+    }
+    
+    function showAccessDenied(title, detail) {
+      const loading = document.getElementById("loading");
+      const app = document.getElementById("app");
+    
+      if (app) app.style.display = "none";
+    
+      loading.style.display = "grid";
+      loading.innerHTML = `
+        <div style="
+          width:min(92vw,420px);
+          padding:24px;
+          border-radius:28px;
+          background:rgba(255,255,255,.84);
+          box-shadow:0 18px 45px rgba(15,23,42,.12);
+          border:1px solid rgba(255,255,255,.9);
+          text-align:center;
+          backdrop-filter:blur(18px);
+          -webkit-backdrop-filter:blur(18px);
+        ">
+          <div style="font-size:44px;margin-bottom:8px;">🔒</div>
+          <h2 style="margin:0 0 8px;font-size:22px;color:#111827;">${escapeHtml(title || "เข้าใช้งานไม่ได้")}</h2>
+          <p style="margin:0;color:#64748b;font-size:14px;line-height:1.55;">
+            ${escapeHtml(detail || "กรุณาเปิดผ่าน LINE LIFF และตรวจสอบสิทธิ์พนักงานครับ")}
+          </p>
+        </div>
+      `;
+    }
+    
+    async function initLiffSafe() {
+      if (!CONFIG.liffId) {
+        showAccessDenied(
+          "ยังไม่ได้ตั้งค่า LIFF ID",
+          "กรุณาใส่ LIFF ID ก่อนใช้งานครับ"
+        );
+        return false;
+      }
+    
+      try {
+        await liff.init({ liffId: CONFIG.liffId });
+    
+        // ✅ ล็อกให้ใช้เฉพาะใน LINE LIFF เท่านั้น
+        // เปิดจาก Chrome / Safari / Browser ปกติ = ไม่ให้เข้า
+        if (CONFIG.requireInLiffClient && !liff.isInClient()) {
+          showAccessDenied(
+            "กรุณาเปิดผ่าน LINE เท่านั้น",
+            "SpondFlow ตอนนี้ล็อกให้ใช้งานเฉพาะใน LIFF เพื่อยืนยันตัวตนพนักงานครับ"
+          );
+          return false;
+        }
+    
+        if (!liff.isLoggedIn()) {
+          if (CONFIG.requireLiffLogin) {
+            liff.login({
+              redirectUri: window.location.href
+            });
+            return false;
+          }
+    
+          showAccessDenied(
+            "ยังไม่ได้ Login LINE",
+            "กรุณา Login LINE ก่อนเข้าใช้งานครับ"
+          );
+          return false;
+        }
+    
+        const profile = await liff.getProfile();
+        const idToken = liff.getIDToken();
+    
+        if (!idToken) {
+          showAccessDenied(
+            "ไม่พบ LINE ID Token",
+            "เช็ก LIFF Settings ว่าเปิด scope: profile และ openid แล้วหรือยังครับ"
+          );
+          return false;
+        }
+    
+        const auth = await callGasJsonp({
+          action: "authLiff",
+          idToken: idToken
+        });
+    
+        if (!auth || !auth.ok) {
+          showAccessDenied(
+            "ไม่มีสิทธิ์เข้าใช้งาน",
+            (auth && auth.message) || "ไม่พบข้อมูลพนักงานใน Employee_DB ครับ"
+          );
+          return false;
+        }
+    
+        currentUser = {
+          name: auth.displayName || profile.displayName || "LINE User",
+          role: auth.role || "User",
+          employeeId: auth.employeeId || "",
+          fullName: auth.fullName || "",
+          scopes: auth.scopes || "",
+          pictureUrl: profile.pictureUrl || auth.pictureUrl || ""
+        };
+    
+        updateUserCard(currentUser);
+        return true;
+    
+      } catch (err) {
+        console.warn(err);
+    
+        showAccessDenied(
+          "LIFF init ไม่สำเร็จ",
+          (err && err.message)
+            ? err.message
+            : "ตรวจสอบ LIFF ID / Endpoint URL / LIFF Settings อีกครั้งครับ"
+        );
+    
+        return false;
+      }
+    }
+
+    function callGasJsonp(params) {
+      return new Promise(function(resolve, reject) {
+        const callbackName =
+          "__spondFlowAuth_" + Date.now() + "_" + Math.floor(Math.random() * 100000);
+    
+        const query = new URLSearchParams(params || {});
+        query.set("callback", callbackName);
+    
+        const script = document.createElement("script");
+        script.src = CONFIG.gasApiUrl + "?" + query.toString();
+    
+        const timer = setTimeout(function() {
+          cleanup();
+          reject(new Error("GAS auth timeout"));
+        }, 15000);
+    
+        function cleanup() {
+          clearTimeout(timer);
+          try {
+            delete window[callbackName];
+          } catch (_) {
+            window[callbackName] = undefined;
+          }
+    
+          if (script && script.parentNode) {
+            script.parentNode.removeChild(script);
+          }
+        }
+    
+        window[callbackName] = function(data) {
+          cleanup();
+          resolve(data);
+        };
+    
+        script.onerror = function() {
+          cleanup();
+          reject(new Error("GAS auth script load failed"));
+        };
+    
+        document.body.appendChild(script);
+      });
     }
 
     function setToday() {
@@ -829,124 +996,6 @@
 
         grid.appendChild(a);
       });
-    }
-
-    async function initLiffSafe() {
-      if (!CONFIG.liffId) {
-        updateUserCard({
-          name: "SpondFlow User",
-          role: "Browser Preview",
-          pictureUrl: ""
-        });
-        return;
-      }
-
-      try {
-        await liff.init({ liffId: CONFIG.liffId });
-
-        if (!liff.isLoggedIn()) {
-          if (CONFIG.requireLiffLogin) {
-            liff.login();
-            return;
-          }
-
-          updateUserCard({
-            name: "Guest",
-            role: "ยังไม่ได้ Login LINE",
-            pictureUrl: ""
-          });
-          return;
-        }
-
-        const profile = await liff.getProfile();
-          const idToken = liff.getIDToken();
-          
-          if (!idToken) {
-            updateUserCard({
-              name: profile.displayName || "LINE User",
-              role: "ไม่พบ ID Token",
-              pictureUrl: profile.pictureUrl || ""
-            });
-          
-            showToast("ไม่พบ LINE ID Token กรุณาเปิดผ่าน LIFF ใหม่อีกครั้งครับ");
-            return;
-          }
-          
-          const auth = await callGasJsonp({
-            action: "authLiff",
-            idToken: idToken
-          });
-          
-          if (!auth || !auth.ok) {
-            updateUserCard({
-              name: profile.displayName || "LINE User",
-              role: "ไม่มีสิทธิ์เข้าใช้งาน",
-              pictureUrl: profile.pictureUrl || ""
-            });
-          
-            showToast((auth && auth.message) || "ไม่มีสิทธิ์เข้าใช้งานครับ");
-          
-            // ถ้ามี section หลัก อยากซ่อนไว้ก็ทำตรงนี้ได้
-            // document.querySelector("main").style.display = "none";
-          
-            return;
-          }
-          
-          currentUser = {
-            name: auth.displayName || profile.displayName || "LINE User",
-            role: auth.role || "User",
-            employeeId: auth.employeeId || "",
-            fullName: auth.fullName || "",
-            scopes: auth.scopes || "",
-            pictureUrl: profile.pictureUrl || auth.pictureUrl || ""
-          };
-          
-          updateUserCard(currentUser);
-
-      function callGasJsonp(params) {
-        return new Promise(function(resolve, reject) {
-          const callbackName =
-            "__spondFlowAuth_" + Date.now() + "_" + Math.floor(Math.random() * 100000);
-      
-          const query = new URLSearchParams(params || {});
-          query.set("callback", callbackName);
-      
-          const script = document.createElement("script");
-          script.src = CONFIG.gasApiUrl + "?" + query.toString();
-      
-          const timer = setTimeout(function() {
-            cleanup();
-            reject(new Error("GAS auth timeout"));
-          }, 15000);
-      
-          function cleanup() {
-            clearTimeout(timer);
-            try { delete window[callbackName]; } catch (_) { window[callbackName] = undefined; }
-            if (script && script.parentNode) script.parentNode.removeChild(script);
-          }
-      
-          window[callbackName] = function(data) {
-            cleanup();
-            resolve(data);
-          };
-      
-          script.onerror = function() {
-            cleanup();
-            reject(new Error("GAS auth script load failed"));
-          };
-      
-          document.body.appendChild(script);
-        });
-      }
-
-      } catch (err) {
-        console.warn(err);
-        updateUserCard({
-          name: "SpondFlow User",
-          role: "LIFF init ไม่สำเร็จ / Browser mode",
-          pictureUrl: ""
-        });
-      }
     }
 
     function updateUserCard(user) {
