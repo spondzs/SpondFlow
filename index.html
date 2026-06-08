@@ -103,13 +103,24 @@
       box-shadow: var(--shadow-soft);
       border: 1px solid rgba(255, 255, 255, 0.72);
       flex: 0 0 auto;
+    
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
     }
     
     .avatar img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
+      width: 82%;
+      height: 82%;
+      object-fit: contain;
       display: block;
+    }
+    
+    .brand-logo-fallback {
+      display: none;
+      font-size: 24px;
+      line-height: 1;
     }
   
     .brand-text {
@@ -651,13 +662,14 @@
   <main id="app" class="app" style="display:none;">
     <header class="topbar">
       <div class="brand">
-        <div class="avatar">
+        <div class="avatar brand-avatar">
           <img
             id="brandLogo"
-            src="./assets/spondflow-icon.png?v=1"
+            src="./assets/spondflow-icon.png?v=2"
             alt="SpondFlow"
-            onerror="this.style.display='none'; this.parentElement.textContent='📦';"
+            onerror="handleBrandLogoError_(this)"
           />
+          <span id="brandLogoFallback" class="brand-logo-fallback">📦</span>
         </div>
         <div class="brand-text">
           <h1 class="brand-title">SpondFlow</h1>
@@ -1340,6 +1352,17 @@
         .replace(/>/g, "&gt;")
         .replace(/"/g, "&quot;")
         .replace(/'/g, "&#039;");
+    }
+
+    function handleBrandLogoError_(img) {
+      if (!img) return;
+    
+      img.style.display = "none";
+    
+      const fallback = document.getElementById("brandLogoFallback");
+      if (fallback) {
+        fallback.style.display = "inline-flex";
+      }
     }
   </script>
 </body>
