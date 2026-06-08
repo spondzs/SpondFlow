@@ -520,6 +520,10 @@
       color: #64748b;
       font-weight: 900;
     }
+
+    .bottom-space {
+      height: 16px;
+    }
       
     /* =========================================================
      * TOAST / LOADING
@@ -591,39 +595,7 @@
         grid-template-columns: repeat(3, minmax(0, 1fr));
       }
     }
-  
-    @media (max-width: 430px) {
-      .hero {
-        padding: 20px;
-        min-height: 300px;
-      }
-  
-      .home-dashboard {
-        grid-template-columns: 1fr;
-      }
-  
-      .dash-side {
-        grid-template-columns: 1fr 1fr;
-        grid-template-rows: auto;
-      }
-  
-      .dash-main {
-        min-height: 118px;
-      }
-  
-      .dash-mini {
-        min-height: 74px;
-      }
-  
-      .dash-value {
-        font-size: clamp(34px, 12vw, 48px);
-      }
-  
-      .dash-sub {
-        font-size: 18px;
-      }
-    }
-  
+   
     /* =========================================================
      * DARK MODE
      * ========================================================= */
@@ -866,24 +838,34 @@
     let currentUser = {
       name: "Guest",
       role: "browser",
-      pictureUrl: ""
+      pictureUrl: "",
+      idToken: ""
     };
   
     let currentIdToken = "";
-    let currentDashboard = null;
   
     document.addEventListener("DOMContentLoaded", init);
   
     async function init() {
-      setToday();
-      renderMenus();
-    
-      const ok = await initLiffSafe();
-    
-      if (!ok) return;
-    
-      await loadHomeDashboard();
-      showApp();
+      try {
+        setToday();
+        renderMenus();
+  
+        const ok = await initLiffSafe();
+        if (!ok) return;
+  
+        await loadHomeDashboard();
+  
+        showApp();
+  
+      } catch (err) {
+        console.warn("[init]", err);
+  
+        applyHomeDashboard(getEmptyDashboard_());
+        showApp();
+  
+        showToast("เปิดหน้าได้แล้ว แต่โหลดบางข้อมูลไม่สำเร็จครับ");
+      }
     }
   
     function showApp() {
@@ -921,10 +903,7 @@
   
     async function initLiffSafe() {
       if (!CONFIG.liffId) {
-        showAccessDenied(
-          "ยังไม่ได้ตั้งค่า LIFF ID",
-          "กรุณาใส่ LIFF ID ก่อนใช้งานครับ"
-        );
+        showAccessDenied("ยังไม่ได้ตั้งค่า LIFF ID", "กรุณาใส่ LIFF ID ก่อนใช้งานครับ");
         return false;
       }
   
@@ -947,10 +926,7 @@
             return false;
           }
   
-          showAccessDenied(
-            "ยังไม่ได้ Login LINE",
-            "กรุณา Login LINE ก่อนเข้าใช้งานครับ"
-          );
+          showAccessDenied("ยังไม่ได้ Login LINE", "กรุณา Login LINE ก่อนเข้าใช้งานครับ");
           return false;
         }
   
@@ -994,11 +970,11 @@
         return true;
   
       } catch (err) {
-        console.warn(err);
+        console.warn("[initLiffSafe]", err);
   
         showAccessDenied(
           "LIFF init ไม่สำเร็จ",
-          (err && err.message)
+          err && err.message
             ? err.message
             : "ตรวจสอบ LIFF ID / Endpoint URL / LIFF Settings อีกครั้งครับ"
         );
@@ -1008,102 +984,95 @@
     }
   
     async function loadHomeDashboard() {
-      setHeroDashboardLoading();
+      setHomeDashboardLoading();
   
       try {
         const res = await callGasJsonp({
           action: "home_dashboard",
-          idToken: currentIdToken
+          idToken: currentIdToken || currentUser.idToken || ""
         });
   
         if (!res || !res.ok) {
           throw new Error((res && res.message) || (res && res.error) || "home_dashboard failed");
         }
   
-        currentDashboard = normalizeHomeDashboard_(res);
-        renderHomeDashboard(currentDashboard);
+        const dashboard = normalizeHomeDashboard_(res);
+        applyHomeDashboard(dashboard);
   
       } catch (err) {
         console.warn("[loadHomeDashboard]", err);
   
-        setText("homeTodayQty", "—");
-        setText("homeTodayAmount", "โหลดข้อมูลไม่ได้");
-        setText("homeMonthQty", "—");
-        setText("homeTopSales", "เช็ก GAS action=home_dashboard");
-  
-        setText("statOrders", "—");
-        setText("statStock", "—");
-        setText("statPay", "—");
-  
-        showToast("โหลด Dashboard ไม่สำเร็จครับ เช็ก GAS action=home_dashboard");
+        applyHomeDashboard(getEmptyDashboard_());
+        showToast("Dashboard ยังโหลดไม่ได้ครับ ตอนนี้แสดงค่า 0 ไว้ก่อน");
       }
     }
   
     function normalizeHomeDashboard_(res) {
-      const src = res.dashboard || res.data || res.summary || res;
-  
+      const src = res.dashboard || res.data || res.summary || res || {};
       const today = src.today || {};
       const month = src.month || {};
   
-      const todayRanking = Array.isArray(today.ranking) ? today.ranking : [];
-      const monthRanking = Array.isArray(month.ranking) ? month.ranking : [];
-  
       return {
         today: {
-          totalQty: Number(today.totalQty || 0),
-          totalAmount: Number(today.totalAmount || 0),
-          ranking: todayRanking
+          totalOrders: pickNumber_(today, [
+            "totalOrders",
+            "orderCount",
+            "orders",
+            "invoiceCount",
+            "quoteCount"
+          ]),
+          totalQty: pickNumber_(today, [
+            "totalQty",
+            "qty",
+            "totalQuantity"
+          ]),
+          totalAmount: pickNumber_(today, [
+            "totalAmount",
+            "amount",
+            "salesAmount"
+          ])
         },
         month: {
-          totalQty: Number(month.totalQty || 0),
-          totalAmount: Number(month.totalAmount || 0),
-          ranking: monthRanking
+          totalQty: pickNumber_(month, [
+            "totalQty",
+            "qty",
+            "totalQuantity"
+          ]),
+          totalAmount: pickNumber_(month, [
+            "totalAmount",
+            "amount",
+            "salesAmount"
+          ])
         }
       };
     }
   
-    function setHeroDashboardLoading() {
-      setText("dashTodayQty", "...");
-      setText("dashTodayAmount", "...");
-      setText("dashMonthQty", "...");
-      setText("dashMonthAmount", "...");
-      setText("dashTopSeller", "กำลังโหลด");
-      setText("dashTopSellerSub", "รอดึงยอดจาก Invoice");
-    
-      setText("statOrders", "...");
-      setText("statStock", "...");
-      setText("statPay", "...");
+    function getEmptyDashboard_() {
+      return {
+        today: {
+          totalOrders: 0,
+          totalQty: 0,
+          totalAmount: 0
+        },
+        month: {
+          totalQty: 0,
+          totalAmount: 0
+        }
+      };
     }
   
-    function renderHomeDashboard(data) {
+    function setHomeDashboardLoading() {
+      setTextSafe("statOrders", "…");
+      setTextSafe("statStock", "…");
+      setTextSafe("statPay", "…");
+    }
+  
+    function applyHomeDashboard(data) {
       const today = data.today || {};
-      const month = data.month || {};
-    
-      const topToday = today.ranking && today.ranking.length
-        ? today.ranking[0]
-        : null;
-    
-      setText("dashTodayQty", fmtInt(today.totalQty || 0));
-      setText("dashTodayAmount", fmtCompactMoney(today.totalAmount || 0));
-    
-      setText("dashMonthQty", fmtInt(month.totalQty || 0));
-      setText("dashMonthAmount", fmtCompactMoney(month.totalAmount || 0));
-    
-      if (topToday && Number(topToday.qty || 0) > 0) {
-        setText("dashTopSeller", topToday.displayName || topToday.employeeId || "-");
-        setText(
-          "dashTopSellerSub",
-          fmtInt(topToday.qty || 0) + " เครื่อง · ฿" + fmtCompactMoney(topToday.amount || 0)
-        );
-      } else {
-        setText("dashTopSeller", "ยังไม่มีแชมป์");
-        setText("dashTopSellerSub", "วันนี้ยังไม่มียอดจากเซลล์");
-      }
-    
-      // กล่องภาพรวมด้านล่าง ถ้ายังใช้ต่อ
-      setText("statOrders", fmtInt(today.totalQty || 0));
-      setText("statStock", fmtInt(month.totalQty || 0));
-      setText("statPay", "฿" + fmtCompactMoney(today.totalAmount || 0));
+  
+      setTextSafe("statOrders", fmtInt_(today.totalOrders));
+      setTextSafe("statStock", fmtInt_(today.totalQty));
+      setTextSafe("statPay", "฿" + fmtMoney_(today.totalAmount));
     }
   
     function callGasJsonp(params) {
@@ -1149,88 +1118,17 @@
         document.body.appendChild(script);
       });
     }
-
-    async function loadHomeDashboard() {
-      setHomeDashboardLoading();
-    
-      try {
-        const res = await callGasJsonp({
-          action: "home_dashboard",
-          idToken: currentUser.idToken || ""
-        });
-    
-        if (!res || !res.ok) {
-          throw new Error((res && res.message) || (res && res.error) || "home_dashboard failed");
-        }
-    
-        applyHomeDashboard(res.dashboard || res);
-    
-      } catch (err) {
-        console.warn("[loadHomeDashboard]", err);
-    
-        applyHomeDashboard({
-          today: {
-            totalOrders: 0,
-            totalQty: 0,
-            totalAmount: 0
-          }
-        });
-    
-        showToast("Dashboard ยังโหลดไม่ได้ครับ ตอนนี้แสดงค่า 0 ไว้ก่อน");
-      }
-    }
-    
-    function setHomeDashboardLoading() {
-      setTextSafe("statOrders", "…");
-      setTextSafe("statStock", "…");
-      setTextSafe("statPay", "…");
-    }
-    
-    function applyHomeDashboard(data) {
-      const today = data.today || {};
-      const month = data.month || {};
-    
-      setTextSafe("dashTodayOrders", fmtInt_(today.totalOrders));
-      setTextSafe("dashTodayQty", fmtInt_(today.totalQty));
-      setTextSafe("dashTodayAmount", fmtMoneyCompact_(today.totalAmount));
-      setTextSafe("dashTodayAmountMini", fmtMoneyCompact_(today.totalAmount));
-    
-      // Hero overview
-      setTextSafe("statOrders", fmtInt_(today.totalOrders));
-      setTextSafe("statStock", fmtInt_(today.totalQty));
-      setTextSafe("statPay", "฿" + fmtMoneyCompact_(today.totalAmount));
-    }
-    
-    function pickNumber_(obj, keys) {
-      for (let i = 0; i < keys.length; i++) {
-        const v = Number(obj && obj[keys[i]]);
-        if (!isNaN(v)) return v;
-      }
-      return 0;
-    }
-    
-    function fmtInt_(n) {
-      return Number(n || 0).toLocaleString("th-TH", {
-        maximumFractionDigits: 0
-      });
-    }
-    
-    function fmtMoney_(n) {
-      return Number(n || 0).toLocaleString("th-TH", {
-        minimumFractionDigits: 0,
-        maximumFractionDigits: 0
-      });
-    }
   
     function setToday() {
       const d = new Date();
+  
       const text = d.toLocaleDateString("th-TH", {
         weekday: "short",
         day: "numeric",
         month: "short",
         year: "numeric"
       });
-    
+  
       setTextSafe("todayText", text);
       setTextSafe("todayTextHero", text);
     }
@@ -1278,54 +1176,38 @@
       const name = user.name || "Guest";
       const role = user.role || "User";
       const initial = getInitial(name);
-    
-      // ของเดิมด้านล่าง ถ้ายังมีอยู่ให้ sync ไว้ด้วย ไม่พัง
-      setTextSafe("userName", name);
-      setTextSafe("userRole", role);
-      setTextSafe("userInitial", initial);
-    
-      // Hero profile ใหม่
+      const pictureUrl = user.pictureUrl || "";
+  
       setTextSafe("heroProfileName", name);
       setTextSafe("heroProfileRole", role);
       setTextSafe("heroProfileInitial", initial);
-    
+  
       const heroImg = document.getElementById("heroProfileImg");
       const heroInitial = document.getElementById("heroProfileInitial");
-    
-      if (heroImg && user.pictureUrl) {
-        heroImg.src = user.pictureUrl;
+  
+      if (heroImg && pictureUrl) {
+        heroImg.src = pictureUrl;
         heroImg.style.display = "block";
-    
+  
         if (heroInitial) {
           heroInitial.style.display = "none";
         }
       } else {
         if (heroImg) {
+          heroImg.removeAttribute("src");
           heroImg.style.display = "none";
         }
-    
+  
         if (heroInitial) {
           heroInitial.style.display = "inline";
           heroInitial.textContent = initial;
         }
       }
-    
-      // รูปมุมบนซ้ายเดิม
-      if (user.pictureUrl) {
-        const logo = document.getElementById("brandLogo");
-        if (logo) logo.src = user.pictureUrl;
-      }
-    }
-    
-    function setTextSafe(id, text) {
-      const el = document.getElementById(id);
-      if (el) el.textContent = text;
-    }
   
-    function getInitial(name) {
-      const s = String(name || "").trim();
-      if (!s) return "P";
-      return s.charAt(0).toUpperCase();
+      const logo = document.getElementById("brandLogo");
+      if (logo && pictureUrl) {
+        logo.src = pictureUrl;
+      }
     }
   
     async function refreshHome() {
@@ -1336,12 +1218,9 @@
   
     function logoutLine() {
       try {
-        // กรณีเปิดอยู่ใน LINE LIFF จริง ๆ
-        // ไม่ต้อง logout เพราะเดี๋ยวเปิดใหม่มันก็ auto login อีกอยู่ดี
-        // ให้ปิด LIFF app ไปเลย
         if (window.liff && typeof liff.isInClient === "function" && liff.isInClient()) {
           showToast("กำลังปิด SpondFlow ครับ ☕");
-    
+  
           setTimeout(function() {
             try {
               liff.closeWindow();
@@ -1350,12 +1229,10 @@
               fallbackClosePage_();
             }
           }, 250);
-    
+  
           return;
         }
-    
-        // กรณีเปิดจาก Browser ภายนอก เช่น Chrome / Safari
-        // ถ้ามี session LINE Login ค้างอยู่ ค่อย logout
+  
         if (
           window.liff &&
           typeof liff.isLoggedIn === "function" &&
@@ -1364,32 +1241,29 @@
         ) {
           liff.logout();
           showToast("Logout แล้วครับ");
-    
+  
           setTimeout(function() {
             location.reload();
           }, 600);
-    
+  
           return;
         }
-    
-        // ถ้า logout ไม่ได้ / ไม่ได้อยู่ใน LIFF
+  
         fallbackClosePage_();
-    
+  
       } catch (err) {
-        console.warn("[logoutLine] error:", err);
+        console.warn("[logoutLine]", err);
         fallbackClosePage_();
       }
     }
-    
+  
     function fallbackClosePage_() {
       showToast("ปิดหน้านี้ไม่ได้อัตโนมัติ ลองกด X มุมขวาบนครับ");
-    
-      // บาง browser อาจยอมให้ปิด ถ้าหน้านี้ถูกเปิดจาก script
+  
       try {
         window.close();
       } catch (e) {}
-    
-      // กันกรณี window.close ไม่ทำงาน
+  
       setTimeout(function() {
         try {
           if (history.length > 1) history.back();
@@ -1410,45 +1284,48 @@
       }, 2200);
     }
   
-    function setText(id, value) {
-      const el = document.getElementById(id);
-      if (!el) return;
-      el.textContent = value;
+    function pickNumber_(obj, keys) {
+      for (let i = 0; i < keys.length; i++) {
+        const raw = obj && obj[keys[i]];
+  
+        if (raw === null || raw === undefined || raw === "") continue;
+  
+        const cleaned = String(raw).replace(/[฿,\s]/g, "");
+        const v = Number(cleaned);
+  
+        if (!isNaN(v)) return v;
+      }
+  
+      return 0;
     }
   
-    function setDisplay(id, value) {
-      const el = document.getElementById(id);
-      if (!el) return;
-      el.style.display = value;
-    }
-  
-    function fmtInt(n) {
+    function fmtInt_(n) {
       return Number(n || 0).toLocaleString("th-TH", {
         maximumFractionDigits: 0
       });
     }
   
-    function fmtCompactMoney(n) {
-      const num = Number(n || 0);
-  
-      if (Math.abs(num) >= 1000000) {
-        return (num / 1000000).toLocaleString("th-TH", {
-          minimumFractionDigits: 0,
-          maximumFractionDigits: 2
-        }) + "M";
-      }
-  
-      if (Math.abs(num) >= 100000) {
-        return (num / 1000).toLocaleString("th-TH", {
-          minimumFractionDigits: 0,
-          maximumFractionDigits: 0
-        }) + "K";
-      }
-  
-      return num.toLocaleString("th-TH", {
+    function fmtMoney_(n) {
+      return Number(n || 0).toLocaleString("th-TH", {
         minimumFractionDigits: 0,
         maximumFractionDigits: 0
       });
+    }
+  
+    function getInitial(name) {
+      const s = String(name || "").trim();
+      if (!s) return "P";
+      return s.charAt(0).toUpperCase();
+    }
+  
+    function setTextSafe(id, text) {
+      const el = document.getElementById(id);
+      if (el) el.textContent = text;
+    }
+  
+    function setDisplay(id, value) {
+      const el = document.getElementById(id);
+      if (el) el.style.display = value;
     }
   
     function escapeHtml(s) {
