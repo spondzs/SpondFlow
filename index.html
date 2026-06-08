@@ -99,12 +99,12 @@
       height: 48px;
       border-radius: 18px;
       overflow: hidden;
-      background: linear-gradient(135deg, #ffffff, #eef2ff);
+      background: linear-gradient(135deg, #eef2ff, #ffffff);
       box-shadow: var(--shadow-soft);
       border: 1px solid rgba(255, 255, 255, 0.72);
       flex: 0 0 auto;
     }
-  
+    
     .avatar img {
       width: 100%;
       height: 100%;
@@ -652,7 +652,12 @@
     <header class="topbar">
       <div class="brand">
         <div class="avatar">
-          <img id="brandLogo" src="Caffe.PNG" alt="Caffe" onerror="this.style.display='none'; this.parentElement.textContent='☕';">
+          <img
+            id="brandLogo"
+            src="./assets/spondflow-icon.png?v=1"
+            alt="SpondFlow"
+            onerror="this.style.display='none'; this.parentElement.textContent='📦';"
+          />
         </div>
         <div class="brand-text">
           <h1 class="brand-title">SpondFlow</h1>
@@ -1177,18 +1182,19 @@
       const role = user.role || "User";
       const initial = getInitial(name);
       const pictureUrl = user.pictureUrl || "";
-  
+    
+      // Hero profile ใช้รูป LINE เหมือนเดิม
       setTextSafe("heroProfileName", name);
       setTextSafe("heroProfileRole", role);
       setTextSafe("heroProfileInitial", initial);
-  
+    
       const heroImg = document.getElementById("heroProfileImg");
       const heroInitial = document.getElementById("heroProfileInitial");
-  
+    
       if (heroImg && pictureUrl) {
         heroImg.src = pictureUrl;
         heroImg.style.display = "block";
-  
+    
         if (heroInitial) {
           heroInitial.style.display = "none";
         }
@@ -1197,17 +1203,16 @@
           heroImg.removeAttribute("src");
           heroImg.style.display = "none";
         }
-  
+    
         if (heroInitial) {
           heroInitial.style.display = "inline";
           heroInitial.textContent = initial;
         }
       }
-  
-      const logo = document.getElementById("brandLogo");
-      if (logo && pictureUrl) {
-        logo.src = pictureUrl;
-      }
+    
+      // สำคัญ:
+      // ไม่ต้อง sync brandLogo กับ pictureUrl แล้ว
+      // มุมซ้ายบนจะเป็น icon ระบบ SpondFlow ตลอด
     }
   
     async function refreshHome() {
