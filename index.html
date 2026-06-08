@@ -212,7 +212,7 @@
     .home-hero-head {
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      justify-content: flex-start;
       gap: 10px;
       margin-bottom: 16px;
     }
@@ -233,11 +233,6 @@
       white-space: nowrap;
       backdrop-filter: blur(18px);
       -webkit-backdrop-filter: blur(18px);
-    }
-    
-    .home-hero-date {
-      color: rgba(255,255,255,0.78);
-      font-weight: 750;
     }
     
     .hero-overview-head {
@@ -327,7 +322,7 @@
       height: 46px;
       border-radius: 17px;
       overflow: hidden;
-      background: linear-gradient(135deg, #22c55e, #86efac);
+      background: rgba(255, 255, 255, 0.26);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -335,15 +330,24 @@
       font-weight: 950;
       font-size: 18px;
       flex: 0 0 auto;
-      box-shadow: 0 12px 24px rgba(34,197,94,0.20);
-      border: 1px solid rgba(255,255,255,0.34);
+      box-shadow: 0 10px 22px rgba(15, 23, 42, 0.12);
+      border: 1px solid rgba(255,255,255,0.44);
+      position: relative;
     }
     
     .hero-profile-avatar img {
+      position: absolute;
+      inset: 0;
       width: 100%;
       height: 100%;
       object-fit: cover;
       display: none;
+      transform: scale(1.03);
+    }
+    
+    .hero-profile-avatar span {
+      position: relative;
+      z-index: 1;
     }
     
     .hero-profile-info {
@@ -385,11 +389,7 @@
         padding: 16px;
         border-radius: 30px;
       }
-    
-      .home-hero-date {
-        display: none;
-      }
-    
+        
       .hero-title {
         font-size: 21px;
       }
@@ -683,8 +683,7 @@
       <div class="home-hero-inner">
     
         <div class="home-hero-head">
-          <div class="home-hero-badge">☕ QUOTATION_BOT · Office Hub</div>
-          <div class="home-hero-date" id="todayTextHero">วันนี้</div>
+          <div class="home-hero-badge">☕ QUOTATION_BOT · V V COMMUNICATION CO.,LTD.</div>          
         </div>
     
         <div class="hero-overview-head">
@@ -866,20 +865,22 @@
       try {
         setToday();
         renderMenus();
-  
+    
         const ok = await initLiffSafe();
         if (!ok) return;
-  
-        await loadHomeDashboard();
-  
+    
+        // ✅ เปิดหน้า Interface ก่อน
         showApp();
-  
+    
+        // ✅ Dashboard โหลดตามมาทีหลัง ไม่ต้องรอก่อนเข้าหน้า
+        loadHomeDashboard();
+    
       } catch (err) {
         console.warn("[init]", err);
-  
+    
         applyHomeDashboard(getEmptyDashboard_());
         showApp();
-  
+    
         showToast("เปิดหน้าได้แล้ว แต่โหลดบางข้อมูลไม่สำเร็จครับ");
       }
     }
@@ -1137,16 +1138,15 @@
   
     function setToday() {
       const d = new Date();
-  
+    
       const text = d.toLocaleDateString("th-TH", {
         weekday: "short",
         day: "numeric",
         month: "short",
         year: "numeric"
       });
-  
+    
       setTextSafe("todayText", text);
-      setTextSafe("todayTextHero", text);
     }
   
     function renderMenus() {
