@@ -535,6 +535,524 @@
     .bottom-space {
       height: 16px;
     }
+
+    /* =========================================================
+     * ORDER VIEW
+     * ========================================================= */
+    
+    .content {
+      padding: 2px 0 0;
+    }
+    
+    .card {
+      margin-bottom: 14px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: #ffffff;
+      box-shadow: var(--shadow-soft);
+    }
+    
+    .card-title {
+      margin-bottom: 12px;
+      font-size: 19px;
+      font-weight: 950;
+      color: #24304f;
+      letter-spacing: -0.15px;
+    }
+    
+    .search-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-height: 54px;
+      padding: 0 14px;
+      border: 1px solid rgba(15, 23, 42, 0.10);
+      border-radius: 18px;
+      background: #ffffff;
+    }
+    
+    .search-icon {
+      color: #8b95a7;
+      font-size: 18px;
+      font-weight: 900;
+    }
+    
+    .search-input {
+      width: 100%;
+      border: 0;
+      outline: 0;
+      background: transparent;
+      color: var(--text);
+      font-size: 16px;
+      font-weight: 650;
+    }
+    
+    .search-input::placeholder {
+      color: #a0a7b4;
+      font-weight: 600;
+    }
+    
+    .clear-btn {
+      width: 32px;
+      height: 32px;
+      border: 0;
+      border-radius: 999px;
+      background: #f1f5f9;
+      color: #64748b;
+      font-size: 22px;
+      line-height: 1;
+    }
+    
+    .customer-picker {
+      position: relative;
+    }
+    
+    .dropdown {
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 0;
+      right: 0;
+      z-index: 30;
+      max-height: 320px;
+      overflow-y: auto;
+      border: 1px solid rgba(15, 23, 42, 0.10);
+      border-radius: 18px;
+      background: #ffffff;
+      box-shadow: 0 18px 42px rgba(31, 41, 55, 0.18);
+    }
+    
+    .customer-option {
+      padding: 13px 14px;
+      border-bottom: 1px solid #eef2f7;
+    }
+    
+    .customer-option:last-child {
+      border-bottom: 0;
+    }
+    
+    .customer-name {
+      font-size: 15px;
+      font-weight: 950;
+      color: #1f2937;
+    }
+    
+    .customer-meta {
+      margin-top: 4px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    
+    .selected-customer {
+      margin-top: 10px;
+      padding: 12px 14px;
+      border-radius: 16px;
+      background: #f8fbff;
+      border: 1px solid #dbeafe;
+      color: #334155;
+      font-size: 14px;
+    }
+    
+    .selected-customer b {
+      color: #1e3a8a;
+    }
+    
+    .list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 12px;
+    }
+    
+    .product-card {
+      padding: 14px;
+      border: 1px solid #e2e8f0;
+      border-radius: 20px;
+      background: linear-gradient(180deg, #ffffff, #fbfcff);
+    }
+    
+    .product-card.selected {
+      border-color: #c7d2fe;
+      background: linear-gradient(180deg, #ffffff, #f7f9ff);
+      box-shadow: 0 8px 18px rgba(79, 109, 245, 0.08);
+    }
+    
+    .product-head {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      justify-content: space-between;
+    }
+    
+    .product-main {
+      flex: 1;
+      min-width: 0;
+    }
+    
+    .product-name {
+      font-size: 16px;
+      font-weight: 950;
+      color: #111827;
+      line-height: 1.35;
+      word-break: break-word;
+    }
+    
+    .product-price {
+      white-space: nowrap;
+      font-size: 14px;
+      font-weight: 950;
+      color: #315bc8;
+    }
+    
+    .product-foot {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-top: 12px;
+    }
+    
+    .stock-meta {
+      flex: 1;
+      font-size: 13px;
+      color: #64748b;
+      line-height: 1.45;
+    }
+    
+    .stock-meta b {
+      color: #111827;
+    }
+    
+    .qty-stepper {
+      display: grid;
+      grid-template-columns: 42px 48px 42px;
+      height: 42px;
+      overflow: hidden;
+      border: 1px solid #d8e0f2;
+      border-radius: 999px;
+      background: #f8fbff;
+      flex: 0 0 auto;
+    }
+    
+    .qty-btn {
+      border: 0;
+      background: transparent;
+      color: var(--blue);
+      font-size: 24px;
+      font-weight: 950;
+      line-height: 42px;
+      padding: 0;
+    }
+    
+    .qty-btn:disabled {
+      opacity: 0.28;
+    }
+    
+    .qty-num {
+      display: block;
+      height: 42px;
+      line-height: 42px;
+      text-align: center;
+      font-size: 18px;
+      font-weight: 950;
+      color: #315bc8;
+    }
+    
+    .empty {
+      padding: 22px 14px;
+      border: 1px dashed #d5dcea;
+      border-radius: 18px;
+      background: #fbfcff;
+      color: var(--muted);
+      text-align: center;
+      font-size: 14px;
+    }
+    
+    .review-box {
+      padding: 14px;
+      border: 1px solid #e2e8f0;
+      border-radius: 18px;
+      background: #fbfcff;
+    }
+    
+    .review-section + .review-section {
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px dashed #dbe3f0;
+    }
+    
+    .review-label {
+      margin-bottom: 5px;
+      font-size: 13px;
+      font-weight: 900;
+      color: #64748b;
+    }
+    
+    .review-main {
+      font-size: 16px;
+      font-weight: 950;
+      color: #1f2937;
+      word-break: break-word;
+    }
+    
+    .review-sub {
+      margin-top: 4px;
+      font-size: 13px;
+      color: var(--muted);
+      white-space: pre-wrap;
+    }
+    
+    .review-item {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 8px 0;
+      border-bottom: 1px dashed #e2e8f0;
+    }
+    
+    .review-item:last-child {
+      border-bottom: 0;
+    }
+    
+    .review-item-name {
+      flex: 1;
+      min-width: 0;
+      font-size: 14px;
+      color: #24304f;
+      line-height: 1.35;
+      word-break: break-word;
+    }
+    
+    .review-item-right {
+      white-space: nowrap;
+      text-align: right;
+      font-size: 14px;
+      font-weight: 950;
+      color: #111827;
+    }
+    
+    .command-preview {
+      display: none !important;
+    }
+    
+    .actions {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin-top: 14px;
+    }
+    
+    .btn {
+      min-height: 54px;
+      border: 0;
+      border-radius: 18px;
+      font-weight: 950;
+      font-size: 16px;
+    }
+    
+    .btn.secondary,
+    .btn.primary {
+      background: linear-gradient(135deg, var(--blue), var(--blue2));
+      color: #ffffff;
+      box-shadow: 0 10px 20px rgba(79, 109, 245, 0.18);
+    }
+    
+    .btn:disabled {
+      opacity: 0.48;
+      cursor: default;
+    }
+    
+    #sendBtn {
+      display: none !important;
+    }
+    
+    /* ORDER MODAL */
+    
+    .review-modal-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 99998;
+      display: none;
+      align-items: flex-end;
+      justify-content: center;
+      padding: 16px;
+      background: rgba(15, 23, 42, 0.48);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+    }
+    
+    .review-modal-backdrop.show {
+      display: flex;
+    }
+    
+    .review-modal {
+      width: min(520px, 100%);
+      max-height: calc(100vh - 54px);
+      overflow-y: auto;
+      border-radius: 28px;
+      background: #ffffff;
+      box-shadow: 0 24px 64px rgba(15, 23, 42, 0.28);
+      animation: modalUp 0.18s ease-out;
+    }
+    
+    @keyframes modalUp {
+      from {
+        opacity: 0;
+        transform: translateY(18px) scale(0.985);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+    
+    .modal-head {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 16px 10px;
+    }
+    
+    .modal-icon {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border-radius: 16px;
+      background: linear-gradient(135deg, #eef3ff, #e5ebff);
+      font-size: 22px;
+    }
+    
+    .modal-title-wrap {
+      flex: 1;
+      min-width: 0;
+    }
+    
+    .modal-title {
+      font-size: 19px;
+      font-weight: 950;
+      color: #172033;
+      line-height: 1.2;
+    }
+    
+    .modal-sub {
+      margin-top: 3px;
+      font-size: 13px;
+      color: #64748b;
+    }
+    
+    .modal-close {
+      width: 40px;
+      height: 40px;
+      border: 0;
+      border-radius: 999px;
+      background: #f1f5f9;
+      color: #475569;
+      font-size: 24px;
+      line-height: 1;
+    }
+    
+    .modal-command {
+      margin: 6px 16px 0;
+      padding: 16px;
+      border-radius: 20px;
+      background:
+        radial-gradient(circle at 92% 0%, rgba(79,109,245,0.24), transparent 30%),
+        #101827;
+      color: #e5e7eb;
+      font-size: 15px;
+      line-height: 1.55;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    
+    .modal-summary {
+      display: flex;
+      gap: 10px;
+      margin: 12px 16px 0;
+    }
+    
+    .modal-summary-card {
+      flex: 1;
+      padding: 12px;
+      border-radius: 18px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+    }
+    
+    .modal-summary-label {
+      font-size: 12px;
+      color: #64748b;
+      font-weight: 800;
+    }
+    
+    .modal-summary-value {
+      margin-top: 3px;
+      font-size: 17px;
+      color: #172033;
+      font-weight: 950;
+    }
+    
+    .modal-actions {
+      display: grid;
+      grid-template-columns: 1fr 1.45fr;
+      gap: 10px;
+      padding: 16px;
+    }
+    
+    .modal-btn {
+      min-height: 52px;
+      border: 0;
+      border-radius: 18px;
+      font-weight: 950;
+      font-size: 15px;
+    }
+    
+    .modal-btn.copy {
+      background: #eef2f7;
+      color: #334155;
+    }
+    
+    .modal-btn.send {
+      background: linear-gradient(135deg, var(--blue), var(--blue2));
+      color: #ffffff;
+    }
+    
+    .toast.success {
+      background: rgba(22, 163, 74, 0.96);
+    }
+    
+    .toast.warn {
+      background: rgba(180, 83, 9, 0.96);
+    }
+    
+    .toast.error {
+      background: rgba(220, 38, 38, 0.96);
+    }
+    
+    @media (max-width: 420px) {
+      .content {
+        padding: 0;
+      }
+    
+      .card {
+        padding: 14px;
+        border-radius: 20px;
+      }
+    
+      .modal-actions {
+        grid-template-columns: 1fr;
+      }
+    
+      .review-modal-backdrop {
+        padding: 10px;
+      }
+    
+      .review-modal {
+        border-radius: 24px;
+      }
+    }
       
     /* =========================================================
      * TOAST / LOADING
@@ -667,79 +1185,127 @@
             id="brandLogo"
             src="./spondflow-icon.png?v=4"
             alt="SpondFlow"
+            onerror="handleBrandLogoError_(this)"
           />
           <span id="brandLogoFallback" class="brand-logo-fallback">📦</span>
         </div>
+  
         <div class="brand-text">
-          <h1 class="brand-title">SpondFlow</h1>
+          <h1 class="brand-title" id="appTitle">SpondFlow</h1>
           <p class="brand-subtitle" id="todayText">QuotationBot Home</p>
         </div>
       </div>
-
-      <button class="icon-btn" type="button" onclick="refreshHome()" aria-label="Refresh">↻</button>
+  
+      <button id="topActionBtn" class="icon-btn" type="button" onclick="handleTopAction_()" aria-label="Action">↻</button>
     </header>
-
+  
+    <section id="viewRoot"></section>
+  
+    <div class="bottom-space"></div>
+  </main>
+  
+  <template id="homeViewTemplate">
     <section class="home-hero" id="homeHero">
       <div class="home-hero-inner">
-    
+  
         <div class="home-hero-head">
-          <div class="home-hero-badge">☕ QUOTATION_BOT · V V COMMUNICATION CO.,LTD.</div>          
+          <div class="home-hero-badge">☕ QUOTATION_BOT · V V COMMUNICATION CO.,LTD.</div>
         </div>
-    
+  
         <div class="hero-overview-head">
           <div>
             <h2 class="hero-title">ภาพรวมวันนี้</h2>
             <p class="hero-subtitle">สรุปออเดอร์และยอดขายจาก SpondFlow</p>
           </div>
         </div>
-    
+  
         <div class="hero-status-row">
           <div class="hero-status-item">
             <p class="hero-status-value" id="statOrders">—</p>
             <p class="hero-status-label">ออเดอร์</p>
           </div>
-    
+  
           <div class="hero-status-item">
             <p class="hero-status-value" id="statStock">—</p>
             <p class="hero-status-label">เครื่อง</p>
           </div>
-    
+  
           <div class="hero-status-item">
             <p class="hero-status-value" id="statPay">—</p>
             <p class="hero-status-label">ยอดเงิน</p>
           </div>
         </div>
-    
+  
         <div class="hero-user-card">
           <div class="hero-user-left">
             <div class="hero-profile-avatar">
               <img id="heroProfileImg" alt="Profile">
               <span id="heroProfileInitial">S</span>
             </div>
-    
+  
             <div class="hero-profile-info">
               <div class="hero-profile-name" id="heroProfileName">SpondFlow User</div>
               <div class="hero-profile-role" id="heroProfileRole">กำลังตรวจสอบสิทธิ์...</div>
             </div>
           </div>
-    
+  
           <button class="hero-profile-logout" type="button" onclick="logoutLine()">
             Close
           </button>
         </div>
-    
+  
       </div>
     </section>
-
+  
     <div class="section-head">
       <h2 class="section-title">เมนูหลัก</h2>
       <div class="section-note">แตะเพื่อเข้าใช้งาน</div>
     </div>
-
+  
     <section class="grid" id="menuGrid"></section>
-    
-    <div class="bottom-space"></div>
-  </main>
+  </template>
+  
+  <template id="orderViewTemplate">
+    <main class="content order-view">
+      <section class="card">
+        <div class="card-title">เลือกลูกค้า</div>
+  
+        <div class="customer-picker">
+          <div class="search-wrap">
+            <div class="search-icon">⌕</div>
+            <input id="customerSearch" class="search-input" placeholder="ค้นหาลูกค้า" autocomplete="off">
+            <button id="clearCustomerBtn" class="clear-btn" type="button" style="display:none;">×</button>
+          </div>
+          <div id="customerDropdown" class="dropdown" style="display:none;"></div>
+        </div>
+  
+        <div id="selectedCustomerBox" class="selected-customer" style="display:none;"></div>
+      </section>
+  
+      <section class="card">
+        <div class="card-title">ค้นหาสินค้า</div>
+  
+        <div class="search-wrap">
+          <div class="search-icon">⌕</div>
+          <input id="catalogSearch" class="search-input" placeholder="ค้นหารุ่น เช่น Y31d, V70, X300">
+        </div>
+  
+        <div id="catalogList" class="list"></div>
+      </section>
+  
+      <section class="card">
+        <div class="card-title">ตรวจสอบรายการ</div>
+  
+        <div id="reviewBox" class="review-box"></div>
+        <div id="commandPreview" class="command-preview" style="display:none;"></div>
+  
+        <div class="actions">
+          <button id="copyBtn" class="btn secondary" type="button">ตรวจสอบรายการ</button>
+          <button id="sendBtn" class="btn primary" type="button">ส่งรายการ #สั่งของ เข้ากลุ่ม</button>
+        </div>
+      </section>
+    </main>
+  </template>
 
   <div id="toast" class="toast"></div>
 
@@ -773,7 +1339,7 @@
         icon: "🛒",
         tag: "LIFF",
         color: "blue",
-        href: CONFIG.links.order
+        view: "order"
       },
       {
         key: "stock",
@@ -858,29 +1424,68 @@
     };
   
     let currentIdToken = "";
+
+    let liffReady = false;
+    let currentView = "home";
+    let homeDashboardData = null;
+    
+    let CUSTOMER_TIMER = null;
+    let CATALOG_TIMER = null;
+    
+    const ORDER_ACTIONS = {
+      init: "liff_order_form_init",
+      customers: "liff_order_search_customers",
+      catalog: "liff_order_search_stock"
+    };
+    
+    const appState = {
+      order: {
+        initialized: false,
+        loading: false,
+        warehouseKey: "RemainQuota",
+    
+        customer: {
+          keyword: "",
+          selected: null,
+          options: [],
+          dropdownOpen: false,
+          loading: false
+        },
+    
+        catalog: {
+          keyword: "",
+          items: [],
+          loading: false
+        },
+    
+        cart: {}
+      }
+    };
   
     document.addEventListener("DOMContentLoaded", init);
   
     async function init() {
       try {
         setToday();
-        renderMenus();
     
         const ok = await initLiffSafe();
         if (!ok) return;
     
-        // ✅ เปิดหน้า Interface ก่อน
         showApp();
     
-        // ✅ Dashboard โหลดตามมาทีหลัง ไม่ต้องรอก่อนเข้าหน้า
+        openView("home");
+    
         loadHomeDashboard();
+    
+        preloadOrderInit_();
     
       } catch (err) {
         console.warn("[init]", err);
     
-        applyHomeDashboard(getEmptyDashboard_());
         showApp();
+        openView("home");
     
+        applyHomeDashboard(getEmptyDashboard_());
         showToast("เปิดหน้าได้แล้ว แต่โหลดบางข้อมูลไม่สำเร็จครับ");
       }
     }
@@ -959,6 +1564,8 @@
         }
   
         currentIdToken = idToken;
+
+        liffReady = true;
   
         const auth = await callGasJsonp({
           action: "authLiff",
@@ -980,6 +1587,7 @@
           fullName: auth.fullName || "",
           scopes: auth.scopes || "",
           pictureUrl: profile.pictureUrl || auth.pictureUrl || "",
+          lineUserId: profile.userId || auth.lineUserId || "",
           idToken: idToken
         };
   
@@ -998,6 +1606,90 @@
   
         return false;
       }
+    }
+
+    function openView(viewName) {
+      currentView = viewName || "home";
+    
+      if (currentView === "home") {
+        renderHomeView_();
+        return;
+      }
+    
+      if (currentView === "order") {
+        renderOrderView_();
+        return;
+      }
+    
+      showToast("เมนูนี้ยังไม่ได้ย้ายเข้า App Shell ครับ");
+      currentView = "home";
+      renderHomeView_();
+    }
+    
+    function renderHomeView_() {
+      const root = document.getElementById("viewRoot");
+      const tpl = document.getElementById("homeViewTemplate");
+      if (!root || !tpl) return;
+    
+      root.innerHTML = "";
+      root.appendChild(tpl.content.cloneNode(true));
+    
+      setAppTopbar_("SpondFlow", getTodayText_(), "↻");
+    
+      renderMenus();
+      updateUserCard(currentUser);
+    
+      if (homeDashboardData) {
+        applyHomeDashboard(homeDashboardData);
+      } else {
+        setHomeDashboardLoading();
+      }
+    }
+    
+    function renderOrderView_() {
+      const root = document.getElementById("viewRoot");
+      const tpl = document.getElementById("orderViewTemplate");
+      if (!root || !tpl) return;
+    
+      root.innerHTML = "";
+      root.appendChild(tpl.content.cloneNode(true));
+    
+      setAppTopbar_("สร้างฟอร์ม #สั่งของ", "เลือกสินค้าแล้วส่งเข้ากลุ่ม", "‹");
+    
+      bindOrderEvents_();
+      ensureOrderReviewModal_();
+      orderRenderAll_();
+      ensureOrderDataLoaded_();
+    }
+    
+    function setAppTopbar_(title, subtitle, actionText) {
+      setTextSafe("appTitle", title || "SpondFlow");
+      setTextSafe("todayText", subtitle || "");
+    
+      const btn = document.getElementById("topActionBtn");
+      if (btn) {
+        btn.textContent = actionText || "↻";
+      }
+    }
+    
+    function handleTopAction_() {
+      if (currentView === "home") {
+        refreshHome();
+        return;
+      }
+    
+      openView("home");
+    }
+    
+    function getTodayText_() {
+      const d = new Date();
+    
+      return d.toLocaleDateString("th-TH", {
+        weekday: "short",
+        day: "numeric",
+        month: "short",
+        year: "numeric"
+      });
     }
   
     async function loadHomeDashboard() {
@@ -1085,8 +1777,10 @@
     }
   
     function applyHomeDashboard(data) {
-      const today = data.today || {};
-  
+      homeDashboardData = data || getEmptyDashboard_();
+    
+      const today = homeDashboardData.today || {};
+    
       setTextSafe("statOrders", fmtInt_(today.totalOrders));
       setTextSafe("statStock", fmtInt_(today.totalQty));
       setTextSafe("statPay", "฿" + fmtMoney_(today.totalAmount));
@@ -1137,36 +1831,30 @@
     }
   
     function setToday() {
-      const d = new Date();
-    
-      const text = d.toLocaleDateString("th-TH", {
-        weekday: "short",
-        day: "numeric",
-        month: "short",
-        year: "numeric"
-      });
-    
-      setTextSafe("todayText", text);
+      setTextSafe("todayText", getTodayText_());
     }
   
     function renderMenus() {
       const grid = document.getElementById("menuGrid");
       if (!grid) return;
-  
+    
       grid.innerHTML = "";
-  
+    
       MENUS.forEach(function(item) {
         const a = document.createElement("a");
         a.className = "tile";
-        a.href = item.href || "#";
+        a.href = "#";
         a.dataset.key = item.key;
-  
-        if (!item.href || item.href === "#") {
+    
+        const hasView = !!item.view;
+        const hasHref = !!item.href && item.href !== "#";
+    
+        if (!hasView && !hasHref) {
           a.classList.add("disabled");
         }
-  
+    
         const c = COLOR_MAP[item.color] || COLOR_MAP.blue;
-  
+    
         a.innerHTML = `
           <div class="tile-top">
             <div class="tile-icon" style="background:linear-gradient(135deg, ${c[0]}, ${c[1]});">${item.icon}</div>
@@ -1176,14 +1864,18 @@
           <p>${escapeHtml(item.desc)}</p>
           <div class="arrow">›</div>
         `;
-  
+    
         a.addEventListener("click", function(e) {
-          if (!item.href || item.href === "#") {
-            e.preventDefault();
-            showToast("เมนูนี้ยังไม่ได้ผูกหน้าเว็บครับ");
+          e.preventDefault();
+    
+          if (item.view) {
+            openView(item.view);
+            return;
           }
+    
+          showToast("เมนูนี้ยังไม่ได้ย้ายเข้า App Shell ครับ");
         });
-  
+    
         grid.appendChild(a);
       });
     }
@@ -1287,17 +1979,21 @@
       }, 500);
     }
   
-    function showToast(msg) {
+    function showToast(msg, type, ms) {
       const el = document.getElementById("toast");
       if (!el) return;
-  
+    
       el.textContent = msg;
-      el.classList.add("show");
-  
+      el.className = "toast show";
+    
+      if (type) {
+        el.classList.add(type);
+      }
+    
       clearTimeout(window.__toastTimer);
       window.__toastTimer = setTimeout(function() {
-        el.classList.remove("show");
-      }, 2200);
+        el.className = "toast";
+      }, ms || 2200);
     }
   
     function pickNumber_(obj, keys) {
@@ -1351,6 +2047,850 @@
         .replace(/>/g, "&gt;")
         .replace(/"/g, "&quot;")
         .replace(/'/g, "&#039;");
+    }
+
+    function $(id) {
+      return document.getElementById(id);
+    }
+    
+    function orderFmt_(n) {
+      try {
+        return Number(n || 0).toLocaleString("th-TH", {
+          maximumFractionDigits: 2
+        });
+      } catch (e) {
+        return String(n || 0);
+      }
+    }
+    
+    function orderDebounce_(fn, delay, bucketName) {
+      clearTimeout(bucketName === "customer" ? CUSTOMER_TIMER : CATALOG_TIMER);
+    
+      const timer = setTimeout(fn, delay || 260);
+    
+      if (bucketName === "customer") CUSTOMER_TIMER = timer;
+      else CATALOG_TIMER = timer;
+    }
+    
+    function orderUnwrapList_(data, keys) {
+      if (Array.isArray(data)) return data;
+      if (!data) return [];
+    
+      for (let i = 0; i < keys.length; i++) {
+        const k = keys[i];
+        if (Array.isArray(data[k])) return data[k];
+      }
+    
+      if (data.ok === true) {
+        if (Array.isArray(data.items)) return data.items;
+        if (Array.isArray(data.data)) return data.data;
+      }
+    
+      return [];
+    }
+    
+    async function preloadOrderInit_() {
+      try {
+        await ensureOrderDataLoaded_(true);
+      } catch (err) {
+        console.warn("[preloadOrderInit_]", err);
+      }
+    }
+    
+    async function ensureOrderDataLoaded_(silent) {
+      const st = appState.order;
+    
+      if (st.initialized && st.catalog.items.length) {
+        orderRenderAll_();
+        return;
+      }
+    
+      st.loading = true;
+      st.catalog.loading = true;
+    
+      if (!silent && currentView === "order") {
+        orderRenderCatalog_();
+      }
+    
+      try {
+        const data = await callGasJsonp({
+          action: ORDER_ACTIONS.init,
+          idToken: currentIdToken || currentUser.idToken || "",
+          lineUserId: currentUser.lineUserId || "",
+          brand: "all",
+          warehouseKey: st.warehouseKey || "RemainQuota"
+        });
+    
+        if (data && data.ok === false) {
+          throw new Error(data.error || data.message || "โหลดข้อมูลเริ่มต้นไม่สำเร็จ");
+        }
+    
+        orderApplyInitData_(data || {});
+        st.initialized = true;
+    
+        if (!st.catalog.items.length) {
+          await orderLoadCatalog_("");
+        }
+    
+      } catch (err) {
+        console.warn("[ensureOrderDataLoaded_]", err);
+    
+        if (!silent) {
+          showToast(err.message || "โหลดข้อมูลสินค้าไม่สำเร็จ", "error", 2400);
+        }
+    
+      } finally {
+        st.loading = false;
+        st.catalog.loading = false;
+    
+        if (currentView === "order") {
+          orderRenderAll_();
+        }
+      }
+    }
+    
+    function orderApplyInitData_(data) {
+      const st = appState.order;
+    
+      if (data && Array.isArray(data.stockItems)) {
+        st.catalog.items = data.stockItems
+          .map(orderNormalizeProduct_)
+          .filter(function(x) {
+            return !!(x && x.modelBase);
+          });
+      }
+    }
+    
+    async function orderLoadCustomers_(keyword) {
+      const st = appState.order;
+    
+      st.customer.loading = true;
+      st.customer.keyword = String(keyword || "");
+    
+      try {
+        const data = await callGasJsonp({
+          action: ORDER_ACTIONS.customers,
+          idToken: currentIdToken || currentUser.idToken || "",
+          lineUserId: currentUser.lineUserId || "",
+          keyword: st.customer.keyword,
+          limit: 80
+        });
+    
+        if (data && data.ok === false) {
+          throw new Error(data.error || data.message || "โหลดลูกค้าไม่สำเร็จ");
+        }
+    
+        const list = orderUnwrapList_(data, ["customers", "items", "data", "results"]);
+    
+        st.customer.options = list.map(function(x) {
+          return {
+            customerNo: String(x.customerNo || x.CustomerNo || x.no || x.code || "").trim(),
+            name: String(x.name || x.customerName || x.CustomerName || x.shopName || x.label || "").trim(),
+            phone: String(x.phone || x.tel || x.mobile || "").trim(),
+            address: String(x.address || x.Address || "").trim()
+          };
+        }).filter(function(x) {
+          return x.customerNo || x.name;
+        });
+    
+        orderRenderCustomerDropdown_();
+    
+      } catch (err) {
+        console.error(err);
+        showToast(err.message || "โหลดลูกค้าไม่สำเร็จ", "error", 2200);
+    
+      } finally {
+        st.customer.loading = false;
+      }
+    }
+    
+    async function orderLoadCatalog_(keyword) {
+      const st = appState.order;
+    
+      st.catalog.loading = true;
+      st.catalog.keyword = String(keyword || "");
+    
+      if (currentView === "order") {
+        orderRenderCatalog_();
+      }
+    
+      try {
+        const data = await callGasJsonp({
+          action: ORDER_ACTIONS.catalog,
+          idToken: currentIdToken || currentUser.idToken || "",
+          lineUserId: currentUser.lineUserId || "",
+          keyword: st.catalog.keyword,
+          warehouseKey: st.warehouseKey || "RemainQuota",
+          brand: "all",
+          limit: 120
+        });
+    
+        if (data && data.ok === false) {
+          throw new Error(data.error || data.message || "โหลดสินค้าไม่สำเร็จ");
+        }
+    
+        const list = orderUnwrapList_(data, ["stockItems", "catalog", "items", "products", "data", "results"]);
+    
+        st.catalog.items = list
+          .map(orderNormalizeProduct_)
+          .filter(function(x) {
+            return !!(x && x.modelBase);
+          });
+    
+      } catch (err) {
+        console.error(err);
+        showToast(err.message || "โหลดสินค้าไม่สำเร็จ", "error", 2400);
+        st.catalog.items = [];
+    
+      } finally {
+        st.catalog.loading = false;
+    
+        if (currentView === "order") {
+          orderRenderCatalog_();
+        }
+      }
+    }
+    
+    function orderNormalizeProduct_(x) {
+      x = x || {};
+    
+      const quota = x.quota || x.stock || {};
+      const priceModes = x.priceModes || x.prices || {};
+    
+      const modelBase = String(x.modelBase || x.ModelBase || x.model || "").trim();
+      const series = String(x.series || x.Series || "").trim();
+      const displayName = String(x.displayName || x.name || modelBase).trim();
+    
+      const orderLine = String(
+        x.orderLine ||
+        x.OrderLine ||
+        x.orderLineTemplate ||
+        x.commandLine ||
+        ""
+      ).trim();
+    
+      const remainQuota = Number(
+        x.remainQuota ||
+        x.available ||
+        x.qtyAvailable ||
+        quota.RemainQuota ||
+        x.RemainQuota ||
+        0
+      );
+    
+      return {
+        modelBase: modelBase,
+        displayName: displayName || modelBase,
+        orderLine: orderNormalizeOrderLineBase_(orderLine || orderBuildOrderLineFromModelBase_(modelBase)),
+        series: series,
+        color: String(x.color || x.ColorName || x.colorName || x.ColorTH || "").trim(),
+        price: Number(x.price || x.priceWholesale || x.PriceWholesale || priceModes.wholesale || 0),
+        quota: {
+          RemainQuota: remainQuota,
+          RemainQuota2: Number(quota.RemainQuota2 || x.RemainQuota2 || 0),
+          RemainQuota3: Number(quota.RemainQuota3 || x.RemainQuota3 || 0)
+        }
+      };
+    }
+    
+    function orderNormalizeOrderLineBase_(line) {
+      return String(line || "")
+        .replace(/\s+x\s*$/i, "")
+        .replace(/\s+x\s*\d+\s*$/i, "")
+        .replace(/\s+/g, " ")
+        .trim();
+    }
+    
+    function orderBuildOrderLineFromModelBase_(modelBase) {
+      let s = String(modelBase || "").trim();
+    
+      s = s
+        .replace(/^vivo\s*[-–]\s*/i, "")
+        .replace(/^iqoo\s*[-–]\s*/i, "iQOO ")
+        .replace(/\(\s*(\d+)\s*[+\/]\s*(\d+)\s*GB\s*\)/ig, "$1+$2")
+        .replace(/\(\s*(\d+)\s*[+\/]\s*(\d+)\s*\)/ig, "$1+$2")
+        .replace(/\(\s*demo\s*\)/ig, "")
+        .replace(/\bdemo\b/ig, "")
+        .replace(/\s+/g, " ")
+        .trim();
+    
+      return s;
+    }
+    
+    function orderCartItems_() {
+      return Object.keys(appState.order.cart).map(function(k) {
+        return appState.order.cart[k];
+      });
+    }
+    
+    function orderAvailableQty_(product) {
+      const st = appState.order;
+      const q = product && product.quota ? product.quota : {};
+      return Number(q[st.warehouseKey] || 0);
+    }
+    
+    function orderGetCartQty_(modelBase) {
+      const it = appState.order.cart[String(modelBase || "")];
+      return it ? Number(it.qty || 0) : 0;
+    }
+    
+    function orderSetCartQty_(product, qty) {
+      const st = appState.order;
+    
+      if (!product || !product.modelBase) return;
+    
+      const modelBase = String(product.modelBase || "");
+      let nextQty = Math.max(0, Number(qty || 0));
+      const maxQty = orderAvailableQty_(product);
+    
+      if (maxQty <= 0 && nextQty > 0) {
+        showToast("รุ่นนี้ไม่มีโควต้าพร้อมขาย", "warn", 1800);
+        return;
+      }
+    
+      if (maxQty > 0 && nextQty > maxQty) {
+        nextQty = maxQty;
+        showToast("ปรับเป็นจำนวนสูงสุดที่มีแล้ว", "warn", 1500);
+      }
+    
+      if (nextQty <= 0) {
+        delete st.cart[modelBase];
+      } else {
+        st.cart[modelBase] = {
+          modelBase: product.modelBase,
+          displayName: product.displayName || product.modelBase,
+          orderLine: orderNormalizeOrderLineBase_(product.orderLine || product.modelBase),
+          qty: nextQty,
+          price: Number(product.price || 0),
+          warehouseKey: st.warehouseKey
+        };
+      }
+    
+      orderRenderAll_();
+    }
+    
+    function orderTotalQty_() {
+      return orderCartItems_().reduce(function(sum, x) {
+        return sum + Number(x.qty || 0);
+      }, 0);
+    }
+    
+    function orderCustomerLabel_() {
+      const c = appState.order.customer.selected || {};
+      return String(c.name || c.customerNo || "").trim();
+    }
+    
+    function orderCanBuild_() {
+      return !!(orderCustomerLabel_() && orderCartItems_().length);
+    }
+    
+    function orderBuildText_() {
+      const name = orderCustomerLabel_();
+      const items = orderCartItems_();
+    
+      const lines = [];
+    
+      lines.push("#สั่งของ " + name);
+      lines.push("");
+    
+      items.forEach(function(it) {
+        const baseLine = orderNormalizeOrderLineBase_(it.orderLine || it.modelBase || "");
+        lines.push(baseLine + " x" + Number(it.qty || 0));
+      });
+    
+      return lines.join("\n").replace(/\n{3,}/g, "\n\n").trim();
+    }
+    
+    function orderRenderAll_() {
+      orderRenderSelectedCustomer_();
+      orderRenderCatalog_();
+      orderRenderReview_();
+      orderRenderButtons_();
+    }
+    
+    function orderRenderSelectedCustomer_() {
+      const st = appState.order;
+      const box = $("selectedCustomerBox");
+      const input = $("customerSearch");
+      const clearBtn = $("clearCustomerBtn");
+      const c = st.customer.selected;
+    
+      if (clearBtn && input) {
+        clearBtn.style.display = String(input.value || "").trim() ? "" : "none";
+      }
+    
+      if (!box) return;
+    
+      if (!c) {
+        box.style.display = "none";
+        box.innerHTML = "";
+        return;
+      }
+    
+      box.style.display = "";
+      box.innerHTML =
+        "<b>" + escapeHtml(c.name || "-") + "</b><br>" +
+        "รหัสลูกค้า: " + escapeHtml(c.customerNo || "-") +
+        (c.phone ? " | โทร: " + escapeHtml(c.phone) : "");
+    }
+    
+    function orderRenderCustomerDropdown_() {
+      const st = appState.order;
+      const box = $("customerDropdown");
+      if (!box) return;
+    
+      const keyword = String(st.customer.keyword || "").trim();
+      const options = st.customer.options || [];
+    
+      if (!st.customer.dropdownOpen || !keyword) {
+        box.style.display = "none";
+        box.innerHTML = "";
+        return;
+      }
+    
+      box.style.display = "";
+    
+      if (st.customer.loading) {
+        box.innerHTML = '<div class="customer-option"><div class="customer-meta">กำลังค้นหา...</div></div>';
+        return;
+      }
+    
+      if (!options.length) {
+        box.innerHTML = '<div class="customer-option"><div class="customer-meta">ไม่พบลูกค้าที่ค้นหา</div></div>';
+        return;
+      }
+    
+      let html = "";
+    
+      options.forEach(function(c, idx) {
+        html +=
+          '<div class="customer-option" data-idx="' + idx + '">' +
+            '<div class="customer-name">' + escapeHtml(c.name || "-") + "</div>" +
+            '<div class="customer-meta">' +
+              "รหัสลูกค้า: " + escapeHtml(c.customerNo || "-") +
+              (c.phone ? " | โทร: " + escapeHtml(c.phone) : "") +
+            "</div>" +
+          "</div>";
+      });
+    
+      box.innerHTML = html;
+    
+      Array.prototype.forEach.call(box.querySelectorAll(".customer-option"), function(el) {
+        el.addEventListener("click", function() {
+          const idx = Number(this.getAttribute("data-idx"));
+          const c = appState.order.customer.options[idx];
+          if (!c) return;
+    
+          appState.order.customer.selected = c;
+          appState.order.customer.keyword = c.name || "";
+    
+          const input = $("customerSearch");
+          if (input) input.value = c.name || "";
+    
+          appState.order.customer.dropdownOpen = false;
+    
+          orderRenderAll_();
+          orderRenderCustomerDropdown_();
+          showToast("เลือกลูกค้าแล้ว", "success", 1000);
+        });
+      });
+    }
+    
+    function orderRenderCatalog_() {
+      const st = appState.order;
+      const box = $("catalogList");
+      if (!box) return;
+    
+      if (st.catalog.loading) {
+        box.innerHTML = '<div class="empty">กำลังโหลดสินค้า...</div>';
+        return;
+      }
+    
+      const items = st.catalog.items || [];
+    
+      if (!items.length) {
+        box.innerHTML = '<div class="empty">ค้นหารุ่นสินค้าเพื่อเริ่มเลือกของได้เลยครับ</div>';
+        return;
+      }
+    
+      let html = "";
+    
+      items.forEach(function(p, idx) {
+        const q = orderGetCartQty_(p.modelBase);
+        const available = orderAvailableQty_(p);
+        const selected = q > 0 ? " selected" : "";
+        const minusDisabled = q <= 0 ? " disabled" : "";
+        const plusDisabled = available <= 0 || q >= available ? " disabled" : "";
+    
+        html +=
+          '<div class="product-card' + selected + '" data-idx="' + idx + '">' +
+            '<div class="product-head">' +
+              '<div class="product-main">' +
+                '<div class="product-name">' + escapeHtml(p.displayName || p.modelBase || "-") + "</div>" +
+              "</div>" +
+              '<div class="product-price">' + (p.price ? orderFmt_(p.price) + " ฿" : "") + "</div>" +
+            "</div>" +
+    
+            '<div class="product-foot">' +
+              '<div class="stock-meta">' +
+                "พร้อมขาย: <b>" + orderFmt_(available) + "</b>" +
+              "</div>" +
+    
+              '<div class="qty-stepper">' +
+                '<button class="qty-btn minus-btn" type="button"' + minusDisabled + ">−</button>" +
+                '<span class="qty-num">' + orderFmt_(q) + "</span>" +
+                '<button class="qty-btn plus-btn" type="button"' + plusDisabled + ">+</button>" +
+              "</div>" +
+            "</div>" +
+          "</div>";
+      });
+    
+      box.innerHTML = html;
+    
+      Array.prototype.forEach.call(box.querySelectorAll(".product-card"), function(el) {
+        const idx = Number(el.getAttribute("data-idx"));
+        const product = appState.order.catalog.items[idx];
+        if (!product) return;
+    
+        const minus = el.querySelector(".minus-btn");
+        const plus = el.querySelector(".plus-btn");
+    
+        if (minus) {
+          minus.addEventListener("click", function() {
+            orderSetCartQty_(product, orderGetCartQty_(product.modelBase) - 1);
+          });
+        }
+    
+        if (plus) {
+          plus.addEventListener("click", function() {
+            orderSetCartQty_(product, orderGetCartQty_(product.modelBase) + 1);
+          });
+        }
+      });
+    }
+    
+    function orderRenderReview_() {
+      const box = $("reviewBox");
+      const preview = $("commandPreview");
+      if (!box) return;
+    
+      const c = appState.order.customer.selected;
+      const items = orderCartItems_();
+    
+      const customerHtml = c
+        ? '<div class="review-main">' + escapeHtml(c.name || "-") + "</div>" +
+          '<div class="review-sub">รหัสลูกค้า: ' + escapeHtml(c.customerNo || "-") + "</div>"
+        : '<div class="review-sub">ยังไม่ได้เลือกลูกค้า</div>';
+    
+      let itemHtml = "";
+    
+      if (!items.length) {
+        itemHtml = '<div class="review-sub">ยังไม่มีรายการสินค้า</div>';
+      } else {
+        items.slice(0, 4).forEach(function(it) {
+          itemHtml +=
+            '<div class="review-item">' +
+              '<div class="review-item-name">' + escapeHtml(it.orderLine || it.modelBase || "-") + "</div>" +
+              '<div class="review-item-right">x' + orderFmt_(it.qty || 0) + "</div>" +
+            "</div>";
+        });
+    
+        if (items.length > 4) {
+          itemHtml += '<div class="review-sub">และอีก ' + orderFmt_(items.length - 4) + " รายการ</div>";
+        }
+      }
+    
+      box.innerHTML =
+        '<div class="review-section">' +
+          '<div class="review-label">ลูกค้า</div>' +
+          customerHtml +
+        "</div>" +
+    
+        '<div class="review-section">' +
+          '<div class="review-label">รายการที่เลือก</div>' +
+          itemHtml +
+        "</div>" +
+    
+        '<div class="review-section">' +
+          '<div class="review-label">รวม</div>' +
+          '<div class="review-main">' + orderFmt_(orderTotalQty_()) + " เครื่อง</div>" +
+        "</div>";
+    
+      if (preview) {
+        preview.style.display = "none";
+        preview.textContent = orderCanBuild_() ? orderBuildText_() : "";
+      }
+    }
+    
+    function orderRenderButtons_() {
+      const ok = orderCanBuild_();
+      const copyBtn = $("copyBtn");
+      const sendBtn = $("sendBtn");
+    
+      if (copyBtn) {
+        copyBtn.disabled = !ok;
+        copyBtn.textContent = "ตรวจสอบรายการ";
+      }
+    
+      if (sendBtn) {
+        sendBtn.disabled = !ok;
+        sendBtn.style.display = "none";
+      }
+    }
+    
+    function ensureOrderReviewModal_() {
+      if ($("reviewModalBackdrop")) return;
+    
+      const wrap = document.createElement("div");
+      wrap.id = "reviewModalBackdrop";
+      wrap.className = "review-modal-backdrop";
+    
+      wrap.innerHTML =
+        '<div class="review-modal">' +
+          '<div class="modal-head">' +
+            '<div class="modal-icon">📋</div>' +
+            '<div class="modal-title-wrap">' +
+              '<div class="modal-title">ตรวจสอบก่อนส่ง</div>' +
+              '<div class="modal-sub">ข้อความที่จะส่งเข้ากลุ่ม</div>' +
+            "</div>" +
+            '<button id="modalCloseBtn" class="modal-close" type="button">×</button>' +
+          "</div>" +
+    
+          '<div id="modalCommandText" class="modal-command"></div>' +
+    
+          '<div class="modal-summary">' +
+            '<div class="modal-summary-card">' +
+              '<div class="modal-summary-label">ลูกค้า</div>' +
+              '<div id="modalCustomerName" class="modal-summary-value">-</div>' +
+            "</div>" +
+            '<div class="modal-summary-card">' +
+              '<div class="modal-summary-label">รวม</div>' +
+              '<div id="modalTotalQty" class="modal-summary-value">0 เครื่อง</div>' +
+            "</div>" +
+          "</div>" +
+    
+          '<div class="modal-actions">' +
+            '<button id="modalCopyBtn" class="modal-btn copy" type="button">คัดลอก</button>' +
+            '<button id="modalSendBtn" class="modal-btn send" type="button">ส่งเข้ากลุ่ม</button>' +
+          "</div>" +
+        "</div>";
+    
+      document.body.appendChild(wrap);
+    
+      $("modalCloseBtn").addEventListener("click", closeOrderReviewModal_);
+      $("modalCopyBtn").addEventListener("click", copyOrderText_);
+      $("modalSendBtn").addEventListener("click", sendOrderToChat_);
+    
+      wrap.addEventListener("click", function(e) {
+        if (e.target === wrap) closeOrderReviewModal_();
+      });
+    }
+    
+    function openOrderReviewModal_() {
+      if (!orderCanBuild_()) {
+        showToast("เลือกลูกค้าและสินค้าให้ครบก่อนครับ", "warn", 1600);
+        return;
+      }
+    
+      ensureOrderReviewModal_();
+    
+      $("modalCommandText").textContent = orderBuildText_();
+      $("modalCustomerName").textContent = orderCustomerLabel_() || "-";
+      $("modalTotalQty").textContent = orderFmt_(orderTotalQty_()) + " เครื่อง";
+    
+      $("reviewModalBackdrop").classList.add("show");
+    }
+    
+    function closeOrderReviewModal_() {
+      const el = $("reviewModalBackdrop");
+      if (el) el.classList.remove("show");
+    }
+    
+    function fallbackCopy_(text) {
+      const ta = document.createElement("textarea");
+      ta.value = text;
+      ta.setAttribute("readonly", "");
+      ta.style.position = "fixed";
+      ta.style.left = "-9999px";
+      document.body.appendChild(ta);
+      ta.select();
+    
+      let ok = false;
+      try {
+        ok = document.execCommand("copy");
+      } catch (e) {
+        ok = false;
+      }
+    
+      document.body.removeChild(ta);
+      return ok;
+    }
+    
+    async function copyOrderText_() {
+      if (!orderCanBuild_()) {
+        showToast("เลือกลูกค้าและสินค้าให้ครบก่อนครับ", "warn", 1600);
+        return;
+      }
+    
+      const text = orderBuildText_();
+    
+      try {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          await navigator.clipboard.writeText(text);
+        } else {
+          const ok = fallbackCopy_(text);
+          if (!ok) throw new Error("copy failed");
+        }
+    
+        showToast("คัดลอกแล้วครับ", "success", 1200);
+    
+      } catch (e) {
+        const ok2 = fallbackCopy_(text);
+    
+        if (ok2) {
+          showToast("คัดลอกแล้วครับ", "success", 1200);
+        } else {
+          showToast("คัดลอกไม่สำเร็จ กดค้างที่ข้อความเพื่อคัดลอกแทนครับ", "error", 2400);
+        }
+      }
+    }
+    
+    async function sendOrderToChat_() {
+      if (!orderCanBuild_()) {
+        showToast("เลือกลูกค้าและสินค้าให้ครบก่อนครับ", "warn", 1600);
+        return;
+      }
+    
+      const text = orderBuildText_();
+    
+      if (!window.liff || !liffReady || !liff.isInClient()) {
+        await copyOrderText_();
+        showToast("ส่งเข้ากลุ่มไม่ได้ในเบราว์เซอร์ จึงคัดลอกให้แทนครับ", "warn", 2200);
+        return;
+      }
+    
+      const modalSendBtn = $("modalSendBtn");
+      const oldText = modalSendBtn ? modalSendBtn.textContent : "";
+    
+      try {
+        if (modalSendBtn) {
+          modalSendBtn.disabled = true;
+          modalSendBtn.textContent = "กำลังส่ง...";
+        }
+    
+        await liff.sendMessages([
+          {
+            type: "text",
+            text: text
+          }
+        ]);
+    
+        showToast("ส่งเข้ากลุ่มแล้วครับ", "success", 1400);
+    
+        setTimeout(function() {
+          try {
+            liff.closeWindow();
+          } catch (e) {}
+        }, 700);
+    
+      } catch (err) {
+        console.error(err);
+        await copyOrderText_();
+        showToast("ส่งไม่สำเร็จ เลยคัดลอกข้อความให้แทนครับ", "warn", 2400);
+    
+      } finally {
+        if (modalSendBtn) {
+          modalSendBtn.disabled = false;
+          modalSendBtn.textContent = oldText || "ส่งเข้ากลุ่ม";
+        }
+      }
+    }
+    
+    function bindOrderEvents_() {
+      const st = appState.order;
+      const customerInput = $("customerSearch");
+      const clearCustomerBtn = $("clearCustomerBtn");
+      const catalogInput = $("catalogSearch");
+      const copyBtn = $("copyBtn");
+    
+      if (customerInput) {
+        customerInput.addEventListener("focus", function() {
+          const v = String(this.value || "").trim();
+    
+          if (v) {
+            st.customer.dropdownOpen = true;
+            orderRenderCustomerDropdown_();
+          }
+        });
+    
+        customerInput.addEventListener("input", function() {
+          const v = String(this.value || "");
+          st.customer.keyword = v;
+    
+          if (!v.trim()) {
+            st.customer.selected = null;
+            st.customer.options = [];
+            st.customer.dropdownOpen = false;
+            orderRenderAll_();
+            orderRenderCustomerDropdown_();
+            return;
+          }
+    
+          st.customer.selected = null;
+          st.customer.dropdownOpen = true;
+          orderRenderAll_();
+    
+          orderDebounce_(function() {
+            orderLoadCustomers_(v);
+          }, 260, "customer");
+        });
+      }
+    
+      if (clearCustomerBtn) {
+        clearCustomerBtn.addEventListener("click", function() {
+          st.customer.keyword = "";
+          st.customer.selected = null;
+          st.customer.options = [];
+          st.customer.dropdownOpen = false;
+    
+          if (customerInput) {
+            customerInput.value = "";
+            customerInput.focus();
+          }
+    
+          orderRenderAll_();
+          orderRenderCustomerDropdown_();
+        });
+      }
+    
+      if (catalogInput) {
+        catalogInput.addEventListener("input", function() {
+          const v = String(this.value || "");
+          st.catalog.keyword = v;
+    
+          orderDebounce_(function() {
+            orderLoadCatalog_(v);
+          }, 260, "catalog");
+        });
+      }
+    
+      if (copyBtn) {
+        copyBtn.addEventListener("click", openOrderReviewModal_);
+      }
+    
+      if (!window.__spondOrderDocClickBound) {
+        document.addEventListener("click", function(e) {
+          const picker = document.querySelector(".customer-picker");
+          if (!picker) return;
+    
+          if (!picker.contains(e.target)) {
+            appState.order.customer.dropdownOpen = false;
+            orderRenderCustomerDropdown_();
+          }
+        });
+    
+        window.__spondOrderDocClickBound = true;
+      }
     }
 
     function handleBrandLogoError_(img) {
