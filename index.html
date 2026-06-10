@@ -868,34 +868,11 @@
     }
     
     /* ORDER MODAL */
-    
-    .review-modal-backdrop {
-      position: fixed;
-      inset: 0;
-      z-index: 99998;
-      display: none;
-      align-items: flex-end;
-      justify-content: center;
-      padding: 16px;
-      background: rgba(15, 23, 42, 0.48);
-      backdrop-filter: blur(6px);
-      -webkit-backdrop-filter: blur(6px);
-    }
-    
+     
     .review-modal-backdrop.show {
       display: flex;
     }
-    
-    .review-modal {
-      width: min(520px, 100%);
-      max-height: calc(100vh - 54px);
-      overflow-y: auto;
-      border-radius: 28px;
-      background: #ffffff;
-      box-shadow: 0 24px 64px rgba(15, 23, 42, 0.28);
-      animation: modalUp 0.18s ease-out;
-    }
-    
+       
     @keyframes modalUp {
       from {
         opacity: 0;
@@ -953,26 +930,6 @@
       line-height: 1;
     }
     
-    .modal-command {
-      margin: 6px 16px 0;
-      padding: 16px;
-      border-radius: 20px;
-      background:
-        radial-gradient(circle at 92% 0%, rgba(79,109,245,0.24), transparent 30%),
-        #101827;
-      color: #e5e7eb;
-      font-size: 15px;
-      line-height: 1.55;
-      white-space: pre-wrap;
-      word-break: break-word;
-    }
-    
-    .modal-summary {
-      display: flex;
-      gap: 10px;
-      margin: 12px 16px 0;
-    }
-    
     .modal-summary-card {
       flex: 1;
       padding: 12px;
@@ -993,14 +950,7 @@
       color: #172033;
       font-weight: 950;
     }
-    
-    .modal-actions {
-      display: grid;
-      grid-template-columns: 1fr 1.45fr;
-      gap: 10px;
-      padding: 16px;
-    }
-    
+       
     .modal-btn {
       min-height: 52px;
       border: 0;
@@ -1373,7 +1323,165 @@
         background: rgba(255, 255, 255, 0.08);
         color: #cbd5e1;
       }
-    }    
+    }
+
+    /* =========================================================
+     * ORDER REVIEW MODAL - SOFT CENTER VERSION
+     * ========================================================= */
+    
+    .review-modal-backdrop {
+      align-items: center !important;
+      justify-content: center !important;
+      padding: 18px !important;
+      background: rgba(15, 23, 42, 0.42) !important;
+      backdrop-filter: blur(10px) !important;
+      -webkit-backdrop-filter: blur(10px) !important;
+    }
+    
+    .review-modal {
+      width: min(520px, 100%) !important;
+      max-height: calc(100vh - 96px) !important;
+      overflow-y: auto !important;
+      border-radius: 30px !important;
+      background:
+        radial-gradient(circle at 100% 0%, rgba(124,156,255,0.14), transparent 30%),
+        #ffffff !important;
+      box-shadow: 0 28px 72px rgba(15, 23, 42, 0.28) !important;
+      animation: modalCenterPop 0.18s ease-out !important;
+    }
+    
+    @keyframes modalCenterPop {
+      from {
+        opacity: 0;
+        transform: translateY(12px) scale(0.975);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+    
+    .modal-head {
+      padding: 18px 18px 12px !important;
+      align-items: center !important;
+    }
+    
+    .modal-icon {
+      width: 46px !important;
+      height: 46px !important;
+      border-radius: 18px !important;
+      background: linear-gradient(135deg, #eef3ff, #e9efff) !important;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.9);
+    }
+    
+    .modal-title {
+      font-size: 21px !important;
+      color: #172033 !important;
+      letter-spacing: -0.3px;
+    }
+    
+    .modal-sub {
+      margin-top: 4px !important;
+      font-size: 13px !important;
+      color: #64748b !important;
+      font-weight: 700;
+    }
+    
+    .modal-close {
+      width: 44px !important;
+      height: 44px !important;
+      background: #f1f5f9 !important;
+      color: #475569 !important;
+    }
+    
+    /* กล่องข้อความใหม่: ไม่ดำดุแล้ว */
+    .modal-command {
+      margin: 8px 18px 0 !important;
+      padding: 16px 16px !important;
+      border-radius: 22px !important;
+      background:
+        radial-gradient(circle at 96% 0%, rgba(79,109,245,0.12), transparent 34%),
+        linear-gradient(180deg, #f8fbff 0%, #ffffff 100%) !important;
+      border: 1px solid rgba(79, 109, 245, 0.14) !important;
+      color: #172033 !important;
+      font-size: 15px !important;
+      line-height: 1.58 !important;
+      white-space: normal !important;
+      word-break: break-word !important;
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.92),
+        0 10px 26px rgba(15, 23, 42, 0.06) !important;
+    }
+    
+    .modal-command-line {
+      display: block;
+      font-size: 15px;
+      font-weight: 800;
+      color: #24304f;
+    }
+    
+    .modal-command-line + .modal-command-line {
+      margin-top: 5px;
+    }
+    
+    .modal-command-title {
+      margin-bottom: 12px;
+      padding-bottom: 12px;
+      border-bottom: 1px dashed rgba(79, 109, 245, 0.22);
+      font-size: 17px;
+      font-weight: 950;
+      color: #315bc8;
+    }
+    
+    .modal-command-empty {
+      height: 4px;
+    }
+    
+    /* ซ่อน summary card เดิม เพราะข้อมูลซ้ำกับข้อความหลัก */
+    .modal-summary {
+      display: none !important;
+    }
+    
+    .modal-actions {
+      grid-template-columns: 0.9fr 1.35fr !important;
+      gap: 10px !important;
+      padding: 16px 18px 18px !important;
+    }
+    
+    .modal-btn {
+      min-height: 54px !important;
+      border-radius: 19px !important;
+      font-size: 15px !important;
+    }
+    
+    .modal-btn.copy {
+      background: #eef2f7 !important;
+      color: #334155 !important;
+    }
+    
+    .modal-btn.send {
+      background:
+        radial-gradient(circle at 92% 0%, rgba(255,255,255,0.24), transparent 30%),
+        linear-gradient(135deg, var(--blue), var(--blue2)) !important;
+      color: #ffffff !important;
+      box-shadow: 0 12px 24px rgba(79, 109, 245, 0.22) !important;
+    }
+    
+    @media (max-width: 420px) {
+      .review-modal-backdrop {
+        padding: 14px !important;
+      }
+    
+      .review-modal {
+        border-radius: 28px !important;
+        max-height: calc(100vh - 86px) !important;
+      }
+    
+      .modal-actions {
+        grid-template-columns: 1fr !important;
+      }
+    }
+    
   </style>
 </head>
 
@@ -3150,18 +3258,7 @@
           "</div>" +
     
           '<div id="modalCommandText" class="modal-command"></div>' +
-    
-          '<div class="modal-summary">' +
-            '<div class="modal-summary-card">' +
-              '<div class="modal-summary-label">ลูกค้า</div>' +
-              '<div id="modalCustomerName" class="modal-summary-value">-</div>' +
-            "</div>" +
-            '<div class="modal-summary-card">' +
-              '<div class="modal-summary-label">รวม</div>' +
-              '<div id="modalTotalQty" class="modal-summary-value">0 เครื่อง</div>' +
-            "</div>" +
-          "</div>" +
-    
+       
           '<div class="modal-actions">' +
             '<button id="modalCopyBtn" class="modal-btn copy" type="button">คัดลอก</button>' +
             '<button id="modalSendBtn" class="modal-btn send" type="button">ส่ง / เลือกปลายทาง</button>' +
@@ -3178,6 +3275,37 @@
         if (e.target === wrap) closeOrderReviewModal_();
       });
     }
+
+    function orderBuildReviewHtml_() {
+      const text = orderBuildText_();
+      const lines = String(text || "").split("\n");
+    
+      let html = "";
+    
+      lines.forEach(function(line, idx) {
+        const clean = String(line || "").trim();
+    
+        if (!clean) {
+          html += '<span class="modal-command-empty"></span>';
+          return;
+        }
+    
+        if (idx === 0) {
+          html +=
+            '<span class="modal-command-line modal-command-title">' +
+              escapeHtml(clean) +
+            "</span>";
+          return;
+        }
+    
+        html +=
+          '<span class="modal-command-line">' +
+            escapeHtml(clean) +
+          "</span>";
+      });
+    
+      return html || '<span class="modal-command-line">ไม่มีข้อความ</span>';
+    }
     
     function openOrderReviewModal_() {
       if (!orderCanBuild_()) {
@@ -3187,11 +3315,30 @@
     
       ensureOrderReviewModal_();
     
-      $("modalCommandText").textContent = orderBuildText_();
-      $("modalCustomerName").textContent = orderCustomerLabel_() || "-";
-      $("modalTotalQty").textContent = orderFmt_(orderTotalQty_()) + " เครื่อง";
+      const commandBox = $("modalCommandText");
+      if (commandBox) {
+        commandBox.innerHTML = orderBuildReviewHtml_();
+      }
     
-      $("reviewModalBackdrop").classList.add("show");
+      const modalSub = document.querySelector(".modal-sub");
+      if (modalSub) {
+        modalSub.textContent = orderFmt_(orderTotalQty_()) + " เครื่อง · ตรวจสอบก่อนส่ง";
+      }
+    
+      const customerEl = $("modalCustomerName");
+      if (customerEl) {
+        customerEl.textContent = orderCustomerLabel_() || "-";
+      }
+    
+      const totalEl = $("modalTotalQty");
+      if (totalEl) {
+        totalEl.textContent = orderFmt_(orderTotalQty_()) + " เครื่อง";
+      }
+    
+      const backdrop = $("reviewModalBackdrop");
+      if (backdrop) {
+        backdrop.classList.add("show");
+      }
     }
     
     function closeOrderReviewModal_() {
