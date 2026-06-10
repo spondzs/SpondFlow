@@ -1314,7 +1314,7 @@
         <div class="hero-overview-head">
           <div>
             <h2 class="hero-title">ภาพรวมวันนี้</h2>
-            <p class="hero-subtitle">สรุปออเดอร์และยอดขายจาก SpondFlow</p>
+            <p class="hero-subtitle">สรุปออเดอร์และยอดขายจาก น้องกาแฟ☕️</p>
           </div>
         </div>
   
@@ -1541,6 +1541,9 @@
           keyword: "",
           selected: null,
           options: [],
+          allItems: [],
+          preloaded: false,
+          preloadLoading: false,
           dropdownOpen: false,
           loading: false
         },
@@ -1760,6 +1763,7 @@
       bindOrderEvents_();
       orderRenderAll_();
       ensureOrderDataLoaded_();
+      orderPreloadCustomers_();
     }
     
     function setAppTopbar_(title, subtitle, actionText) {
@@ -2410,20 +2414,54 @@
         }
       }
     }
+
+    function orderNormalizeCustomerList_(list) {
+      return (list || []).map(function(x) {
+        return {
+          customerNo: String(x.customerNo || x.CustomerNo || x.no || x.code || "").trim(),
+          name: String(x.name || x.customerName || x.CustomerName || x.shopName || x.label || "").trim(),
+          phone: String(x.phone || x.tel || x.mobile || "").trim(),
+          address: String(x.address || x.Address || "").trim()
+        };
+      }).filter(function(x) {
+        return x.customerNo || x.name;
+      });
+    }
     
-    async function orderLoadCustomers_(keyword) {
+    function orderCustomerSearchText_(c) {
+      return [
+        c.customerNo,
+        c.name,
+        c.phone,
+        c.address
+      ].join(" ").toLowerCase();
+    }
+    
+    function orderFilterCustomersLocal_(keyword, limit) {
+      const st = appState.order;
+      const key = String(keyword || "").trim().toLowerCase();
+    
+      if (!key) return [];
+    
+      return (st.customer.allItems || []).filter(function(c) {
+        return orderCustomerSearchText_(c).indexOf(key) > -1;
+      }).slice(0, Number(limit || 80));
+    }
+    
+    async function orderPreloadCustomers_() {
       const st = appState.order;
     
-      st.customer.loading = true;
-      st.customer.keyword = String(keyword || "");
+      if (st.customer.preloaded || st.customer.preloadLoading) return;
+    
+      st.customer.preloadLoading = true;
     
       try {
         const data = await callGasJsonp({
           action: ORDER_ACTIONS.customers,
           idToken: currentIdToken || currentUser.idToken || "",
           lineUserId: currentUser.lineUserId || "",
-          keyword: st.customer.keyword,
-          limit: 80
+          keyword: "",
+          limit: 800
         });
     
         if (data && data.ok === false) {
@@ -2432,16 +2470,46 @@
     
         const list = orderUnwrapList_(data, ["customers", "items", "data", "results"]);
     
-        st.customer.options = list.map(function(x) {
-          return {
-            customerNo: String(x.customerNo || x.CustomerNo || x.no || x.code || "").trim(),
-            name: String(x.name || x.customerName || x.CustomerName || x.shopName || x.label || "").trim(),
-            phone: String(x.phone || x.tel || x.mobile || "").trim(),
-            address: String(x.address || x.Address || "").trim()
-          };
-        }).filter(function(x) {
-          return x.customerNo || x.name;
+        st.customer.allItems = orderNormalizeCustomerList_(list);
+        st.customer.preloaded = true;
+    
+      } catch (err) {
+        console.warn("[orderPreloadCustomers_]", err);
+        st.customer.preloaded = false;
+    
+      } finally {
+        st.customer.preloadLoading = false;
+      }
+    }
+    
+    async function orderLoadCustomers_(keyword) {
+      const st = appState.order;
+      const key = String(keyword || "").trim();
+    
+      st.customer.loading = true;
+      st.customer.keyword = key;
+    
+      try {
+        if (st.customer.preloaded && st.customer.allItems.length) {
+          st.customer.options = orderFilterCustomersLocal_(key, 80);
+          orderRenderCustomerDropdown_();
+          return;
+        }
+    
+        const data = await callGasJsonp({
+          action: ORDER_ACTIONS.customers,
+          idToken: currentIdToken || currentUser.idToken || "",
+          lineUserId: currentUser.lineUserId || "",
+          keyword: key,
+          limit: 80
         });
+    
+        if (data && data.ok === false) {
+          throw new Error(data.error || data.message || "โหลดลูกค้าไม่สำเร็จ");
+        }
+    
+        const list = orderUnwrapList_(data, ["customers", "items", "data", "results"]);
+        st.customer.options = orderNormalizeCustomerList_(list);
     
         orderRenderCustomerDropdown_();
     
@@ -3063,6 +3131,47 @@
       const el = $("reviewModalBackdrop");
       if (el) el.classList.remove("show");
     }
+
+    function orderResetAfterSubmit_(opt) {
+      opt = opt || {};
+    
+      const st = appState.order;
+    
+      // เคลียร์รายการสินค้า / จำนวนที่เลือก
+      st.cart = {};
+    
+      // เคลียร์คำค้นสินค้า
+      st.catalog.keyword = "";
+    
+      const catalogInput = $("catalogSearch");
+      if (catalogInput) {
+        catalogInput.value = "";
+      }
+    
+      // ค่า default: ยังเก็บลูกค้าไว้ เผื่อสั่งต่อให้ร้านเดิม
+      // ถ้าอยากให้ส่งเสร็จแล้วเคลียร์ลูกค้าด้วย ให้เรียก { clearCustomer: true }
+      if (opt.clearCustomer) {
+        st.customer.keyword = "";
+        st.customer.selected = null;
+        st.customer.options = [];
+        st.customer.dropdownOpen = false;
+    
+        const customerInput = $("customerSearch");
+        if (customerInput) {
+          customerInput.value = "";
+        }
+      }
+    
+      closeOrderReviewModal_();
+      orderRenderAll_();
+    
+      setTimeout(function() {
+        const catalogInputAfter = $("catalogSearch");
+        if (catalogInputAfter) {
+          catalogInputAfter.focus();
+        }
+      }, 120);
+    }
     
     function fallbackCopy_(text) {
       const ta = document.createElement("textarea");
@@ -3204,13 +3313,12 @@
         // group / room = ส่งกลับห้องเดิม
         if (contextType === "group" || contextType === "room") {
           await sendOrderToCurrentChat_();
-    
-          setTimeout(function() {
-            try {
-              liff.closeWindow();
-            } catch (e) {}
-          }, 700);
-    
+        
+          orderResetAfterSubmit_({
+            clearCustomer: false
+          });
+        
+          showToast("ส่งออเดอร์เรียบร้อย", "success", 1800);
           return;
         }
     
@@ -3220,13 +3328,13 @@
             const sent = await sendOrderByShareTargetPicker_();
     
             if (sent) {
-              setTimeout(function() {
-                try {
-                  liff.closeWindow();
-                } catch (e) {}
-              }, 700);
+              orderResetAfterSubmit_({
+                clearCustomer: false
+              });
+            
+              showToast("ส่งออเดอร์เรียบร้อย", "success", 1800);
             }
-    
+            
             return;
           }
     
@@ -3248,7 +3356,7 @@
       } finally {
         if (modalSendBtn) {
           modalSendBtn.disabled = false;
-          modalSendBtn.textContent = oldText || "ส่งเข้ากลุ่ม";
+          modalSendBtn.textContent = oldText || "ส่ง / เลือกปลายทาง";
         }
       }
     }
@@ -3287,9 +3395,14 @@
           st.customer.dropdownOpen = true;
           orderRenderAll_();
     
-          orderDebounce_(function() {
-            orderLoadCustomers_(v);
-          }, 260, "customer");
+          if (st.customer.preloaded && st.customer.allItems.length) {
+            st.customer.options = orderFilterCustomersLocal_(v, 80);
+            orderRenderCustomerDropdown_();
+          } else {
+            orderDebounce_(function() {
+              orderLoadCustomers_(v);
+            }, 260, "customer");
+          }
         });
       }
     
