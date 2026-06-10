@@ -1481,6 +1481,19 @@
         grid-template-columns: 1fr !important;
       }
     }
+
+    .order-cart-bar {
+      z-index: 9990 !important;
+    }
+    
+    .order-cart-bar.show {
+      pointer-events: auto !important;
+    }
+    
+    .order-cart-button {
+      pointer-events: auto !important;
+      cursor: pointer;
+    }
     
   </style>
 </head>
@@ -2562,18 +2575,13 @@
       }
     
       bar.innerHTML =
-        '<button id="orderCartBarBtn" class="order-cart-button" type="button">' +
+        '<button class="order-cart-button" type="button" onclick="openOrderReviewModal_()">' +
           '<span class="order-cart-count">' + orderFmt_(qty) + "</span>" +
           '<span class="order-cart-title">ตรวจสอบรายการ</span>' +
           '<span class="order-cart-total">฿' + orderFmt_(amount) + "</span>" +
         "</button>";
     
       bar.classList.add("show");
-    
-      const btn = $("orderCartBarBtn");
-      if (btn) {
-        btn.addEventListener("click", openOrderReviewModal_);
-      }
     }
 
     function orderNormalizeBrandKey_(brand) {
@@ -3269,8 +3277,16 @@
     
       $("modalCloseBtn").addEventListener("click", closeOrderReviewModal_);
       $("modalCopyBtn").addEventListener("click", copyOrderText_);
-      $("modalSendBtn").addEventListener("click", sendOrderToChat_);
-    
+      
+      $("modalSendBtn").addEventListener("click", function() {
+        if (typeof sendOrderToChat_ === "function") {
+          sendOrderToChat_();
+          return;
+        }
+      
+        showToast("ยังไม่พบฟังก์ชันส่งข้อความครับ", "error", 1800);
+      });
+      
       wrap.addEventListener("click", function(e) {
         if (e.target === wrap) closeOrderReviewModal_();
       });
@@ -3316,8 +3332,13 @@
       ensureOrderReviewModal_();
     
       const commandBox = $("modalCommandText");
+    
       if (commandBox) {
-        commandBox.innerHTML = orderBuildReviewHtml_();
+        if (typeof orderBuildReviewHtml_ === "function") {
+          commandBox.innerHTML = orderBuildReviewHtml_();
+        } else {
+          commandBox.textContent = orderBuildText_();
+        }
       }
     
       const modalSub = document.querySelector(".modal-sub");
@@ -3338,6 +3359,8 @@
       const backdrop = $("reviewModalBackdrop");
       if (backdrop) {
         backdrop.classList.add("show");
+      } else {
+        showToast("เปิดกล่องตรวจสอบไม่ได้ครับ", "error", 1800);
       }
     }
     
