@@ -3164,7 +3164,7 @@
     
           '<div class="modal-actions">' +
             '<button id="modalCopyBtn" class="modal-btn copy" type="button">คัดลอก</button>' +
-            '<button id="modalSendBtn" class="modal-btn send" type="button">ส่งเข้ากลุ่ม</button>' +
+            '<button id="modalSendBtn" class="modal-btn send" type="button">ส่ง / เลือกปลายทาง</button>' +
           "</div>" +
         "</div>";
     
@@ -3247,6 +3247,71 @@
         }
       }
     }
+
+    function getLiffContextType_() {
+      try {
+        if (!window.liff || !liffReady || typeof liff.getContext !== "function") {
+          return "external";
+        }
+    
+        const ctx = liff.getContext() || {};
+        return String(ctx.type || "external");
+      } catch (err) {
+        console.warn("[getLiffContextType_]", err);
+        return "external";
+      }
+    }
+    
+    function canUseShareTargetPicker_() {
+      try {
+        if (!window.liff || !liffReady) return false;
+        if (typeof liff.shareTargetPicker !== "function") return false;
+    
+        if (typeof liff.isApiAvailable === "function") {
+          return !!liff.isApiAvailable("shareTargetPicker");
+        }
+    
+        return true;
+      } catch (err) {
+        console.warn("[canUseShareTargetPicker_]", err);
+        return false;
+      }
+    }
+    
+    function buildOrderMessageObjects_() {
+      return [
+        {
+          type: "text",
+          text: orderBuildText_()
+        }
+      ];
+    }
+    
+    async function sendOrderByShareTargetPicker_() {
+      const result = await liff.shareTargetPicker(buildOrderMessageObjects_(), {
+        isMultiple: false
+      });
+    
+      // result undefined = user กดยกเลิก / ปิด picker
+      if (!result) {
+        showToast("ยกเลิกการเลือกปลายทางครับ", "warn", 1600);
+        return false;
+      }
+    
+      if (result.status === "success") {
+        showToast("ส่งผ่านตัวเลือกปลายทางแล้วครับ", "success", 1400);
+        return true;
+      }
+    
+      showToast("ยังไม่ได้ส่งข้อความครับ", "warn", 1600);
+      return false;
+    }
+    
+    async function sendOrderToCurrentChat_() {
+      await liff.sendMessages(buildOrderMessageObjects_());
+      showToast("ส่งเข้าห้องแชทแล้วครับ", "success", 1400);
+      return true;
+    }
     
     async function sendOrderToChat_() {
       if (!orderCanBuild_()) {
@@ -3254,11 +3319,9 @@
         return;
       }
     
-      const text = orderBuildText_();
-    
-      if (!window.liff || !liffReady || !liff.isInClient()) {
+      if (!window.liff || !liffReady) {
         await copyOrderText_();
-        showToast("ส่งเข้ากลุ่มไม่ได้ในเบราว์เซอร์ จึงคัดลอกให้แทนครับ", "warn", 2200);
+        showToast("LIFF ไม่พร้อม จึงคัดลอกข้อความให้แทนครับ", "warn", 2200);
         return;
       }
     
@@ -3271,23 +3334,49 @@
           modalSendBtn.textContent = "กำลังส่ง...";
         }
     
-        await liff.sendMessages([
-          {
-            type: "text",
-            text: text
+        const contextType = getLiffContextType_();
+    
+        // group / room = ส่งกลับห้องเดิม
+        if (contextType === "group" || contextType === "room") {
+          await sendOrderToCurrentChat_();
+    
+          setTimeout(function() {
+            try {
+              liff.closeWindow();
+            } catch (e) {}
+          }, 700);
+    
+          return;
+        }
+    
+        // utou = 1:1 กับบอท → เปิดตัวเลือกปลายทาง
+        if (contextType === "utou") {
+          if (canUseShareTargetPicker_()) {
+            const sent = await sendOrderByShareTargetPicker_();
+    
+            if (sent) {
+              setTimeout(function() {
+                try {
+                  liff.closeWindow();
+                } catch (e) {}
+              }, 700);
+            }
+    
+            return;
           }
-        ]);
     
-        showToast("ส่งเข้ากลุ่มแล้วครับ", "success", 1400);
+          await copyOrderText_();
+          showToast("เครื่องนี้ยังเปิดตัวเลือกปลายทางไม่ได้ จึงคัดลอกให้แทนครับ", "warn", 2400);
+          return;
+        }
     
-        setTimeout(function() {
-          try {
-            liff.closeWindow();
-          } catch (e) {}
-        }, 700);
+        // external / none / อื่น ๆ = คัดลอก
+        await copyOrderText_();
+        showToast("เปิดนอกห้องแชท LINE จึงคัดลอกข้อความให้แทนครับ", "warn", 2400);
     
       } catch (err) {
-        console.error(err);
+        console.error("[sendOrderToChat_]", err);
+    
         await copyOrderText_();
         showToast("ส่งไม่สำเร็จ เลยคัดลอกข้อความให้แทนครับ", "warn", 2400);
     
