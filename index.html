@@ -3154,7 +3154,7 @@
     
     async function sendOrderByShareTargetPicker_() {
       const result = await liff.shareTargetPicker(buildOrderMessageObjects_(), {
-        isMultiple: false
+        isMultiple: true
       });
     
       // result undefined = user กดยกเลิก / ปิด picker
