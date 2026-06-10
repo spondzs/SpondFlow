@@ -1482,6 +1482,42 @@
       }
     }
 
+    /* =========================================================
+     * FIX: ORDER REVIEW MODAL LAYER / CART TOUCH
+     * วางท้ายสุดก่อน </style>
+     * ========================================================= */
+    
+    .review-modal-backdrop {
+      position: fixed !important;
+      inset: 0 !important;
+      z-index: 99980 !important;
+    
+      display: none !important;
+      align-items: center !important;
+      justify-content: center !important;
+    
+      padding: 18px !important;
+      background: rgba(15, 23, 42, 0.42) !important;
+      backdrop-filter: blur(10px) !important;
+      -webkit-backdrop-filter: blur(10px) !important;
+    }
+    
+    .review-modal-backdrop.show {
+      display: flex !important;
+    }
+    
+    .review-modal {
+      width: min(520px, 100%) !important;
+      max-height: calc(100vh - 96px) !important;
+      overflow-y: auto !important;
+      border-radius: 30px !important;
+      background:
+        radial-gradient(circle at 100% 0%, rgba(124,156,255,0.14), transparent 30%),
+        #ffffff !important;
+      box-shadow: 0 28px 72px rgba(15, 23, 42, 0.28) !important;
+      animation: modalCenterPop 0.18s ease-out !important;
+    }
+    
     .order-cart-bar {
       z-index: 9990 !important;
     }
@@ -1988,7 +2024,6 @@
       setAppTopbar_("สร้างฟอร์ม #สั่งของ", "เลือกสินค้าแล้วส่งเข้ากลุ่ม", "‹");
     
       bindOrderEvents_();
-      ensureOrderReviewModal_();
       orderRenderAll_();
       ensureOrderDataLoaded_();
     }
@@ -2479,88 +2514,7 @@
         }
       }
     }
-
-    function orderInferBrand_(modelBase) {
-      const s = String(modelBase || "").trim().toLowerCase();
-    
-      if (s.indexOf("iqoo") === 0 || s.indexOf("iqoo") > -1) return "iQOO";
-      if (s.indexOf("vivo") === 0) return "vivo";
-    
-      // ถ้าไม่มีคำว่า vivo / iQOO แต่เป็นสินค้ามือถือหลักตอนนี้ ให้ fallback เป็น vivo ก่อน
-      if (/^(y|v|x|z)\d/i.test(String(modelBase || "").trim())) return "vivo";
-    
-      return "อื่น ๆ";
-    }
-    
-    function orderCollectBrands_(items) {
-      const map = {};
-    
-      (items || []).forEach(function(item) {
-        const b = String(item.brand || "").trim();
-        if (b) map[b] = true;
-      });
-    
-      const priority = {
-        "vivo": 1,
-        "iqoo": 2,
-        "อื่น ๆ": 99
-      };
-    
-      const brands = Object.keys(map).sort(function(a, b) {
-        const pa = priority[String(a).toLowerCase()] || priority[a] || 50;
-        const pb = priority[String(b).toLowerCase()] || priority[b] || 50;
-    
-        if (pa !== pb) return pa - pb;
-        return String(a).localeCompare(String(b), "th");
-      });
-    
-      brands.unshift("all");
-    
-      return brands;
-    }
-    
-    function orderBrandLabel_(brand) {
-      const b = String(brand || "").trim();
-    
-      if (!b || b === "all") return "ทั้งหมด";
-      if (b.toLowerCase() === "iqoo") return "iQOO";
-      if (b.toLowerCase() === "vivo") return "vivo";
-    
-      return b;
-    }
-    
-    function orderGetFilteredItems_() {
-      const st = appState.order;
-    
-      const keyword = String(st.catalog.keyword || "").trim().toLowerCase();
-      const activeBrand = String(st.catalog.activeBrand || "all").trim().toLowerCase();
-    
-      return (st.catalog.items || []).filter(function(item) {
-        const itemBrand = String(item.brand || "").trim().toLowerCase();
-    
-        const searchText = [
-          item.brand,
-          item.displayName,
-          item.modelBase,
-          item.orderLine,
-          item.series,
-          item.color
-        ].join(" ").toLowerCase();
-    
-        const brandOk = activeBrand === "all" || itemBrand === activeBrand;
-        const keywordOk = !keyword || searchText.indexOf(keyword) > -1;
-        const stockOk = orderAvailableQty_(item) > 0;
-    
-        return brandOk && keywordOk && stockOk;
-      });
-    }
-    
-    function orderTotalAmount_() {
-      return orderCartItems_().reduce(function(sum, item) {
-        return sum + Number(item.qty || 0) * Number(item.price || 0);
-      }, 0);
-    }
-           
+          
     function orderRenderFloatingCart_() {
       const bar = $("orderCartBar");
       if (!bar) return;
@@ -2575,13 +2529,22 @@
       }
     
       bar.innerHTML =
-        '<button class="order-cart-button" type="button" onclick="openOrderReviewModal_()">' +
+        '<button class="order-cart-button" type="button">' +
           '<span class="order-cart-count">' + orderFmt_(qty) + "</span>" +
           '<span class="order-cart-title">ตรวจสอบรายการ</span>' +
           '<span class="order-cart-total">฿' + orderFmt_(amount) + "</span>" +
         "</button>";
     
       bar.classList.add("show");
+    
+      const btn = bar.querySelector(".order-cart-button");
+      if (btn) {
+        btn.onclick = function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          openOrderReviewModal_();
+        };
+      }
     }
 
     function orderNormalizeBrandKey_(brand) {
@@ -2988,8 +2951,6 @@
       orderRenderSelectedCustomer_();
       orderRenderBrandTabs_();
       orderRenderCatalog_();
-      orderRenderReview_();
-      orderRenderButtons_();
       orderRenderFloatingCart_();
     }
     
