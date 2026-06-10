@@ -1059,6 +1059,236 @@
       color: #ffffff;
       box-shadow: 0 12px 24px rgba(79, 109, 245, 0.22);
     }
+
+    /* =========================================================
+     * STOCK VIEW V1
+     * ========================================================= */
+    
+    .app.view-stock {
+      padding-bottom: calc(88px + var(--safe-bottom));
+    }
+    
+    .app.view-stock .topbar {
+      padding-left: 58px;
+    }
+    
+    .stock-view {
+      padding: 2px 0 104px;
+    }
+    
+    .stock-filter-card .search-wrap {
+      min-height: 46px;
+      border-radius: 16px;
+    }
+    
+    .stock-filter-card .search-input {
+      font-size: 15px;
+    }
+    
+    .stock-warehouse-tabs {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 12px;
+    }
+    
+    .stock-wh-tab {
+      min-height: 38px;
+      border: 1px solid rgba(79, 109, 245, 0.14);
+      border-radius: 999px;
+      background: rgba(255,255,255,0.72);
+      color: #64748b;
+      font-size: 12px;
+      font-weight: 950;
+    }
+    
+    .stock-wh-tab.active {
+      background: linear-gradient(135deg, var(--blue), var(--blue2));
+      color: #ffffff;
+      border-color: rgba(255,255,255,0.42);
+      box-shadow: 0 10px 22px rgba(79, 109, 245, 0.18);
+    }
+    
+    .stock-summary-card {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+    
+    .stock-summary-item {
+      padding: 14px;
+      border-radius: 22px;
+      background:
+        radial-gradient(circle at 95% 0%, rgba(79,109,245,0.10), transparent 34%),
+        #ffffff;
+      border: 1px solid rgba(79, 109, 245, 0.10);
+      box-shadow: var(--shadow-soft);
+    }
+    
+    .stock-summary-value {
+      font-size: 24px;
+      font-weight: 950;
+      color: #315bc8;
+      letter-spacing: -0.5px;
+    }
+    
+    .stock-summary-label {
+      margin-top: 3px;
+      font-size: 12px;
+      color: #64748b;
+      font-weight: 800;
+    }
+    
+    .stock-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    
+    .stock-card {
+      padding: 14px;
+      border-radius: 22px;
+      border: 1px solid #e2e8f0;
+      background:
+        radial-gradient(circle at 98% 0%, rgba(79,109,245,0.08), transparent 30%),
+        linear-gradient(180deg, #ffffff, #fbfcff);
+      box-shadow: 0 8px 18px rgba(15, 23, 42, 0.04);
+    }
+    
+    .stock-card-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    
+    .stock-card-name {
+      font-size: 16px;
+      font-weight: 950;
+      color: #111827;
+      line-height: 1.35;
+      word-break: break-word;
+    }
+    
+    .stock-card-price {
+      white-space: nowrap;
+      font-size: 14px;
+      font-weight: 950;
+      color: #315bc8;
+    }
+    
+    .stock-card-meta {
+      margin-top: 8px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    
+    .stock-chip {
+      display: inline-flex;
+      align-items: center;
+      min-height: 26px;
+      padding: 0 9px;
+      border-radius: 999px;
+      background: #f1f5ff;
+      color: #334155;
+      font-size: 12px;
+      font-weight: 850;
+    }
+    
+    .stock-chip.brand {
+      background: #eef3ff;
+      color: #315bc8;
+    }
+    
+    .stock-chip.qty {
+      background: #ecfdf5;
+      color: #15803d;
+    }
+    
+    .stock-share-bar {
+      position: fixed;
+      left: 50%;
+      bottom: calc(14px + var(--safe-bottom));
+      z-index: 9990;
+      width: min(720px, calc(100vw - 28px));
+      transform: translateX(-50%) translateY(18px);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.18s ease, transform 0.18s ease;
+    }
+    
+    .stock-share-bar.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+      pointer-events: auto;
+    }
+    
+    .stock-share-button {
+      width: 100%;
+      min-height: 62px;
+      border: 0;
+      border-radius: 22px;
+      padding: 0 18px;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: 12px;
+      background:
+        radial-gradient(circle at 92% 0%, rgba(255,255,255,0.26), transparent 28%),
+        linear-gradient(135deg, var(--blue), var(--blue2));
+      color: #ffffff;
+      box-shadow: 0 18px 42px rgba(79, 109, 245, 0.30);
+    }
+    
+    .stock-share-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      background: rgba(255,255,255,0.96);
+      color: var(--blue);
+      font-size: 17px;
+      font-weight: 950;
+    }
+    
+    .stock-share-title {
+      text-align: left;
+      font-size: 16px;
+      font-weight: 950;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    
+    .stock-share-count {
+      font-size: 15px;
+      font-weight: 950;
+      white-space: nowrap;
+    }
+    
+    @media (max-width: 420px) {
+      .app.view-stock .topbar {
+        padding-left: 56px;
+      }
+    
+      .stock-warehouse-tabs {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    
+      .stock-share-button {
+        min-height: 60px;
+        border-radius: 20px;
+        padding: 0 15px;
+      }
+    
+      .stock-share-title,
+      .stock-share-count {
+        font-size: 15px;
+      }
+    }
   
     /* =========================================================
      * TOAST / LOADING
@@ -1400,6 +1630,41 @@
     <div id="orderCartBar" class="order-cart-bar"></div>
   </template>
 
+  <template id="stockViewTemplate">
+    <button class="order-back-fab" type="button" onclick="openView('home')" aria-label="Back">‹</button>
+  
+    <main class="content stock-view">
+      <section class="card stock-filter-card">
+        <div class="card-title">ค้นหาสต็อก</div>
+  
+        <div class="search-wrap">
+          <div class="search-icon">⌕</div>
+          <input id="stockSearch" class="search-input" placeholder="ค้นหารุ่น เช่น Y11d, V70, X300">
+        </div>
+  
+        <div id="stockBrandTabs" class="brand-tabs"></div>
+  
+        <div id="stockWarehouseTabs" class="stock-warehouse-tabs"></div>
+      </section>
+  
+      <section class="stock-summary-card">
+        <div class="stock-summary-item">
+          <div id="stockSummaryModels" class="stock-summary-value">—</div>
+          <div class="stock-summary-label">รุ่นที่แสดง</div>
+        </div>
+  
+        <div class="stock-summary-item">
+          <div id="stockSummaryQty" class="stock-summary-value">—</div>
+          <div class="stock-summary-label">เครื่องพร้อมขาย</div>
+        </div>
+      </section>
+  
+      <section id="stockList" class="stock-list"></section>
+    </main>
+  
+    <div id="stockShareBar" class="stock-share-bar"></div>
+  </template>
+
   <div id="toast" class="toast"></div>
 
   <script>
@@ -1437,11 +1702,11 @@
       {
         key: "stock",
         title: "ดูสต็อก",
-        desc: "เช็กโควต้าและสินค้าพร้อมขาย",
+        desc: "เช็กโควต้าและแชร์รายการพร้อมขาย",
         icon: "📦",
         tag: "Stock",
         color: "green",
-        href: CONFIG.links.stock
+        view: "stock"
       },
       {
         key: "quotes",
@@ -1557,6 +1822,16 @@
         },
     
         cart: {}
+      },
+    
+      stock: {
+        initialized: false,
+        loading: false,
+        keyword: "",
+        activeBrand: "all",
+        warehouseKey: "all",
+        brands: ["all"],
+        items: []
       }
     };
   
@@ -1718,6 +1993,11 @@
         renderOrderView_();
         return;
       }
+      
+      if (currentView === "stock") {
+        renderStockView_();
+        return;
+      }
     
       showToast("เมนูนี้ยังไม่ได้ย้ายเข้า App Shell ครับ");
       currentView = "home";
@@ -1730,7 +2010,10 @@
       if (!root || !tpl) return;
 
       const app = document.getElementById("app");
-      if (app) app.classList.remove("view-order");
+      if (app) {
+        app.classList.remove("view-order");
+        app.classList.remove("view-stock");
+      }
     
       root.innerHTML = "";
       root.appendChild(tpl.content.cloneNode(true));
@@ -1753,7 +2036,10 @@
       if (!root || !tpl) return;
 
       const app = document.getElementById("app");
-      if (app) app.classList.add("view-order");
+      if (app) {
+        app.classList.add("view-order");
+        app.classList.remove("view-stock");
+      }
     
       root.innerHTML = "";
       root.appendChild(tpl.content.cloneNode(true));
@@ -1764,6 +2050,27 @@
       orderRenderAll_();
       ensureOrderDataLoaded_();
       orderPreloadCustomers_();
+    }
+
+    function renderStockView_() {
+      const root = document.getElementById("viewRoot");
+      const tpl = document.getElementById("stockViewTemplate");
+      if (!root || !tpl) return;
+    
+      const app = document.getElementById("app");
+      if (app) {
+        app.classList.add("view-stock");
+        app.classList.remove("view-order");
+      }
+    
+      root.innerHTML = "";
+      root.appendChild(tpl.content.cloneNode(true));
+    
+      setAppTopbar_("ดูสต็อกสินค้า", "เช็กโควต้าและแชร์ให้ลูกค้า", "↻");
+    
+      bindStockEvents_();
+      stockRenderAll_();
+      ensureStockLoaded_();
     }
     
     function setAppTopbar_(title, subtitle, actionText) {
@@ -1779,6 +2086,11 @@
     function handleTopAction_() {
       if (currentView === "home") {
         refreshHome();
+        return;
+      }
+    
+      if (currentView === "stock") {
+        stockReload_();
         return;
       }
     
@@ -3464,6 +3776,501 @@
         });
     
         window.__spondOrderDocClickBound = true;
+      }
+    }
+
+    const STOCK_WAREHOUSES = [
+      { key: "all", label: "รวม" },
+      { key: "RemainQuota", label: "Main" },
+      { key: "RemainQuota2", label: "ลำปาง" },
+      { key: "RemainQuota3", label: "ลำพูน" }
+    ];
+    
+    async function ensureStockLoaded_() {
+      const st = appState.stock;
+    
+      if (st.initialized && st.items.length) {
+        stockRenderAll_();
+        return;
+      }
+    
+      await stockReload_();
+    }
+    
+    async function stockReload_() {
+      const st = appState.stock;
+    
+      st.loading = true;
+      stockRenderAll_();
+    
+      try {
+        const data = await callGasJsonp({
+          action: ORDER_ACTIONS.catalog,
+          idToken: currentIdToken || currentUser.idToken || "",
+          lineUserId: currentUser.lineUserId || "",
+          keyword: "",
+          brand: "all",
+          warehouseKey: "all",
+          limit: 800
+        });
+    
+        if (data && data.ok === false) {
+          throw new Error(data.error || data.message || "โหลดสต็อกไม่สำเร็จ");
+        }
+    
+        const list = orderUnwrapList_(data, ["stockItems", "catalog", "items", "products", "data", "results"]);
+    
+        st.items = stockAggregateItems_(
+          list.map(stockNormalizeItem_).filter(function(x) {
+            return !!(x && x.modelBase);
+          })
+        );
+    
+        st.brands = stockCollectBrands_(st.items);
+        st.initialized = true;
+    
+        const activeKey = orderNormalizeBrandKey_(st.activeBrand || "all");
+        const hasActive = st.brands.some(function(b) {
+          return orderNormalizeBrandKey_(b) === activeKey;
+        });
+    
+        if (!hasActive) st.activeBrand = "all";
+    
+      } catch (err) {
+        console.error("[stockReload_]", err);
+        showToast(err.message || "โหลดสต็อกไม่สำเร็จ", "error", 2400);
+    
+        st.items = [];
+        st.brands = ["all"];
+    
+      } finally {
+        st.loading = false;
+    
+        if (currentView === "stock") {
+          stockRenderAll_();
+        }
+      }
+    }
+    
+    function stockNormalizeItem_(x) {
+      x = x || {};
+    
+      const modelBase = String(x.modelBase || x.ModelBase || x.model || "").trim();
+      const warehouseKey = String(x.warehouseKey || x.WarehouseKey || "RemainQuota").trim();
+    
+      const rawBrand = String(
+        x.brand ||
+        x.Brand ||
+        x["แบรนด์"] ||
+        x.brandName ||
+        x.BrandName ||
+        ""
+      ).trim();
+    
+      const brand = rawBrand || orderInferBrand_(modelBase);
+    
+      const remain = Number(
+        x.remainQuota ||
+        x.available ||
+        x.qtyAvailable ||
+        x.RemainQuota ||
+        0
+      );
+    
+      const quota = {
+        RemainQuota: 0,
+        RemainQuota2: 0,
+        RemainQuota3: 0
+      };
+    
+      if (warehouseKey === "RemainQuota" || warehouseKey === "RemainQuota2" || warehouseKey === "RemainQuota3") {
+        quota[warehouseKey] = remain;
+      } else {
+        quota.RemainQuota = Number(x.RemainQuota || 0);
+        quota.RemainQuota2 = Number(x.RemainQuota2 || 0);
+        quota.RemainQuota3 = Number(x.RemainQuota3 || 0);
+      }
+    
+      return {
+        id: String(x.id || modelBase + "|" + warehouseKey),
+        modelBase: modelBase,
+        brand: brand,
+        series: String(x.series || x.Series || "").trim(),
+        displayName: String(x.displayName || x.name || modelBase).trim(),
+        color: String(x.color || x.colorName || x.ColorName || x.ColorTH || "").trim(),
+        price: Number(x.price || x.priceWholesale || x.PriceWholesale || 0),
+        quota: quota
+      };
+    }
+    
+    function stockAggregateItems_(items) {
+      const map = {};
+    
+      (items || []).forEach(function(item) {
+        const key = String(item.modelBase || "").trim();
+        if (!key) return;
+    
+        if (!map[key]) {
+          map[key] = {
+            modelBase: item.modelBase,
+            brand: item.brand,
+            series: item.series,
+            displayName: item.displayName || item.modelBase,
+            color: item.color,
+            price: item.price || 0,
+            quota: {
+              RemainQuota: 0,
+              RemainQuota2: 0,
+              RemainQuota3: 0
+            }
+          };
+        }
+    
+        map[key].quota.RemainQuota += Number(item.quota.RemainQuota || 0);
+        map[key].quota.RemainQuota2 += Number(item.quota.RemainQuota2 || 0);
+        map[key].quota.RemainQuota3 += Number(item.quota.RemainQuota3 || 0);
+    
+        if (!map[key].price && item.price) map[key].price = item.price;
+        if (!map[key].brand && item.brand) map[key].brand = item.brand;
+      });
+    
+      return Object.keys(map).map(function(k) {
+        return map[k];
+      }).sort(function(a, b) {
+        return String(a.displayName || "").localeCompare(String(b.displayName || ""), "th", {
+          numeric: true,
+          sensitivity: "base"
+        });
+      });
+    }
+    
+    function stockCollectBrands_(items) {
+      if (typeof orderCollectBrands_ === "function") {
+        return orderCollectBrands_(items || []);
+      }
+    
+      const map = {};
+      (items || []).forEach(function(item) {
+        const b = String(item.brand || "").trim();
+        if (b) map[b] = true;
+      });
+    
+      const brands = Object.keys(map).sort();
+      brands.unshift("all");
+      return brands;
+    }
+    
+    function stockQty_(item, warehouseKey) {
+      const q = item && item.quota ? item.quota : {};
+    
+      if (!warehouseKey || warehouseKey === "all") {
+        return Number(q.RemainQuota || 0) +
+          Number(q.RemainQuota2 || 0) +
+          Number(q.RemainQuota3 || 0);
+      }
+    
+      return Number(q[warehouseKey] || 0);
+    }
+    
+    function stockGetFilteredItems_() {
+      const st = appState.stock;
+    
+      const keyword = String(st.keyword || "").trim().toLowerCase();
+      const activeBrandKey = orderNormalizeBrandKey_(st.activeBrand || "all");
+      const warehouseKey = st.warehouseKey || "all";
+    
+      return (st.items || []).filter(function(item) {
+        const brandKey = orderNormalizeBrandKey_(item.brand || "");
+    
+        const searchText = [
+          item.brand,
+          item.displayName,
+          item.modelBase,
+          item.series,
+          item.color
+        ].join(" ").toLowerCase();
+    
+        const brandOk = activeBrandKey === "all" || brandKey === activeBrandKey;
+        const keywordOk = !keyword || searchText.indexOf(keyword) > -1;
+        const qtyOk = stockQty_(item, warehouseKey) > 0;
+    
+        return brandOk && keywordOk && qtyOk;
+      });
+    }
+    
+    function stockRenderAll_() {
+      stockRenderBrandTabs_();
+      stockRenderWarehouseTabs_();
+      stockRenderSummary_();
+      stockRenderList_();
+      stockRenderShareBar_();
+    }
+    
+    function stockRenderBrandTabs_() {
+      const st = appState.stock;
+      const box = $("stockBrandTabs");
+      if (!box) return;
+    
+      const brands = st.brands && st.brands.length ? st.brands : ["all"];
+      let html = "";
+    
+      brands.forEach(function(brand) {
+        const active = orderNormalizeBrandKey_(brand) === orderNormalizeBrandKey_(st.activeBrand || "all")
+          ? " active"
+          : "";
+    
+        html +=
+          '<button class="brand-tab' + active + '" type="button" data-brand="' + escapeHtml(brand) + '">' +
+            escapeHtml(orderBrandLabel_(brand)) +
+          "</button>";
+      });
+    
+      box.innerHTML = html;
+    }
+    
+    function stockRenderWarehouseTabs_() {
+      const st = appState.stock;
+      const box = $("stockWarehouseTabs");
+      if (!box) return;
+    
+      let html = "";
+    
+      STOCK_WAREHOUSES.forEach(function(wh) {
+        const active = wh.key === st.warehouseKey ? " active" : "";
+    
+        html +=
+          '<button class="stock-wh-tab' + active + '" type="button" data-wh="' + escapeHtml(wh.key) + '">' +
+            escapeHtml(wh.label) +
+          "</button>";
+      });
+    
+      box.innerHTML = html;
+    }
+    
+    function stockRenderSummary_() {
+      const items = stockGetFilteredItems_();
+      const qty = items.reduce(function(sum, item) {
+        return sum + stockQty_(item, appState.stock.warehouseKey);
+      }, 0);
+    
+      setTextSafe("stockSummaryModels", orderFmt_(items.length));
+      setTextSafe("stockSummaryQty", orderFmt_(qty));
+    }
+    
+    function stockRenderList_() {
+      const st = appState.stock;
+      const box = $("stockList");
+      if (!box) return;
+    
+      if (st.loading) {
+        box.innerHTML = '<div class="empty">กำลังโหลดสต็อก...</div>';
+        return;
+      }
+    
+      const items = stockGetFilteredItems_();
+    
+      if (!items.length) {
+        box.innerHTML = '<div class="empty">ไม่พบสินค้าพร้อมขายในเงื่อนไขนี้ครับ</div>';
+        return;
+      }
+    
+      let html = "";
+    
+      items.forEach(function(item) {
+        const qty = stockQty_(item, st.warehouseKey);
+        const q = item.quota || {};
+    
+        html +=
+          '<article class="stock-card">' +
+            '<div class="stock-card-head">' +
+              '<div class="stock-card-name">' + escapeHtml(item.displayName || item.modelBase || "-") + "</div>" +
+              '<div class="stock-card-price">' + (item.price ? orderFmt_(item.price) + " ฿" : "") + "</div>" +
+            "</div>" +
+    
+            '<div class="stock-card-meta">' +
+              '<span class="stock-chip brand">' + escapeHtml(orderBrandLabel_(item.brand)) + "</span>" +
+              '<span class="stock-chip qty">พร้อมขาย ' + orderFmt_(qty) + " เครื่อง</span>" +
+              '<span class="stock-chip">Main ' + orderFmt_(q.RemainQuota || 0) + "</span>" +
+              '<span class="stock-chip">ลำปาง ' + orderFmt_(q.RemainQuota2 || 0) + "</span>" +
+              '<span class="stock-chip">ลำพูน ' + orderFmt_(q.RemainQuota3 || 0) + "</span>" +
+            "</div>" +
+          "</article>";
+      });
+    
+      box.innerHTML = html;
+    }
+    
+    function stockRenderShareBar_() {
+      const bar = $("stockShareBar");
+      if (!bar) return;
+    
+      const items = stockGetFilteredItems_();
+    
+      if (!items.length || appState.stock.loading) {
+        bar.classList.remove("show");
+        bar.innerHTML = "";
+        return;
+      }
+    
+      bar.innerHTML =
+        '<button class="stock-share-button" type="button">' +
+          '<span class="stock-share-icon">↗</span>' +
+          '<span class="stock-share-title">แชร์สต็อกที่แสดงอยู่</span>' +
+          '<span class="stock-share-count">' + orderFmt_(items.length) + " รุ่น</span>" +
+        "</button>";
+    
+      bar.classList.add("show");
+    
+      const btn = bar.querySelector(".stock-share-button");
+      if (btn) {
+        btn.onclick = function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          stockShareVisible_();
+        };
+      }
+    }
+    
+    function stockWarehouseLabel_(key) {
+      const found = STOCK_WAREHOUSES.find(function(x) {
+        return x.key === key;
+      });
+    
+      return found ? found.label : "รวม";
+    }
+    
+    function stockBuildShareText_() {
+      const st = appState.stock;
+      const items = stockGetFilteredItems_();
+    
+      const brandLabel = orderBrandLabel_(st.activeBrand || "all");
+      const warehouseLabel = stockWarehouseLabel_(st.warehouseKey || "all");
+    
+      const now = new Date().toLocaleString("th-TH", {
+        day: "numeric",
+        month: "short",
+        hour: "2-digit",
+        minute: "2-digit"
+      });
+    
+      const maxLines = 40;
+      const lines = [];
+    
+      lines.push("📦 สต็อกพร้อมขาย");
+      lines.push("แบรนด์: " + brandLabel + " · คลัง: " + warehouseLabel);
+      lines.push("อัปเดต: " + now);
+      lines.push("");
+    
+      items.slice(0, maxLines).forEach(function(item) {
+        const qty = stockQty_(item, st.warehouseKey);
+        const priceText = item.price ? " · ฿" + orderFmt_(item.price) : "";
+    
+        lines.push("• " + (item.displayName || item.modelBase || "-") + " — " + orderFmt_(qty) + " เครื่อง" + priceText);
+      });
+    
+      if (items.length > maxLines) {
+        lines.push("");
+        lines.push("และอีก " + orderFmt_(items.length - maxLines) + " รุ่น");
+      }
+    
+      return lines.join("\n").trim();
+    }
+    
+    async function stockShareVisible_() {
+      const text = stockBuildShareText_();
+    
+      if (!text) {
+        showToast("ยังไม่มีรายการสต็อกให้แชร์ครับ", "warn", 1600);
+        return;
+      }
+    
+      try {
+        if (window.liff && liffReady && typeof liff.shareTargetPicker === "function") {
+          const canShare = typeof canUseShareTargetPicker_ === "function"
+            ? canUseShareTargetPicker_()
+            : true;
+    
+          if (canShare) {
+            const result = await liff.shareTargetPicker([
+              {
+                type: "text",
+                text: text
+              }
+            ], {
+              isMultiple: true
+            });
+    
+            if (result && result.status === "success") {
+              showToast("แชร์สต็อกแล้วครับ", "success", 1400);
+              return;
+            }
+    
+            showToast("ยกเลิกการแชร์ครับ", "warn", 1400);
+            return;
+          }
+        }
+    
+        await stockCopyShareText_();
+        showToast("แชร์ไม่ได้ จึงคัดลอกข้อความให้แทนครับ", "warn", 2200);
+    
+      } catch (err) {
+        console.error("[stockShareVisible_]", err);
+    
+        await stockCopyShareText_();
+        showToast("แชร์ไม่สำเร็จ เลยคัดลอกข้อความให้แทนครับ", "warn", 2200);
+      }
+    }
+    
+    async function stockCopyShareText_() {
+      const text = stockBuildShareText_();
+    
+      try {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          await navigator.clipboard.writeText(text);
+          return;
+        }
+    
+        const ok = fallbackCopy_(text);
+        if (!ok) throw new Error("copy failed");
+    
+      } catch (err) {
+        fallbackCopy_(text);
+      }
+    }
+    
+    function bindStockEvents_() {
+      const st = appState.stock;
+      const search = $("stockSearch");
+      const brandTabs = $("stockBrandTabs");
+      const warehouseTabs = $("stockWarehouseTabs");
+    
+      if (search) {
+        search.value = st.keyword || "";
+    
+        search.addEventListener("input", function() {
+          st.keyword = String(this.value || "");
+          stockRenderAll_();
+        });
+      }
+    
+      if (brandTabs) {
+        brandTabs.addEventListener("click", function(e) {
+          const btn = e.target.closest(".brand-tab");
+          if (!btn) return;
+    
+          st.activeBrand = btn.getAttribute("data-brand") || "all";
+          stockRenderAll_();
+        });
+      }
+    
+      if (warehouseTabs) {
+        warehouseTabs.addEventListener("click", function(e) {
+          const btn = e.target.closest(".stock-wh-tab");
+          if (!btn) return;
+    
+          st.warehouseKey = btn.getAttribute("data-wh") || "all";
+          stockRenderAll_();
+        });
       }
     }
 
