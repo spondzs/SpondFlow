@@ -1495,6 +1495,34 @@
         color: #111827;
       }
     }
+    
+    .stock-card-price {
+      text-align: right;
+      line-height: 1.2;
+    }
+    
+    .stock-card-retail {
+      display: block;
+      margin-top: 3px;
+      font-size: 12px;
+      font-weight: 850;
+      color: #64748b;
+    }
+    
+    .stock-share-button.disabled {
+      background: linear-gradient(135deg, #e8eef8, #f1f5f9);
+      color: #64748b;
+      box-shadow: 0 12px 26px rgba(15, 23, 42, 0.08);
+    }
+    
+    .stock-share-button.disabled .stock-share-icon {
+      color: #94a3b8;
+    }
+    
+    .stock-share-button.disabled .stock-share-count {
+      color: #94a3b8;
+    }
+    
   </style>
 </head>
 
@@ -3899,6 +3927,7 @@
         displayName: String(x.displayName || x.name || modelBase).trim(),
         color: String(x.color || x.colorName || x.ColorName || x.ColorTH || "").trim(),
         price: Number(x.price || x.priceWholesale || x.PriceWholesale || 0),
+        retailPrice: Number(x.retailPrice || x.priceRetail || x.PriceRetail || 0),
         quota: quota
       };
     }
@@ -3918,6 +3947,7 @@
             displayName: item.displayName || item.modelBase,
             color: item.color,
             price: item.price || 0,
+            retailPrice: item.retailPrice || 0,
             quota: {
               RemainQuota: 0,
               RemainQuota2: 0,
@@ -3931,6 +3961,7 @@
         map[key].quota.RemainQuota3 += Number(item.quota.RemainQuota3 || 0);
     
         if (!map[key].price && item.price) map[key].price = item.price;
+        if (!map[key].retailPrice && item.retailPrice) map[key].retailPrice = item.retailPrice;
         if (!map[key].brand && item.brand) map[key].brand = item.brand;
       });
     
@@ -4056,6 +4087,34 @@
       setTextSafe("stockSummaryModels", orderFmt_(items.length));
       setTextSafe("stockSummaryQty", orderFmt_(qty));
     }
+
+    function stockSelectedBrandKey_() {
+      return orderNormalizeBrandKey_(appState.stock.activeBrand || "all");
+    }
+    
+    function stockCanShareSelectedBrand_() {
+      const key = stockSelectedBrandKey_();
+      return key === "vivo" || key === "iqoo";
+    }
+    
+    function stockPriceHtml_(item) {
+      const wholesale = Number(item && item.price || 0);
+      const retail = Number(item && item.retailPrice || 0);
+    
+      if (!wholesale && !retail) return "";
+    
+      let html = "";
+    
+      if (wholesale) {
+        html += "ส่ง ฿" + orderFmt_(wholesale);
+      }
+    
+      if (retail) {
+        html += '<span class="stock-card-retail">ปลีก ฿' + orderFmt_(retail) + "</span>";
+      }
+    
+      return html;
+    }
     
     function stockRenderList_() {
       const st = appState.stock;
@@ -4084,7 +4143,7 @@
           '<article class="stock-card">' +
             '<div class="stock-card-head">' +
               '<div class="stock-card-name">' + escapeHtml(item.displayName || item.modelBase || "-") + "</div>" +
-              '<div class="stock-card-price">' + (item.price ? orderFmt_(item.price) + " ฿" : "") + "</div>" +
+              '<div class="stock-card-price">' + stockPriceHtml_(item) + "</div>" +
             "</div>" +
     
             '<div class="stock-card-meta">' +
@@ -4112,10 +4171,25 @@
         return;
       }
     
+      const canShare = stockCanShareSelectedBrand_();
+      const brandLabel = orderBrandLabel_(appState.stock.activeBrand || "all");
+    
+      if (!canShare) {
+        bar.innerHTML =
+          '<button class="stock-share-button disabled" type="button">' +
+            '<span class="stock-share-icon">↗</span>' +
+            '<span class="stock-share-title">เลือก vivo / iQOO เพื่อแชร์</span>' +
+            '<span class="stock-share-count">ดูรวมเท่านั้น</span>' +
+          "</button>";
+    
+        bar.classList.add("show");
+        return;
+      }
+    
       bar.innerHTML =
         '<button class="stock-share-button" type="button">' +
           '<span class="stock-share-icon">↗</span>' +
-          '<span class="stock-share-title">แชร์สต็อกที่แสดงอยู่</span>' +
+          '<span class="stock-share-title">แชร์สต็อก ' + escapeHtml(brandLabel) + '</span>' +
           '<span class="stock-share-count">' + orderFmt_(items.length) + " รุ่น</span>" +
         "</button>";
     
@@ -4141,6 +4215,11 @@
     
     function stockBuildShareText_() {
       const st = appState.stock;
+    
+      if (!stockCanShareSelectedBrand_()) {
+        return "";
+      }
+    
       const items = stockGetFilteredItems_();
     
       const brandLabel = orderBrandLabel_(st.activeBrand || "all");
@@ -4156,16 +4235,34 @@
       const maxLines = 40;
       const lines = [];
     
-      lines.push("📦 สต็อกพร้อมขาย");
-      lines.push("แบรนด์: " + brandLabel + " · คลัง: " + warehouseLabel);
+      lines.push("📦 สต็อกพร้อมขาย " + brandLabel);
+      lines.push("คลัง: " + warehouseLabel);
       lines.push("อัปเดต: " + now);
       lines.push("");
     
       items.slice(0, maxLines).forEach(function(item) {
         const qty = stockQty_(item, st.warehouseKey);
-        const priceText = item.price ? " · ฿" + orderFmt_(item.price) : "";
     
-        lines.push("• " + (item.displayName || item.modelBase || "-") + " — " + orderFmt_(qty) + " เครื่อง" + priceText);
+        const prices = [];
+    
+        if (Number(item.price || 0)) {
+          prices.push("ส่ง ฿" + orderFmt_(item.price));
+        }
+    
+        if (Number(item.retailPrice || 0)) {
+          prices.push("ปลีก ฿" + orderFmt_(item.retailPrice));
+        }
+    
+        const priceText = prices.length ? " · " + prices.join(" / ") : "";
+    
+        lines.push(
+          "• " +
+          (item.displayName || item.modelBase || "-") +
+          " — " +
+          orderFmt_(qty) +
+          " เครื่อง" +
+          priceText
+        );
       });
     
       if (items.length > maxLines) {
@@ -4177,6 +4274,11 @@
     }
     
     async function stockShareVisible_() {
+      if (!stockCanShareSelectedBrand_()) {
+        showToast("เลือกแบรนด์ vivo หรือ iQOO ก่อนแชร์", "warn", 2200);
+        return;
+      }
+    
       const text = stockBuildShareText_();
     
       if (!text) {
