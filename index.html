@@ -2311,7 +2311,7 @@
     
     let CUSTOMER_TIMER = null;
     let CATALOG_TIMER = null;
-    let CATALOG_TIMER = null;
+    let QUOTE_CANCEL_CTX = null;
     
     const ORDER_ACTIONS = {
       init: "liff_order_form_init",
@@ -5416,7 +5416,13 @@
     }
 
     async function quotePerformCancel_() {
-      const ctx = QUOTE_CANCEL_CTX || {};
+      if (!QUOTE_CANCEL_CTX) {
+        showToast("ไม่พบข้อมูลรายการที่จะยกเลิกครับ", "warn", 1800);
+        closeQuoteCancelModal_();
+        return;
+      }
+
+      const ctx = QUOTE_CANCEL_CTX;
       const quoteNo = String(ctx.quoteNo || "").trim();
       const originalBtn = ctx.button || null;
     
