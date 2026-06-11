@@ -1760,6 +1760,228 @@
         font-size: 22px;
       }
     }
+
+    /* =========================================================
+     * QUOTE CANCEL MODAL
+     * ========================================================= */
+    
+    .quote-cancel-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 99980;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+      background: rgba(15, 23, 42, 0.42);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+    
+    .quote-cancel-backdrop.show {
+      display: flex;
+    }
+    
+    .quote-cancel-modal {
+      width: min(520px, 100%);
+      max-height: calc(100vh - 96px);
+      overflow-y: auto;
+      border-radius: 30px;
+      background:
+        radial-gradient(circle at 100% 0%, rgba(239,68,68,0.11), transparent 32%),
+        #ffffff;
+      box-shadow: 0 28px 72px rgba(15, 23, 42, 0.28);
+      animation: modalCenterPop 0.18s ease-out;
+    }
+    
+    .quote-cancel-head {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 18px 18px 12px;
+    }
+    
+    .quote-cancel-icon {
+      width: 46px;
+      height: 46px;
+      display: grid;
+      place-items: center;
+      border-radius: 18px;
+      background: linear-gradient(135deg, #fff1f2, #ffe4e6);
+      color: #be123c;
+      font-size: 22px;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.9);
+    }
+    
+    .quote-cancel-title-wrap {
+      flex: 1;
+      min-width: 0;
+    }
+    
+    .quote-cancel-title {
+      font-size: 21px;
+      font-weight: 950;
+      color: #172033;
+      line-height: 1.2;
+      letter-spacing: -0.3px;
+    }
+    
+    .quote-cancel-sub {
+      margin-top: 4px;
+      font-size: 13px;
+      color: #64748b;
+      font-weight: 750;
+    }
+    
+    .quote-cancel-close {
+      width: 44px;
+      height: 44px;
+      border: 0;
+      border-radius: 999px;
+      background: #f1f5f9;
+      color: #475569;
+      font-size: 24px;
+      line-height: 1;
+    }
+    
+    .quote-cancel-body {
+      padding: 6px 18px 0;
+    }
+    
+    .quote-cancel-info {
+      padding: 15px;
+      border-radius: 22px;
+      background:
+        radial-gradient(circle at 96% 0%, rgba(79,109,245,0.10), transparent 34%),
+        linear-gradient(180deg, #f8fbff 0%, #ffffff 100%);
+      border: 1px solid rgba(79, 109, 245, 0.13);
+    }
+    
+    .quote-cancel-customer {
+      font-size: 17px;
+      font-weight: 950;
+      color: #111827;
+      line-height: 1.35;
+      word-break: break-word;
+    }
+    
+    .quote-cancel-quote {
+      margin-top: 4px;
+      font-size: 13px;
+      font-weight: 900;
+      color: #6d4adf;
+      word-break: break-word;
+    }
+    
+    .quote-cancel-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 10px;
+    }
+    
+    .quote-cancel-chip {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      padding: 0 10px;
+      border-radius: 999px;
+      background: #f1f5ff;
+      color: #334155;
+      font-size: 12px;
+      font-weight: 900;
+    }
+    
+    .quote-cancel-warning {
+      margin-top: 12px;
+      padding: 13px 14px;
+      border-radius: 18px;
+      background: #fff7ed;
+      border: 1px solid #fed7aa;
+      color: #9a3412;
+      font-size: 13px;
+      font-weight: 800;
+      line-height: 1.45;
+    }
+    
+    .quote-cancel-reason-wrap {
+      margin-top: 12px;
+    }
+    
+    .quote-cancel-reason-label {
+      margin-bottom: 7px;
+      font-size: 13px;
+      font-weight: 900;
+      color: #64748b;
+    }
+    
+    .quote-cancel-reason {
+      width: 100%;
+      min-height: 78px;
+      resize: vertical;
+      border: 1px solid #e2e8f0;
+      outline: 0;
+      border-radius: 18px;
+      padding: 12px 13px;
+      background: #ffffff;
+      color: #111827;
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 1.45;
+    }
+    
+    .quote-cancel-reason::placeholder {
+      color: #a0a7b4;
+      font-weight: 650;
+    }
+    
+    .quote-cancel-actions {
+      display: grid;
+      grid-template-columns: 0.95fr 1.25fr;
+      gap: 10px;
+      padding: 16px 18px 18px;
+    }
+    
+    .quote-cancel-btn {
+      min-height: 54px;
+      border: 0;
+      border-radius: 19px;
+      font-weight: 950;
+      font-size: 15px;
+    }
+    
+    .quote-cancel-btn.keep {
+      background: #eef2f7;
+      color: #334155;
+    }
+    
+    .quote-cancel-btn.danger {
+      background:
+        radial-gradient(circle at 92% 0%, rgba(255,255,255,0.22), transparent 30%),
+        linear-gradient(135deg, #ef4444, #fb7185);
+      color: #ffffff;
+      box-shadow: 0 12px 24px rgba(239, 68, 68, 0.20);
+    }
+    
+    .quote-cancel-btn:disabled {
+      opacity: 0.58;
+      box-shadow: none;
+    }
+    
+    @media (max-width: 420px) {
+      .quote-cancel-backdrop {
+        padding: 14px;
+      }
+    
+      .quote-cancel-modal {
+        border-radius: 28px;
+        max-height: calc(100vh - 86px);
+      }
+    
+      .quote-cancel-actions {
+        grid-template-columns: 1fr;
+      }
+    }
     
   </style>
 </head>
@@ -2088,6 +2310,7 @@
     let homeDashboardData = null;
     
     let CUSTOMER_TIMER = null;
+    let CATALOG_TIMER = null;
     let CATALOG_TIMER = null;
     
     const ORDER_ACTIONS = {
@@ -5076,8 +5299,112 @@
         }
       }
     }
+
+    function ensureQuoteCancelModal_() {
+      if ($("quoteCancelBackdrop")) return;
     
-    async function quoteCancel_(quoteNo, btn) {
+      const wrap = document.createElement("div");
+      wrap.id = "quoteCancelBackdrop";
+      wrap.className = "quote-cancel-backdrop";
+    
+      wrap.innerHTML =
+        '<div class="quote-cancel-modal">' +
+          '<div class="quote-cancel-head">' +
+            '<div class="quote-cancel-icon">!</div>' +
+            '<div class="quote-cancel-title-wrap">' +
+              '<div class="quote-cancel-title">ยืนยันยกเลิกใบเสนอราคา</div>' +
+              '<div class="quote-cancel-sub">ระบบจะคืนโควต้าและเปลี่ยนสถานะเป็น CANCELLED</div>' +
+            "</div>" +
+            '<button id="quoteCancelCloseBtn" class="quote-cancel-close" type="button">×</button>' +
+          "</div>" +
+    
+          '<div class="quote-cancel-body">' +
+            '<div class="quote-cancel-info">' +
+              '<div id="quoteCancelCustomer" class="quote-cancel-customer">-</div>' +
+              '<div id="quoteCancelQuoteNo" class="quote-cancel-quote">-</div>' +
+              '<div class="quote-cancel-meta">' +
+                '<span id="quoteCancelQty" class="quote-cancel-chip">- เครื่อง</span>' +
+                '<span id="quoteCancelAmount" class="quote-cancel-chip">฿0</span>' +
+                '<span id="quoteCancelSales" class="quote-cancel-chip">Sales: -</span>' +
+              "</div>" +
+            "</div>" +
+    
+            '<div class="quote-cancel-warning">' +
+              "การยกเลิกนี้จะคืนโควต้าสินค้ากลับคลัง และรายการนี้จะหายจากหน้าใบเสนอราคาเปิดค้าง" +
+            "</div>" +
+    
+            '<div class="quote-cancel-reason-wrap">' +
+              '<div class="quote-cancel-reason-label">เหตุผลการยกเลิก (ไม่บังคับ)</div>' +
+              '<textarea id="quoteCancelReason" class="quote-cancel-reason" placeholder="เช่น ลูกค้ายกเลิก / เปิดบิลผิด / แก้จำนวนสินค้า"></textarea>' +
+            "</div>" +
+          "</div>" +
+    
+          '<div class="quote-cancel-actions">' +
+            '<button id="quoteCancelKeepBtn" class="quote-cancel-btn keep" type="button">ยังไม่ยกเลิก</button>' +
+            '<button id="quoteCancelConfirmBtn" class="quote-cancel-btn danger" type="button">ยืนยันยกเลิก</button>' +
+          "</div>" +
+        "</div>";
+    
+      document.body.appendChild(wrap);
+    
+      $("quoteCancelCloseBtn").addEventListener("click", closeQuoteCancelModal_);
+      $("quoteCancelKeepBtn").addEventListener("click", closeQuoteCancelModal_);
+    
+      $("quoteCancelConfirmBtn").addEventListener("click", function() {
+        quotePerformCancel_();
+      });
+    
+      wrap.addEventListener("click", function(e) {
+        if (e.target === wrap) closeQuoteCancelModal_();
+      });
+    }
+    
+    function openQuoteCancelModal_(quoteNo, btn) {
+      quoteNo = String(quoteNo || "").trim();
+    
+      const item = (appState.quote.items || []).find(function(x) {
+        return String(x.quoteNo || "").trim() === quoteNo;
+      });
+    
+      if (!item) {
+        showToast("ไม่พบข้อมูลใบเสนอราคานี้ครับ", "error", 1800);
+        return;
+      }
+    
+      ensureQuoteCancelModal_();
+    
+      QUOTE_CANCEL_CTX = {
+        quoteNo: quoteNo,
+        button: btn || null
+      };
+    
+      setTextSafe("quoteCancelCustomer", item.customerName || item.customerNo || "-");
+      setTextSafe("quoteCancelQuoteNo", quoteNo || "-");
+      setTextSafe("quoteCancelQty", quoteFmt_(item.sumQty || 0) + " เครื่อง");
+      setTextSafe("quoteCancelAmount", "฿" + quoteFmt_(item.sumTotal || 0));
+      setTextSafe("quoteCancelSales", "Sales: " + (item.salesName || "-"));
+    
+      const reason = $("quoteCancelReason");
+      if (reason) reason.value = "";
+    
+      const confirmBtn = $("quoteCancelConfirmBtn");
+      if (confirmBtn) {
+        confirmBtn.disabled = false;
+        confirmBtn.textContent = "ยืนยันยกเลิก";
+      }
+    
+      const backdrop = $("quoteCancelBackdrop");
+      if (backdrop) backdrop.classList.add("show");
+    }
+    
+    function closeQuoteCancelModal_() {
+      const backdrop = $("quoteCancelBackdrop");
+      if (backdrop) backdrop.classList.remove("show");
+    
+      QUOTE_CANCEL_CTX = null;
+    }
+    
+    function quoteCancel_(quoteNo, btn) {
       quoteNo = String(quoteNo || "").trim();
     
       if (!quoteNo) {
@@ -5085,20 +5412,34 @@
         return;
       }
     
-      const ok = window.confirm(
-        "ยืนยันยกเลิกใบเสนอราคานี้?\n\n" +
-        quoteNo +
-        "\n\nระบบจะคืนโควต้าและเปลี่ยนสถานะเป็น CANCELLED"
-      );
+      openQuoteCancelModal_(quoteNo, btn);
+    }
+
+    async function quotePerformCancel_() {
+      const ctx = QUOTE_CANCEL_CTX || {};
+      const quoteNo = String(ctx.quoteNo || "").trim();
+      const originalBtn = ctx.button || null;
     
-      if (!ok) return;
+      if (!quoteNo) {
+        showToast("ไม่พบเลขใบเสนอราคา", "warn", 1600);
+        return;
+      }
     
-      const oldText = btn ? btn.textContent : "";
+      const confirmBtn = $("quoteCancelConfirmBtn");
+      const reasonEl = $("quoteCancelReason");
+      const reason = String(reasonEl && reasonEl.value || "").trim();
+    
+      const oldText = originalBtn ? originalBtn.textContent : "";
     
       try {
-        if (btn) {
-          btn.disabled = true;
-          btn.textContent = "กำลังยกเลิก...";
+        if (confirmBtn) {
+          confirmBtn.disabled = true;
+          confirmBtn.textContent = "กำลังยกเลิก...";
+        }
+    
+        if (originalBtn) {
+          originalBtn.disabled = true;
+          originalBtn.textContent = "กำลังยกเลิก...";
         }
     
         const res = await callGasJsonp({
@@ -5106,12 +5447,14 @@
           idToken: currentIdToken || currentUser.idToken || "",
           lineUserId: currentUser.lineUserId || "",
           quoteNo: quoteNo,
-          reason: "cancel from LIFF"
+          reason: reason || "cancel from LIFF"
         });
     
         if (!res || res.ok === false) {
           throw new Error((res && (res.error || res.message)) || "ยกเลิกไม่สำเร็จ");
         }
+    
+        closeQuoteCancelModal_();
     
         showToast("ยกเลิกใบเสนอราคาแล้วครับ", "success", 1800);
     
@@ -5119,13 +5462,18 @@
         await quoteReload_();
     
       } catch (err) {
-        console.error("[quoteCancel_]", err);
-        showToast(err.message || "ยกเลิกไม่สำเร็จ", "error", 2600);
+        console.error("[quotePerformCancel_]", err);
+        showToast(err.message || "ยกเลิกไม่สำเร็จ", "error", 2800);
     
       } finally {
-        if (btn) {
-          btn.disabled = false;
-          btn.textContent = oldText || "ยกเลิก";
+        if (confirmBtn) {
+          confirmBtn.disabled = false;
+          confirmBtn.textContent = "ยืนยันยกเลิก";
+        }
+    
+        if (originalBtn) {
+          originalBtn.disabled = false;
+          originalBtn.textContent = oldText || "ยกเลิก";
         }
       }
     }
