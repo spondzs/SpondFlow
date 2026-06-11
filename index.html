@@ -1823,6 +1823,10 @@
       customers: "liff_order_search_customers",
       catalog: "liff_order_search_stock"
     };
+
+    const STOCK_ACTIONS = {
+      sharePayload: "liff_stock_share_payload"
+    };
     
     const appState = {
       order: {
@@ -4272,54 +4276,103 @@
     
       return lines.join("\n").trim();
     }
+
+    function stockGetShareBrand_() {
+      const key = stockSelectedBrandKey_();
+    
+      if (key === "vivo") return "vivo";
+      if (key === "iqoo") return "iqoo";
+    
+      return "";
+    }
+    
+    async function stockFetchSharePayload_(brand) {
+      const data = await callGasJsonp({
+        action: STOCK_ACTIONS.sharePayload,
+        idToken: currentIdToken || currentUser.idToken || "",
+        lineUserId: currentUser.lineUserId || "",
+        brand: brand
+      });
+    
+      if (!data || data.ok === false) {
+        throw new Error(
+          (data && (data.error || data.message)) ||
+          "สร้าง Stock Flex ไม่สำเร็จ"
+        );
+      }
+    
+      if (!Array.isArray(data.messages) || !data.messages.length) {
+        throw new Error("GAS ไม่ได้ส่ง messages กลับมา");
+      }
+    
+      return data.messages;
+    }
     
     async function stockShareVisible_() {
-      if (!stockCanShareSelectedBrand_()) {
-        showToast("เลือกแบรนด์ vivo หรือ iQOO ก่อนแชร์", "warn", 2200);
+      const brand = stockGetShareBrand_();
+    
+      if (!brand) {
+        showToast("แท็บทั้งหมดใช้ดูรวมเท่านั้น เลือก vivo หรือ iQOO ก่อนแชร์ครับ", "warn", 2200);
         return;
       }
     
-      const text = stockBuildShareText_();
-    
-      if (!text) {
-        showToast("ยังไม่มีรายการสต็อกให้แชร์ครับ", "warn", 1600);
+      if (!window.liff || !liffReady || typeof liff.shareTargetPicker !== "function") {
+        await stockCopyShareText_();
+        showToast("SharePicker ไม่พร้อม จึงคัดลอกข้อความให้แทนครับ", "warn", 2200);
         return;
       }
+    
+      const canShare = typeof canUseShareTargetPicker_ === "function"
+        ? canUseShareTargetPicker_()
+        : true;
+    
+      if (!canShare) {
+        await stockCopyShareText_();
+        showToast("เครื่องนี้ยังแชร์ไม่ได้ จึงคัดลอกข้อความให้แทนครับ", "warn", 2200);
+        return;
+      }
+    
+      const barBtn = document.querySelector(".stock-share-button");
+      const oldHtml = barBtn ? barBtn.innerHTML : "";
     
       try {
-        if (window.liff && liffReady && typeof liff.shareTargetPicker === "function") {
-          const canShare = typeof canUseShareTargetPicker_ === "function"
-            ? canUseShareTargetPicker_()
-            : true;
-    
-          if (canShare) {
-            const result = await liff.shareTargetPicker([
-              {
-                type: "text",
-                text: text
-              }
-            ], {
-              isMultiple: true
-            });
-    
-            if (result && result.status === "success") {
-              showToast("แชร์สต็อกแล้วครับ", "success", 1400);
-              return;
-            }
-    
-            showToast("ยกเลิกการแชร์ครับ", "warn", 1400);
-            return;
-          }
+        if (barBtn) {
+          barBtn.disabled = true;
+          barBtn.innerHTML =
+            '<span class="stock-share-icon">…</span>' +
+            '<span class="stock-share-title">กำลังสร้าง Stock Flex</span>' +
+            '<span class="stock-share-count">' + escapeHtml(orderBrandLabel_(brand)) + "</span>";
         }
     
-        await stockCopyShareText_();
-        showToast("แชร์ไม่ได้ จึงคัดลอกข้อความให้แทนครับ", "warn", 2200);
+        const messages = await stockFetchSharePayload_(brand);
+    
+        const result = await liff.shareTargetPicker(messages, {
+          isMultiple: true
+        });
+    
+        if (result && result.status === "success") {
+          showToast("แชร์ Stock Flex แล้วครับ", "success", 1600);
+          return;
+        }
+    
+        showToast("ยกเลิกการแชร์ครับ", "warn", 1400);
     
       } catch (err) {
         console.error("[stockShareVisible_]", err);
     
         await stockCopyShareText_();
-        showToast("แชร์ไม่สำเร็จ เลยคัดลอกข้อความให้แทนครับ", "warn", 2200);
+        showToast("แชร์ Flex ไม่สำเร็จ เลยคัดลอกข้อความสต็อกให้แทนครับ", "warn", 2600);
+    
+      } finally {
+        if (barBtn) {
+          barBtn.disabled = false;
+    
+          if (oldHtml) {
+            barBtn.innerHTML = oldHtml;
+          } else {
+            stockRenderShareBar_();
+          }
+        }
       }
     }
     
