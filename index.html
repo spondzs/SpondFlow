@@ -1522,6 +1522,244 @@
     .stock-share-button.disabled .stock-share-count {
       color: #94a3b8;
     }
+
+    /* =========================================================
+     * QUOTE VIEW
+     * ========================================================= */
+    
+    .app.view-quote {
+      padding-bottom: calc(24px + var(--safe-bottom));
+    }
+    
+    .app.view-quote .topbar {
+      padding-left: 58px;
+    }
+    
+    .quote-view {
+      padding: 2px 0 24px;
+    }
+    
+    .quote-filter-card .search-wrap {
+      min-height: 46px;
+      border-radius: 16px;
+    }
+    
+    .quote-filter-card .search-input {
+      font-size: 15px;
+    }
+    
+    .quote-summary-card {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+    
+    .quote-summary-item {
+      padding: 14px;
+      border-radius: 22px;
+      background:
+        radial-gradient(circle at 95% 0%, rgba(139,92,246,0.10), transparent 34%),
+        #ffffff;
+      border: 1px solid rgba(139, 92, 246, 0.10);
+      box-shadow: var(--shadow-soft);
+    }
+    
+    .quote-summary-item.wide {
+      grid-column: 1 / -1;
+    }
+    
+    .quote-summary-value {
+      font-size: 24px;
+      font-weight: 950;
+      color: #6d4adf;
+      letter-spacing: -0.5px;
+    }
+    
+    .quote-summary-label {
+      margin-top: 3px;
+      font-size: 12px;
+      color: #64748b;
+      font-weight: 800;
+    }
+    
+    .quote-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    
+    .quote-card {
+      padding: 15px;
+      border-radius: 24px;
+      border: 1px solid #e2e8f0;
+      background:
+        radial-gradient(circle at 100% 0%, rgba(139,92,246,0.08), transparent 30%),
+        linear-gradient(180deg, #ffffff, #fbfcff);
+      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.05);
+    }
+    
+    .quote-card-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: flex-start;
+    }
+    
+    .quote-customer {
+      min-width: 0;
+      flex: 1;
+    }
+    
+    .quote-customer-name {
+      font-size: 17px;
+      font-weight: 950;
+      color: #111827;
+      line-height: 1.35;
+      word-break: break-word;
+    }
+    
+    .quote-no {
+      margin-top: 3px;
+      font-size: 13px;
+      font-weight: 850;
+      color: #6d4adf;
+      word-break: break-word;
+    }
+    
+    .quote-total {
+      text-align: right;
+      white-space: nowrap;
+      font-size: 17px;
+      font-weight: 950;
+      color: #111827;
+    }
+    
+    .quote-total-sub {
+      margin-top: 3px;
+      font-size: 12px;
+      color: #64748b;
+      font-weight: 800;
+    }
+    
+    .quote-meta {
+      margin-top: 8px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    
+    .quote-chip {
+      display: inline-flex;
+      align-items: center;
+      min-height: 26px;
+      padding: 0 9px;
+      border-radius: 999px;
+      background: #f1f5ff;
+      color: #334155;
+      font-size: 12px;
+      font-weight: 850;
+    }
+    
+    .quote-chip.sales {
+      background: #f5f3ff;
+      color: #6d4adf;
+    }
+    
+    .quote-items {
+      margin-top: 12px;
+      padding: 10px 12px;
+      border-radius: 16px;
+      background: #f8fafc;
+      border: 1px solid #e8edf6;
+    }
+    
+    .quote-item-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 7px 0;
+      border-bottom: 1px dashed #e2e8f0;
+    }
+    
+    .quote-item-row:last-child {
+      border-bottom: 0;
+    }
+    
+    .quote-item-name {
+      flex: 1;
+      min-width: 0;
+      font-size: 13px;
+      color: #334155;
+      line-height: 1.35;
+      word-break: break-word;
+    }
+    
+    .quote-item-qty {
+      white-space: nowrap;
+      font-size: 13px;
+      font-weight: 950;
+      color: #315bc8;
+    }
+    
+    .quote-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 8px;
+      margin-top: 12px;
+    }
+    
+    .quote-action-btn {
+      min-height: 48px;
+      border: 0;
+      border-radius: 16px;
+      font-size: 13px;
+      font-weight: 950;
+      color: #334155;
+      background: #eef2f7;
+    }
+    
+    .quote-action-btn.pdf {
+      background: #eef3ff;
+      color: #315bc8;
+    }
+    
+    .quote-action-btn.share {
+      background: linear-gradient(135deg, var(--blue), var(--blue2));
+      color: #ffffff;
+      box-shadow: 0 10px 20px rgba(79, 109, 245, 0.16);
+    }
+    
+    .quote-action-btn.cancel {
+      background: #fff1f2;
+      color: #be123c;
+    }
+    
+    .quote-action-btn:disabled {
+      opacity: 0.45;
+      box-shadow: none;
+    }
+    
+    .quote-cancel-note {
+      margin-top: 8px;
+      font-size: 12px;
+      color: #94a3b8;
+      line-height: 1.35;
+    }
+    
+    @media (max-width: 420px) {
+      .app.view-quote .topbar {
+        padding-left: 56px;
+      }
+    
+      .quote-actions {
+        grid-template-columns: 1fr;
+      }
+    
+      .quote-summary-value {
+        font-size: 22px;
+      }
+    }
     
   </style>
 </head>
@@ -1693,6 +1931,40 @@
     <div id="stockShareBar" class="stock-share-bar"></div>
   </template>
 
+  <template id="quoteViewTemplate">
+    <button class="order-back-fab" type="button" onclick="openView('home')" aria-label="Back">‹</button>
+  
+    <main class="content quote-view">
+      <section class="card quote-filter-card">
+        <div class="card-title">ค้นหาใบเสนอราคา</div>
+  
+        <div class="search-wrap">
+          <div class="search-icon">⌕</div>
+          <input id="quoteSearch" class="search-input" placeholder="ค้นหา QuoteNo / ลูกค้า / Sales">
+        </div>
+      </section>
+  
+      <section class="quote-summary-card">
+        <div class="quote-summary-item">
+          <div id="quoteSummaryCount" class="quote-summary-value">—</div>
+          <div class="quote-summary-label">ใบเปิดค้าง</div>
+        </div>
+  
+        <div class="quote-summary-item">
+          <div id="quoteSummaryQty" class="quote-summary-value">—</div>
+          <div class="quote-summary-label">เครื่อง</div>
+        </div>
+  
+        <div class="quote-summary-item wide">
+          <div id="quoteSummaryAmount" class="quote-summary-value">—</div>
+          <div class="quote-summary-label">ยอดรวม</div>
+        </div>
+      </section>
+  
+      <section id="quoteList" class="quote-list"></section>
+    </main>
+  </template>
+
   <div id="toast" class="toast"></div>
 
   <script>
@@ -1737,13 +2009,14 @@
         view: "stock"
       },
       {
+        {
         key: "quotes",
         title: "ใบเสนอราคา",
-        desc: "ดูบิลเปิดค้าง / PDF / รายการใบเสนอราคา",
+        desc: "ดู PDF แชร์ และยกเลิกใบเสนอราคาเปิดค้าง",
         icon: "🧾",
         tag: "Quotes",
         color: "purple",
-        href: CONFIG.links.quotes
+        view: "quote"
       },
       {
         key: "payment",
@@ -1827,6 +2100,12 @@
     const STOCK_ACTIONS = {
       sharePayload: "liff_stock_share_payload"
     };
+
+    const QUOTE_ACTIONS = {
+      list: "list_open_quotes",
+      sharePayload: "get_quote_share_payload",
+      cancel: "cancel_quote_from_liff"
+    };
     
     const appState = {
       order: {
@@ -1863,6 +2142,13 @@
         activeBrand: "all",
         warehouseKey: "all",
         brands: ["all"],
+        items: []
+      }
+
+      quote: {
+        initialized: false,
+        loading: false,
+        keyword: "",
         items: []
       }
     };
@@ -2030,6 +2316,11 @@
         renderStockView_();
         return;
       }
+
+      if (currentView === "quote") {
+        renderQuoteView_();
+        return;
+      }
     
       showToast("เมนูนี้ยังไม่ได้ย้ายเข้า App Shell ครับ");
       currentView = "home";
@@ -2045,6 +2336,7 @@
       if (app) {
         app.classList.remove("view-order");
         app.classList.remove("view-stock");
+        app.classList.remove("view-quote");
       }
     
       root.innerHTML = "";
@@ -2071,6 +2363,7 @@
       if (app) {
         app.classList.add("view-order");
         app.classList.remove("view-stock");
+        app.classList.remove("view-quote");
       }
     
       root.innerHTML = "";
@@ -2093,6 +2386,7 @@
       if (app) {
         app.classList.add("view-stock");
         app.classList.remove("view-order");
+        app.classList.remove("view-quote");
       }
     
       root.innerHTML = "";
@@ -2103,6 +2397,28 @@
       bindStockEvents_();
       stockRenderAll_();
       ensureStockLoaded_();
+    }
+
+    function renderQuoteView_() {
+      const root = document.getElementById("viewRoot");
+      const tpl = document.getElementById("quoteViewTemplate");
+      if (!root || !tpl) return;
+    
+      const app = document.getElementById("app");
+      if (app) {
+        app.classList.add("view-quote");
+        app.classList.remove("view-order");
+        app.classList.remove("view-stock");
+      }
+    
+      root.innerHTML = "";
+      root.appendChild(tpl.content.cloneNode(true));
+    
+      setAppTopbar_("ใบเสนอราคาเปิดค้าง", "ดู PDF แชร์ และยกเลิก", "↻");
+    
+      bindQuoteEvents_();
+      quoteRenderAll_();
+      ensureQuoteLoaded_();
     }
     
     function setAppTopbar_(title, subtitle, actionText) {
@@ -2123,6 +2439,11 @@
     
       if (currentView === "stock") {
         stockReload_();
+        return;
+      }
+
+      if (currentView === "quote") {
+        quoteReload_();
         return;
       }
     
@@ -4425,6 +4746,401 @@
     
           st.warehouseKey = btn.getAttribute("data-wh") || "all";
           stockRenderAll_();
+        });
+      }
+    }
+
+    async function ensureQuoteLoaded_() {
+      const st = appState.quote;
+    
+      if (st.initialized && st.items.length) {
+        quoteRenderAll_();
+        return;
+      }
+    
+      await quoteReload_();
+    }
+    
+    async function quoteReload_() {
+      const st = appState.quote;
+    
+      st.loading = true;
+      quoteRenderAll_();
+    
+      try {
+        const data = await callGasJsonp({
+          action: QUOTE_ACTIONS.list,
+          idToken: currentIdToken || currentUser.idToken || "",
+          lineUserId: currentUser.lineUserId || ""
+        });
+    
+        if (data && data.ok === false) {
+          throw new Error(data.error || data.message || "โหลดใบเสนอราคาไม่สำเร็จ");
+        }
+    
+        st.items = Array.isArray(data) ? data : [];
+        st.initialized = true;
+    
+      } catch (err) {
+        console.error("[quoteReload_]", err);
+        showToast(err.message || "โหลดใบเสนอราคาไม่สำเร็จ", "error", 2400);
+    
+        st.items = [];
+    
+      } finally {
+        st.loading = false;
+    
+        if (currentView === "quote") {
+          quoteRenderAll_();
+        }
+      }
+    }
+    
+    function quoteFmt_(n) {
+      try {
+        return Number(n || 0).toLocaleString("th-TH", {
+          maximumFractionDigits: 0
+        });
+      } catch (e) {
+        return String(n || 0);
+      }
+    }
+    
+    function quoteFmtDate_(value) {
+      if (!value) return "-";
+    
+      try {
+        const d = new Date(value);
+        if (isNaN(d.getTime())) return "-";
+    
+        return d.toLocaleDateString("th-TH", {
+          day: "numeric",
+          month: "short",
+          year: "2-digit"
+        });
+      } catch (e) {
+        return "-";
+      }
+    }
+    
+    function quoteGetFilteredItems_() {
+      const st = appState.quote;
+      const keyword = String(st.keyword || "").trim().toLowerCase();
+    
+      return (st.items || []).filter(function(x) {
+        if (!keyword) return true;
+    
+        return [
+          x.quoteNo,
+          x.customerName,
+          x.customerNo,
+          x.salesName
+        ].join(" ").toLowerCase().indexOf(keyword) > -1;
+      });
+    }
+    
+    function quoteRenderAll_() {
+      quoteRenderSummary_();
+      quoteRenderList_();
+    }
+    
+    function quoteRenderSummary_() {
+      const items = quoteGetFilteredItems_();
+    
+      const qty = items.reduce(function(sum, x) {
+        return sum + Number(x.sumQty || 0);
+      }, 0);
+    
+      const amount = items.reduce(function(sum, x) {
+        return sum + Number(x.sumTotal || 0);
+      }, 0);
+    
+      setTextSafe("quoteSummaryCount", quoteFmt_(items.length));
+      setTextSafe("quoteSummaryQty", quoteFmt_(qty));
+      setTextSafe("quoteSummaryAmount", "฿" + quoteFmt_(amount));
+    }
+    
+    function quoteRenderList_() {
+      const st = appState.quote;
+      const box = $("quoteList");
+      if (!box) return;
+    
+      box.innerHTML = "";
+    
+      if (st.loading) {
+        box.innerHTML = '<div class="empty">กำลังโหลดใบเสนอราคา...</div>';
+        return;
+      }
+    
+      const items = quoteGetFilteredItems_();
+    
+      if (!items.length) {
+        box.innerHTML = '<div class="empty">ไม่มีใบเสนอราคาเปิดค้างครับ</div>';
+        return;
+      }
+    
+      items.forEach(function(x) {
+        const card = document.createElement("article");
+        card.className = "quote-card";
+    
+        const quoteNo = String(x.quoteNo || "").trim();
+        const customer = String(x.customerName || x.customerNo || "-").trim();
+        const pdfUrl = String(x.pdfUrl || "").trim();
+        const canCancel = !!x.canCancel;
+    
+        let itemHtml = "";
+    
+        if (Array.isArray(x.items) && x.items.length) {
+          itemHtml += '<div class="quote-items">';
+    
+          x.items.slice(0, 5).forEach(function(it) {
+            itemHtml +=
+              '<div class="quote-item-row">' +
+                '<div class="quote-item-name">' + escapeHtml(it.modelBase || "-") + "</div>" +
+                '<div class="quote-item-qty">' + quoteFmt_(it.qty || 0) + " เครื่อง</div>" +
+              "</div>";
+          });
+    
+          if (x.items.length > 5) {
+            itemHtml +=
+              '<div class="quote-item-row">' +
+                '<div class="quote-item-name">และอีก ' + quoteFmt_(x.items.length - 5) + " รายการ</div>" +
+                '<div class="quote-item-qty">ดูใน PDF</div>' +
+              "</div>";
+          }
+    
+          itemHtml += "</div>";
+        }
+    
+        const cancelNote = canCancel
+          ? ""
+          : '<div class="quote-cancel-note">' + escapeHtml(x.cancelDeniedReason || "ยกเลิกได้เฉพาะผู้เปิดรายการหรือ admin") + "</div>";
+    
+        card.innerHTML =
+          '<div class="quote-card-head">' +
+            '<div class="quote-customer">' +
+              '<div class="quote-customer-name">' + escapeHtml(customer) + "</div>" +
+              '<div class="quote-no">' + escapeHtml(quoteNo || "-") + "</div>" +
+            "</div>" +
+            '<div class="quote-total">' +
+              "฿" + quoteFmt_(x.sumTotal || 0) +
+              '<div class="quote-total-sub">' + quoteFmt_(x.sumQty || 0) + " เครื่อง</div>" +
+            "</div>" +
+          "</div>" +
+    
+          '<div class="quote-meta">' +
+            '<span class="quote-chip sales">Sales: ' + escapeHtml(x.salesName || "-") + "</span>" +
+            '<span class="quote-chip">' + escapeHtml(quoteFmtDate_(x.date)) + "</span>" +
+          "</div>" +
+    
+          itemHtml +
+    
+          '<div class="quote-actions">' +
+            '<button class="quote-action-btn pdf" type="button"' + (pdfUrl ? "" : " disabled") + ">ดู PDF</button>" +
+            '<button class="quote-action-btn share" type="button">แชร์</button>' +
+            '<button class="quote-action-btn cancel" type="button"' + (canCancel ? "" : " disabled") + ">ยกเลิก</button>" +
+          "</div>" +
+          cancelNote;
+    
+        const pdfBtn = card.querySelector(".quote-action-btn.pdf");
+        const shareBtn = card.querySelector(".quote-action-btn.share");
+        const cancelBtn = card.querySelector(".quote-action-btn.cancel");
+    
+        if (pdfBtn) {
+          pdfBtn.onclick = function() {
+            quoteOpenPdf_(pdfUrl);
+          };
+        }
+    
+        if (shareBtn) {
+          shareBtn.onclick = function() {
+            quoteShare_(quoteNo, shareBtn);
+          };
+        }
+    
+        if (cancelBtn && canCancel) {
+          cancelBtn.onclick = function() {
+            quoteCancel_(quoteNo, cancelBtn);
+          };
+        }
+    
+        box.appendChild(card);
+      });
+    }
+    
+    function quoteOpenPdf_(url) {
+      url = String(url || "").trim();
+    
+      if (!url) {
+        showToast("ใบนี้ยังไม่มี PDF URL ครับ", "warn", 1800);
+        return;
+      }
+    
+      try {
+        if (window.liff && liffReady && typeof liff.openWindow === "function") {
+          liff.openWindow({
+            url: url,
+            external: true
+          });
+          return;
+        }
+      } catch (err) {
+        console.warn("[quoteOpenPdf_]", err);
+      }
+    
+      window.open(url, "_blank");
+    }
+    
+    function quoteBuildFallbackText_(quoteNo) {
+      quoteNo = String(quoteNo || "").trim();
+      const item = (appState.quote.items || []).find(function(x) {
+        return String(x.quoteNo || "").trim() === quoteNo;
+      });
+    
+      if (!item) return quoteNo;
+    
+      return [
+        "ใบเสนอราคา: " + quoteNo,
+        "ลูกค้า: " + (item.customerName || item.customerNo || "-"),
+        "ยอดรวม: ฿" + quoteFmt_(item.sumTotal || 0),
+        item.pdfUrl ? "PDF: " + item.pdfUrl : ""
+      ].filter(Boolean).join("\n");
+    }
+    
+    async function quoteShare_(quoteNo, btn) {
+      quoteNo = String(quoteNo || "").trim();
+    
+      if (!quoteNo) {
+        showToast("ไม่พบเลขใบเสนอราคา", "warn", 1600);
+        return;
+      }
+    
+      const oldText = btn ? btn.textContent : "";
+    
+      try {
+        if (btn) {
+          btn.disabled = true;
+          btn.textContent = "Loading...";
+        }
+    
+        const messages = await callGasJsonp({
+          action: QUOTE_ACTIONS.sharePayload,
+          idToken: currentIdToken || currentUser.idToken || "",
+          lineUserId: currentUser.lineUserId || "",
+          quoteNo: quoteNo
+        });
+    
+        if (messages && messages.ok === false) {
+          throw new Error(messages.error || messages.message || "โหลด payload ไม่สำเร็จ");
+        }
+    
+        if (!Array.isArray(messages) || !messages.length) {
+          throw new Error("GAS ไม่ได้ส่งข้อความกลับมา");
+        }
+    
+        if (
+          !window.liff ||
+          !liffReady ||
+          typeof liff.shareTargetPicker !== "function" ||
+          (typeof canUseShareTargetPicker_ === "function" && !canUseShareTargetPicker_())
+        ) {
+          const text = quoteBuildFallbackText_(quoteNo);
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            await navigator.clipboard.writeText(text);
+          } else {
+            fallbackCopy_(text);
+          }
+    
+          showToast("SharePicker ไม่พร้อม จึงคัดลอกข้อมูลให้แทนครับ", "warn", 2200);
+          return;
+        }
+    
+        const result = await liff.shareTargetPicker(messages, {
+          isMultiple: true
+        });
+    
+        if (result && result.status === "success") {
+          showToast("แชร์ใบเสนอราคาแล้วครับ", "success", 1600);
+          return;
+        }
+    
+        showToast("ยกเลิกการแชร์ครับ", "warn", 1400);
+    
+      } catch (err) {
+        console.error("[quoteShare_]", err);
+        showToast(err.message || "แชร์ใบเสนอราคาไม่สำเร็จ", "error", 2400);
+    
+      } finally {
+        if (btn) {
+          btn.disabled = false;
+          btn.textContent = oldText || "แชร์";
+        }
+      }
+    }
+    
+    async function quoteCancel_(quoteNo, btn) {
+      quoteNo = String(quoteNo || "").trim();
+    
+      if (!quoteNo) {
+        showToast("ไม่พบเลขใบเสนอราคา", "warn", 1600);
+        return;
+      }
+    
+      const ok = window.confirm(
+        "ยืนยันยกเลิกใบเสนอราคานี้?\n\n" +
+        quoteNo +
+        "\n\nระบบจะคืนโควต้าและเปลี่ยนสถานะเป็น CANCELLED"
+      );
+    
+      if (!ok) return;
+    
+      const oldText = btn ? btn.textContent : "";
+    
+      try {
+        if (btn) {
+          btn.disabled = true;
+          btn.textContent = "กำลังยกเลิก...";
+        }
+    
+        const res = await callGasJsonp({
+          action: QUOTE_ACTIONS.cancel,
+          idToken: currentIdToken || currentUser.idToken || "",
+          lineUserId: currentUser.lineUserId || "",
+          quoteNo: quoteNo,
+          reason: "cancel from LIFF"
+        });
+    
+        if (!res || res.ok === false) {
+          throw new Error((res && (res.error || res.message)) || "ยกเลิกไม่สำเร็จ");
+        }
+    
+        showToast("ยกเลิกใบเสนอราคาแล้วครับ", "success", 1800);
+    
+        appState.quote.initialized = false;
+        await quoteReload_();
+    
+      } catch (err) {
+        console.error("[quoteCancel_]", err);
+        showToast(err.message || "ยกเลิกไม่สำเร็จ", "error", 2600);
+    
+      } finally {
+        if (btn) {
+          btn.disabled = false;
+          btn.textContent = oldText || "ยกเลิก";
+        }
+      }
+    }
+    
+    function bindQuoteEvents_() {
+      const st = appState.quote;
+      const search = $("quoteSearch");
+    
+      if (search) {
+        search.value = st.keyword || "";
+    
+        search.addEventListener("input", function() {
+          st.keyword = String(this.value || "");
+          quoteRenderAll_();
         });
       }
     }
