@@ -2386,7 +2386,7 @@
     
         showApp();
     
-        openView("home");
+        openView(getInitialViewFromUrl_());
     
         loadHomeDashboard();
     
@@ -2681,6 +2681,23 @@
         month: "short",
         year: "numeric"
       });
+    }
+
+    function getInitialViewFromUrl_() {
+      try {
+        const params = new URLSearchParams(window.location.search || "");
+        let view = String(params.get("view") || "").trim().toLowerCase();
+    
+        if (view === "quotes") view = "quote";
+    
+        if (["home", "order", "stock", "quote"].indexOf(view) > -1) {
+          return view;
+        }
+    
+        return "home";
+      } catch (err) {
+        return "home";
+      }
     }
   
     async function loadHomeDashboard() {
