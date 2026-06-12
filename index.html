@@ -2227,6 +2227,70 @@
         font-size: 16px;
       }
     }
+
+    .report-row.expandable {
+      cursor: pointer;
+    }
+    
+    .report-expand {
+      margin-top: 12px;
+      padding: 10px;
+      border-radius: 18px;
+      background: #f8fafc;
+      border: 1px solid #e8edf6;
+    }
+    
+    .report-subtabs {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 7px;
+      margin-bottom: 10px;
+    }
+    
+    .report-subtab {
+      min-height: 34px;
+      border: 1px solid rgba(79, 109, 245, 0.14);
+      border-radius: 999px;
+      background: #ffffff;
+      color: #64748b;
+      font-size: 12px;
+      font-weight: 950;
+    }
+    
+    .report-subtab.active {
+      background: linear-gradient(135deg, var(--blue), var(--blue2));
+      color: #ffffff;
+    }
+    
+    .report-expand-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 8px 2px;
+      border-bottom: 1px dashed #e2e8f0;
+    }
+    
+    .report-expand-row:last-child {
+      border-bottom: 0;
+    }
+    
+    .report-expand-name {
+      flex: 1;
+      min-width: 0;
+      font-size: 12px;
+      font-weight: 850;
+      color: #334155;
+      line-height: 1.35;
+      word-break: break-word;
+    }
+    
+    .report-expand-right {
+      white-space: nowrap;
+      text-align: right;
+      font-size: 12px;
+      font-weight: 950;
+      color: #315bc8;
+    }
     
   </style>
 </head>
@@ -2688,6 +2752,8 @@
         brand: "all",
         keyword: "",
         activeTab: "product",
+        expandedSalesKey: "",
+        salesSubTab: "products",
         data: null
       }
     };
@@ -6106,8 +6172,12 @@
     
       rows.forEach(function(x) {
         const title = x.label || x.key || "-";
+        const rowKey = String(x.key || x.label || "").trim();
         const qty = Number(x.qty || 0);
         const amount = Number(x.amount || 0);
+    
+        const isSalesTab = st.activeTab === "sales";
+        const isExpanded = isSalesTab && rowKey && String(st.expandedSalesKey || "") === rowKey;
     
         let detailHtml = "";
     
@@ -6133,10 +6203,17 @@
           detailHtml += "</div>";
         }
     
+        if (isExpanded) {
+          detailHtml += reportBuildSalesExpandHtml_(x);
+        }
+    
         html +=
-          '<article class="report-row">' +
+          '<article class="report-row' + (isSalesTab ? " expandable" : "") + '" data-sales-key="' + escapeHtml(rowKey) + '">' +
             '<div class="report-row-head">' +
-              '<div class="report-row-title">' + escapeHtml(title) + "</div>" +
+              '<div class="report-row-title">' +
+                escapeHtml(title) +
+                (isSalesTab ? '<span style="display:block;margin-top:3px;font-size:12px;color:#94a3b8;font-weight:800;">แตะเพื่อดูรายละเอียด' + (isExpanded ? " ▲" : " ▼") + "</span>" : "") +
+              "</div>" +
               '<div class="report-row-amount">฿' + reportFmtMoney_(amount) + "</div>" +
             "</div>" +
     
@@ -6151,6 +6228,129 @@
       });
     
       box.innerHTML = html;
+    
+      reportBindSalesExpandEvents_();
+    }
+
+    function reportBuildSalesExpandHtml_(salesRow) {
+      salesRow = salesRow || {};
+    
+      const subTab = appState.report.salesSubTab || "products";
+    
+      let rows = [];
+      let titleKey = "products";
+    
+      if (subTab === "bills") {
+        rows = salesRow.bills || [];
+        titleKey = "bills";
+      } else if (subTab === "customers") {
+        rows = salesRow.customerDetails || [];
+        titleKey = "customers";
+      } else {
+        rows = salesRow.details || [];
+        titleKey = "products";
+      }
+    
+      let html = "";
+    
+      html += '<div class="report-expand">';
+      html +=   '<div class="report-subtabs">';
+      html +=     '<button class="report-subtab' + (titleKey === "products" ? " active" : "") + '" type="button" data-sales-subtab="products">รุ่นสินค้า</button>';
+      html +=     '<button class="report-subtab' + (titleKey === "bills" ? " active" : "") + '" type="button" data-sales-subtab="bills">บิล</button>';
+      html +=     '<button class="report-subtab' + (titleKey === "customers" ? " active" : "") + '" type="button" data-sales-subtab="customers">ลูกค้า</button>';
+      html +=   "</div>";
+    
+      if (!rows.length) {
+        html += '<div class="empty" style="padding:14px;">ยังไม่มีรายละเอียดในหมวดนี้ครับ</div>';
+        html += "</div>";
+        return html;
+      }
+    
+      rows.slice(0, 30).forEach(function(r) {
+        if (titleKey === "bills") {
+          html +=
+            '<div class="report-expand-row">' +
+              '<div class="report-expand-name">' +
+                escapeHtml(r.invoiceNo || r.key || "-") +
+                '<div style="margin-top:2px;color:#94a3b8;font-weight:750;">' +
+                  escapeHtml(r.customerNo || r.customerName || "-") +
+                "</div>" +
+              "</div>" +
+              '<div class="report-expand-right">' +
+                reportFmtInt_(r.qty || 0) + " เครื่อง<br>" +
+                '<span style="color:#111827;">฿' + reportFmtMoney_(r.amount || 0) + "</span>" +
+              "</div>" +
+            "</div>";
+          return;
+        }
+    
+        if (titleKey === "customers") {
+          html +=
+            '<div class="report-expand-row">' +
+              '<div class="report-expand-name">' +
+                escapeHtml(r.customerNo || r.customerName || r.key || "-") +
+              "</div>" +
+              '<div class="report-expand-right">' +
+                reportFmtInt_(r.qty || 0) + " เครื่อง<br>" +
+                reportFmtInt_(r.invoiceCount || 0) + " บิล" +
+              "</div>" +
+            "</div>";
+          return;
+        }
+    
+        html +=
+          '<div class="report-expand-row">' +
+            '<div class="report-expand-name">' + escapeHtml(r.label || r.key || "-") + "</div>" +
+            '<div class="report-expand-right">' +
+              reportFmtInt_(r.qty || 0) + " เครื่อง<br>" +
+              '<span style="color:#111827;">฿' + reportFmtMoney_(r.amount || 0) + "</span>" +
+            "</div>" +
+          "</div>";
+      });
+    
+      if (rows.length > 30) {
+        html +=
+          '<div class="report-expand-row">' +
+            '<div class="report-expand-name">และอีก ' + reportFmtInt_(rows.length - 30) + " รายการ</div>" +
+            '<div class="report-expand-right">ย่อไว้ก่อน</div>' +
+          "</div>";
+      }
+    
+      html += "</div>";
+    
+      return html;
+    }
+
+    function reportBindSalesExpandEvents_() {
+      const box = $("reportList");
+      if (!box) return;
+    
+      Array.prototype.forEach.call(box.querySelectorAll(".report-row.expandable"), function(card) {
+        card.addEventListener("click", function(e) {
+          const subBtn = e.target.closest(".report-subtab");
+    
+          if (subBtn) {
+            e.preventDefault();
+            e.stopPropagation();
+    
+            appState.report.salesSubTab = subBtn.getAttribute("data-sales-subtab") || "products";
+            reportRenderList_();
+            return;
+          }
+    
+          const key = String(card.getAttribute("data-sales-key") || "").trim();
+          if (!key) return;
+    
+          if (String(appState.report.expandedSalesKey || "") === key) {
+            appState.report.expandedSalesKey = "";
+          } else {
+            appState.report.expandedSalesKey = key;
+            appState.report.salesSubTab = appState.report.salesSubTab || "products";
+          }
+    
+          reportRenderList_();
+        });
+      });
     }
     
     function bindReportEvents_() {
@@ -6208,6 +6408,8 @@
           if (!btn) return;
     
           st.activeTab = btn.getAttribute("data-tab") || "product";
+          st.expandedSalesKey = "";
+          st.salesSubTab = "products";
           reportRenderAll_();
         });
       }
