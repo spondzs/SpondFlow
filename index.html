@@ -6046,15 +6046,8 @@
       const data = appState.report.data || {};
       const sum = data.summary || data.totals || {};
     
-      const customerCount =
-        sum.customerCount != null
-          ? sum.customerCount
-          : (sum.totalCustomers != null ? sum.totalCustomers : 0);
-    
-      const topProduct =
-        sum.topProduct ||
-        sum.bestProduct ||
-        "-";
+      const customerCount = Number(sum.customerCount || sum.totalCustomers || 0);
+      const topProduct = String(sum.topProduct || sum.bestProduct || "-").trim() || "-";
     
       setTextSafe("reportTotalQty", reportFmtInt_(sum.totalQty || 0));
       setTextSafe("reportTotalAmount", "฿" + reportFmtMoney_(sum.totalAmount || 0));
