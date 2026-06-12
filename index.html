@@ -1982,6 +1982,251 @@
         grid-template-columns: 1fr;
       }
     }
+
+    /* =========================================================
+     * REPORT VIEW
+     * ========================================================= */
+    
+    .app.view-report {
+      padding-bottom: calc(24px + var(--safe-bottom));
+    }
+    
+    .app.view-report .topbar {
+      padding-left: 58px;
+    }
+    
+    .report-view {
+      padding: 2px 0 24px;
+    }
+    
+    .report-filter-card .search-wrap {
+      min-height: 46px;
+      border-radius: 16px;
+    }
+    
+    .report-search-wrap {
+      margin-top: 12px;
+    }
+    
+    .report-period-row {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+    }
+    
+    .report-period-btn,
+    .report-select {
+      min-height: 40px;
+      border: 1px solid rgba(79, 109, 245, 0.14);
+      border-radius: 999px;
+      background: rgba(255,255,255,0.72);
+      color: #64748b;
+      font-size: 13px;
+      font-weight: 950;
+    }
+    
+    .report-period-btn.active {
+      background: linear-gradient(135deg, var(--blue), var(--blue2));
+      color: #ffffff;
+      border-color: rgba(255,255,255,0.42);
+      box-shadow: 0 10px 22px rgba(79, 109, 245, 0.18);
+    }
+    
+    .report-month-picker {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: 10px;
+    }
+    
+    .report-select {
+      padding: 0 12px;
+      outline: 0;
+    }
+    
+    .report-summary-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+    
+    .report-summary-card {
+      padding: 14px;
+      border-radius: 22px;
+      background:
+        radial-gradient(circle at 95% 0%, rgba(79,109,245,0.10), transparent 34%),
+        #ffffff;
+      border: 1px solid rgba(79, 109, 245, 0.10);
+      box-shadow: var(--shadow-soft);
+      min-width: 0;
+    }
+    
+    .report-summary-value {
+      font-size: 24px;
+      font-weight: 950;
+      color: #315bc8;
+      letter-spacing: -0.5px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    
+    .report-summary-value.small {
+      font-size: 18px;
+    }
+    
+    .report-summary-label {
+      margin-top: 3px;
+      font-size: 12px;
+      color: #64748b;
+      font-weight: 800;
+    }
+    
+    .report-tab-card {
+      margin-bottom: 12px;
+    }
+    
+    .report-tabs {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 8px;
+    }
+    
+    .report-tab {
+      min-height: 40px;
+      border: 1px solid rgba(79, 109, 245, 0.14);
+      border-radius: 999px;
+      background: rgba(255,255,255,0.72);
+      color: #64748b;
+      font-size: 12px;
+      font-weight: 950;
+    }
+    
+    .report-tab.active {
+      background: linear-gradient(135deg, var(--blue), var(--blue2));
+      color: #ffffff;
+      box-shadow: 0 10px 22px rgba(79, 109, 245, 0.18);
+    }
+    
+    .report-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    
+    .report-row {
+      padding: 14px;
+      border-radius: 22px;
+      border: 1px solid #e2e8f0;
+      background:
+        radial-gradient(circle at 100% 0%, rgba(79,109,245,0.08), transparent 30%),
+        linear-gradient(180deg, #ffffff, #fbfcff);
+      box-shadow: 0 8px 18px rgba(15, 23, 42, 0.04);
+    }
+    
+    .report-row-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: flex-start;
+    }
+    
+    .report-row-title {
+      flex: 1;
+      min-width: 0;
+      font-size: 16px;
+      font-weight: 950;
+      color: #111827;
+      line-height: 1.35;
+      word-break: break-word;
+    }
+    
+    .report-row-amount {
+      white-space: nowrap;
+      text-align: right;
+      font-size: 15px;
+      font-weight: 950;
+      color: #111827;
+    }
+    
+    .report-row-meta {
+      margin-top: 8px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    
+    .report-chip {
+      display: inline-flex;
+      align-items: center;
+      min-height: 26px;
+      padding: 0 9px;
+      border-radius: 999px;
+      background: #f1f5ff;
+      color: #334155;
+      font-size: 12px;
+      font-weight: 850;
+    }
+    
+    .report-chip.qty {
+      background: #ecfdf5;
+      color: #15803d;
+    }
+    
+    .report-detail {
+      margin-top: 10px;
+      padding: 10px 12px;
+      border-radius: 16px;
+      background: #f8fafc;
+      border: 1px solid #e8edf6;
+    }
+    
+    .report-detail-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 6px 0;
+      border-bottom: 1px dashed #e2e8f0;
+    }
+    
+    .report-detail-row:last-child {
+      border-bottom: 0;
+    }
+    
+    .report-detail-name {
+      flex: 1;
+      min-width: 0;
+      font-size: 12px;
+      color: #334155;
+      line-height: 1.35;
+      word-break: break-word;
+    }
+    
+    .report-detail-qty {
+      white-space: nowrap;
+      font-size: 12px;
+      font-weight: 950;
+      color: #315bc8;
+    }
+    
+    @media (max-width: 420px) {
+      .app.view-report .topbar {
+        padding-left: 56px;
+      }
+    
+      .report-tabs {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    
+      .report-summary-value {
+        font-size: 22px;
+      }
+    
+      .report-summary-value.small {
+        font-size: 16px;
+      }
+    }
     
   </style>
 </head>
@@ -2187,6 +2432,62 @@
     </main>
   </template>
 
+  <template id="reportViewTemplate">
+    <button class="order-back-fab" type="button" onclick="openView('home')" aria-label="Back">‹</button>
+  
+    <main class="content report-view">
+      <section class="card report-filter-card">
+        <div class="card-title">สรุปยอดขาย</div>
+  
+        <div class="report-period-row">
+          <button class="report-period-btn active" type="button" data-mode="this_month">เดือนนี้</button>
+          <button class="report-period-btn" type="button" data-mode="last_month">เดือนก่อน</button>
+          <button class="report-period-btn" type="button" data-mode="pick_month">เลือกเดือน</button>
+        </div>
+  
+        <div id="reportMonthPicker" class="report-month-picker" style="display:none;">
+          <select id="reportMonthSelect" class="report-select"></select>
+          <select id="reportYearSelect" class="report-select"></select>
+        </div>
+  
+        <div id="reportBrandTabs" class="brand-tabs"></div>
+  
+        <div class="search-wrap report-search-wrap">
+          <div class="search-icon">⌕</div>
+          <input id="reportSearch" class="search-input" placeholder="ค้นหารุ่น / ลูกค้า / Sales">
+        </div>
+      </section>
+  
+      <section class="report-summary-grid">
+        <div class="report-summary-card">
+          <div id="reportTotalQty" class="report-summary-value">—</div>
+          <div class="report-summary-label">เครื่อง</div>
+        </div>
+  
+        <div class="report-summary-card">
+          <div id="reportTotalAmount" class="report-summary-value">—</div>
+          <div class="report-summary-label">ยอดรวม</div>
+        </div>
+  
+        <div class="report-summary-card">
+          <div id="reportCustomerCount" class="report-summary-value">—</div>
+          <div class="report-summary-label">ลูกค้า</div>
+        </div>
+  
+        <div class="report-summary-card">
+          <div id="reportTopProduct" class="report-summary-value small">—</div>
+          <div class="report-summary-label">รุ่นขายดี</div>
+        </div>
+      </section>
+  
+      <section class="report-tab-card">
+        <div id="reportTabs" class="report-tabs"></div>
+      </section>
+  
+      <section id="reportList" class="report-list"></section>
+    </main>
+  </template>
+
   <div id="toast" class="toast"></div>
 
   <script>
@@ -2249,13 +2550,13 @@
         href: CONFIG.links.payment
       },
       {
-        key: "sales",
-        title: "ยอดขาย",
-        desc: "สรุปยอดขาย รายงาน และภาพรวมรายเดือน",
+        key: "report",
+        title: "สรุปยอด",
+        desc: "ดูยอดขายจาก Invoice ตามรุ่น Sales ลูกค้า และรายวัน",
         icon: "📊",
         tag: "Report",
         color: "cyan",
-        href: CONFIG.links.sales
+        view: "report"
       },
       {
         key: "products",
@@ -2328,6 +2629,10 @@
       sharePayload: "get_quote_share_payload",
       cancel: "cancel_quote_from_liff"
     };
+
+    const REPORT_ACTIONS = {
+      summary: "liff_report_sales_summary"
+    };
     
     const appState = {
       order: {
@@ -2372,6 +2677,18 @@
         loading: false,
         keyword: "",
         items: []
+      },
+
+      report: {
+        initialized: false,
+        loading: false,
+        mode: "this_month",
+        year: new Date().getFullYear(),
+        month: new Date().getMonth() + 1,
+        brand: "all",
+        keyword: "",
+        activeTab: "product",
+        data: null
       }
     };
   
@@ -2543,6 +2860,11 @@
         renderQuoteView_();
         return;
       }
+
+      if (currentView === "report") {
+        renderReportView_();
+        return;
+      }
     
       showToast("เมนูนี้ยังไม่ได้ย้ายเข้า App Shell ครับ");
       currentView = "home";
@@ -2559,6 +2881,7 @@
         app.classList.remove("view-order");
         app.classList.remove("view-stock");
         app.classList.remove("view-quote");
+        app.classList.remove("view-report");
       }
     
       root.innerHTML = "";
@@ -2642,6 +2965,30 @@
       quoteRenderAll_();
       ensureQuoteLoaded_();
     }
+
+    function renderReportView_() {
+      const root = document.getElementById("viewRoot");
+      const tpl = document.getElementById("reportViewTemplate");
+      if (!root || !tpl) return;
+    
+      const app = document.getElementById("app");
+      if (app) {
+        app.classList.add("view-report");
+        app.classList.remove("view-order");
+        app.classList.remove("view-stock");
+        app.classList.remove("view-quote");
+      }
+    
+      root.innerHTML = "";
+      root.appendChild(tpl.content.cloneNode(true));
+    
+      setAppTopbar_("สรุปยอดขาย", "เดือนนี้ · จาก Invoice", "↻");
+    
+      bindReportEvents_();
+      reportInitPicker_();
+      reportRenderAll_();
+      ensureReportLoaded_();
+    }
     
     function setAppTopbar_(title, subtitle, actionText) {
       setTextSafe("appTitle", title || "SpondFlow");
@@ -2666,6 +3013,11 @@
 
       if (currentView === "quote") {
         quoteReload_();
+        return;
+      }
+
+      if (currentView === "report") {
+        reportReload_();
         return;
       }
     
@@ -5513,6 +5865,366 @@
           quoteRenderAll_();
         });
       }
+    }
+
+    const REPORT_TABS = [
+      { key: "product", label: "สินค้า" },
+      { key: "sales", label: "Sales" },
+      { key: "customer", label: "ลูกค้า" },
+      { key: "daily", label: "รายวัน" }
+    ];
+    
+    const REPORT_BRANDS = [
+      { key: "all", label: "ทั้งหมด" },
+      { key: "vivo", label: "vivo" },
+      { key: "iqoo", label: "iQOO" }
+    ];
+    
+    async function ensureReportLoaded_() {
+      const st = appState.report;
+    
+      if (st.initialized && st.data) {
+        reportRenderAll_();
+        return;
+      }
+    
+      await reportReload_();
+    }
+    
+    async function reportReload_() {
+      const st = appState.report;
+    
+      st.loading = true;
+      reportRenderAll_();
+    
+      try {
+        reportApplyModeDate_();
+    
+        const data = await callGasJsonp({
+          action: REPORT_ACTIONS.summary,
+          idToken: currentIdToken || currentUser.idToken || "",
+          lineUserId: currentUser.lineUserId || "",
+          mode: st.mode || "this_month",
+          year: st.year || "",
+          month: st.month || "",
+          brand: st.brand || "all",
+          keyword: st.keyword || ""
+        });
+    
+        if (!data || data.ok === false) {
+          throw new Error((data && (data.error || data.message)) || "โหลดรายงานไม่สำเร็จ");
+        }
+    
+        st.data = data;
+        st.initialized = true;
+    
+        const label = data.period && data.period.label ? data.period.label : "จาก Invoice";
+        setAppTopbar_("สรุปยอดขาย", label + " · จาก Invoice", "↻");
+    
+      } catch (err) {
+        console.error("[reportReload_]", err);
+        showToast(err.message || "โหลดรายงานไม่สำเร็จ", "error", 2600);
+    
+        st.data = null;
+    
+      } finally {
+        st.loading = false;
+    
+        if (currentView === "report") {
+          reportRenderAll_();
+        }
+      }
+    }
+    
+    function reportApplyModeDate_() {
+      const st = appState.report;
+      const now = new Date();
+    
+      if (st.mode === "this_month") {
+        st.year = now.getFullYear();
+        st.month = now.getMonth() + 1;
+        return;
+      }
+    
+      if (st.mode === "last_month") {
+        const d = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+        st.year = d.getFullYear();
+        st.month = d.getMonth() + 1;
+        return;
+      }
+    
+      st.year = Number(st.year || now.getFullYear());
+      st.month = Number(st.month || (now.getMonth() + 1));
+    }
+    
+    function reportInitPicker_() {
+      const st = appState.report;
+      const monthSelect = $("reportMonthSelect");
+      const yearSelect = $("reportYearSelect");
+    
+      if (monthSelect && !monthSelect.innerHTML) {
+        const monthNames = [
+          "ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.",
+          "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค."
+        ];
+    
+        monthSelect.innerHTML = monthNames.map(function(label, idx) {
+          const m = idx + 1;
+          return '<option value="' + m + '">' + label + "</option>";
+        }).join("");
+    
+        monthSelect.value = String(st.month || (new Date().getMonth() + 1));
+      }
+    
+      if (yearSelect && !yearSelect.innerHTML) {
+        const y = new Date().getFullYear();
+        const years = [y - 2, y - 1, y, y + 1];
+    
+        yearSelect.innerHTML = years.map(function(yy) {
+          return '<option value="' + yy + '">' + (yy + 543) + "</option>";
+        }).join("");
+    
+        yearSelect.value = String(st.year || y);
+      }
+    }
+    
+    function reportRenderAll_() {
+      reportRenderPeriods_();
+      reportRenderBrandTabs_();
+      reportRenderTabs_();
+      reportRenderSummary_();
+      reportRenderList_();
+    }
+    
+    function reportRenderPeriods_() {
+      const st = appState.report;
+    
+      Array.prototype.forEach.call(document.querySelectorAll(".report-period-btn"), function(btn) {
+        const mode = btn.getAttribute("data-mode") || "this_month";
+        btn.classList.toggle("active", mode === st.mode);
+      });
+    
+      const picker = $("reportMonthPicker");
+      if (picker) {
+        picker.style.display = st.mode === "pick_month" ? "" : "none";
+      }
+    }
+    
+    function reportRenderBrandTabs_() {
+      const st = appState.report;
+      const box = $("reportBrandTabs");
+      if (!box) return;
+    
+      box.innerHTML = REPORT_BRANDS.map(function(b) {
+        const active = b.key === st.brand ? " active" : "";
+    
+        return '<button class="brand-tab' + active + '" type="button" data-brand="' + b.key + '">' +
+          escapeHtml(b.label) +
+        "</button>";
+      }).join("");
+    }
+    
+    function reportRenderTabs_() {
+      const st = appState.report;
+      const box = $("reportTabs");
+      if (!box) return;
+    
+      box.innerHTML = REPORT_TABS.map(function(t) {
+        const active = t.key === st.activeTab ? " active" : "";
+    
+        return '<button class="report-tab' + active + '" type="button" data-tab="' + t.key + '">' +
+          escapeHtml(t.label) +
+        "</button>";
+      }).join("");
+    }
+    
+    function reportRenderSummary_() {
+      const data = appState.report.data || {};
+      const sum = data.summary || {};
+    
+      setTextSafe("reportTotalQty", reportFmtInt_(sum.totalQty || 0));
+      setTextSafe("reportTotalAmount", "฿" + reportFmtMoney_(sum.totalAmount || 0));
+      setTextSafe("reportCustomerCount", reportFmtInt_(sum.customerCount || 0));
+      setTextSafe("reportTopProduct", sum.topProduct || "-");
+    }
+    
+    function reportGetActiveRows_() {
+      const st = appState.report;
+      const data = st.data || {};
+      const keyword = String(st.keyword || "").trim().toLowerCase();
+    
+      let rows = [];
+    
+      if (st.activeTab === "product") rows = data.products || [];
+      else if (st.activeTab === "sales") rows = data.sales || [];
+      else if (st.activeTab === "customer") rows = data.customers || [];
+      else if (st.activeTab === "daily") rows = data.daily || [];
+      else rows = [];
+    
+      if (!keyword) return rows;
+    
+      return rows.filter(function(x) {
+        return [
+          x.label,
+          x.key,
+          x.customerNo,
+          x.brand
+        ].join(" ").toLowerCase().indexOf(keyword) > -1;
+      });
+    }
+    
+    function reportRenderList_() {
+      const st = appState.report;
+      const box = $("reportList");
+      if (!box) return;
+    
+      if (st.loading) {
+        box.innerHTML = '<div class="empty">กำลังโหลดรายงานจาก Invoice...</div>';
+        return;
+      }
+    
+      if (!st.data) {
+        box.innerHTML = '<div class="empty">ยังไม่มีข้อมูลรายงานครับ</div>';
+        return;
+      }
+    
+      const rows = reportGetActiveRows_();
+    
+      if (!rows.length) {
+        box.innerHTML = '<div class="empty">ไม่พบข้อมูลตามเงื่อนไขนี้ครับ</div>';
+        return;
+      }
+    
+      let html = "";
+    
+      rows.forEach(function(x) {
+        const title = x.label || x.key || "-";
+        const qty = Number(x.qty || 0);
+        const amount = Number(x.amount || 0);
+    
+        let detailHtml = "";
+    
+        if (st.activeTab === "product" && Array.isArray(x.details) && x.details.length) {
+          detailHtml += '<div class="report-detail">';
+    
+          x.details.slice(0, 4).forEach(function(d) {
+            detailHtml +=
+              '<div class="report-detail-row">' +
+                '<div class="report-detail-name">' + escapeHtml(d.label || "-") + "</div>" +
+                '<div class="report-detail-qty">' + reportFmtInt_(d.qty || 0) + " เครื่อง</div>" +
+              "</div>";
+          });
+    
+          if (x.details.length > 4) {
+            detailHtml +=
+              '<div class="report-detail-row">' +
+                '<div class="report-detail-name">และอีก ' + reportFmtInt_(x.details.length - 4) + " รายการ</div>" +
+                '<div class="report-detail-qty">รวมในยอดบน</div>' +
+              "</div>";
+          }
+    
+          detailHtml += "</div>";
+        }
+    
+        html +=
+          '<article class="report-row">' +
+            '<div class="report-row-head">' +
+              '<div class="report-row-title">' + escapeHtml(title) + "</div>" +
+              '<div class="report-row-amount">฿' + reportFmtMoney_(amount) + "</div>" +
+            "</div>" +
+    
+            '<div class="report-row-meta">' +
+              '<span class="report-chip qty">' + reportFmtInt_(qty) + " เครื่อง</span>" +
+              '<span class="report-chip">' + reportFmtInt_(x.invoiceCount || 0) + " บิล</span>" +
+              '<span class="report-chip">' + reportFmtInt_(x.customerCount || 0) + " ลูกค้า</span>" +
+            "</div>" +
+    
+            detailHtml +
+          "</article>";
+      });
+    
+      box.innerHTML = html;
+    }
+    
+    function bindReportEvents_() {
+      const st = appState.report;
+    
+      const search = $("reportSearch");
+      const monthSelect = $("reportMonthSelect");
+      const yearSelect = $("reportYearSelect");
+      const brandTabs = $("reportBrandTabs");
+      const tabs = $("reportTabs");
+    
+      Array.prototype.forEach.call(document.querySelectorAll(".report-period-btn"), function(btn) {
+        btn.addEventListener("click", function() {
+          st.mode = this.getAttribute("data-mode") || "this_month";
+    
+          if (st.mode === "pick_month") {
+            reportRenderPeriods_();
+            return;
+          }
+    
+          reportReload_();
+        });
+      });
+    
+      if (monthSelect) {
+        monthSelect.addEventListener("change", function() {
+          st.month = Number(this.value || 0);
+          st.mode = "pick_month";
+          reportReload_();
+        });
+      }
+    
+      if (yearSelect) {
+        yearSelect.addEventListener("change", function() {
+          st.year = Number(this.value || 0);
+          st.mode = "pick_month";
+          reportReload_();
+        });
+      }
+    
+      if (brandTabs) {
+        brandTabs.addEventListener("click", function(e) {
+          const btn = e.target.closest(".brand-tab");
+          if (!btn) return;
+    
+          st.brand = btn.getAttribute("data-brand") || "all";
+          st.initialized = false;
+          reportReload_();
+        });
+      }
+    
+      if (tabs) {
+        tabs.addEventListener("click", function(e) {
+          const btn = e.target.closest(".report-tab");
+          if (!btn) return;
+    
+          st.activeTab = btn.getAttribute("data-tab") || "product";
+          reportRenderAll_();
+        });
+      }
+    
+      if (search) {
+        search.value = st.keyword || "";
+    
+        search.addEventListener("input", function() {
+          st.keyword = String(this.value || "");
+          reportRenderList_();
+        });
+      }
+    }
+    
+    function reportFmtInt_(n) {
+      return Number(n || 0).toLocaleString("th-TH", {
+        maximumFractionDigits: 0
+      });
+    }
+    
+    function reportFmtMoney_(n) {
+      return Number(n || 0).toLocaleString("th-TH", {
+        maximumFractionDigits: 0
+      });
     }
 
     function handleBrandLogoError_(img) {
