@@ -6385,53 +6385,6 @@
     
       return html;
     }
-    
-      rows.forEach(function(r) {
-        if (titleKey === "bills") {
-          html +=
-            '<div class="report-expand-row">' +
-              '<div class="report-expand-name">' +
-                escapeHtml(r.invoiceNo || r.key || "-") +
-                '<div style="margin-top:2px;color:#94a3b8;font-weight:750;">' +
-                  escapeHtml(r.customerNo || r.customerName || "-") +
-                "</div>" +
-              "</div>" +
-              '<div class="report-expand-right">' +
-                reportFmtInt_(r.qty || 0) + " เครื่อง<br>" +
-                '<span style="color:#111827;">฿' + reportFmtMoney_(r.amount || 0) + "</span>" +
-              "</div>" +
-            "</div>";
-          return;
-        }
-    
-        if (titleKey === "customers") {
-          html +=
-            '<div class="report-expand-row">' +
-              '<div class="report-expand-name">' +
-                escapeHtml(r.customerNo || r.customerName || r.key || "-") +
-              "</div>" +
-              '<div class="report-expand-right">' +
-                reportFmtInt_(r.qty || 0) + " เครื่อง<br>" +
-                reportFmtInt_(r.invoiceCount || 0) + " บิล" +
-              "</div>" +
-            "</div>";
-          return;
-        }
-    
-        html +=
-          '<div class="report-expand-row">' +
-            '<div class="report-expand-name">' + escapeHtml(r.label || r.key || "-") + "</div>" +
-            '<div class="report-expand-right">' +
-              reportFmtInt_(r.qty || 0) + " เครื่อง<br>" +
-              '<span style="color:#111827;">฿' + reportFmtMoney_(r.amount || 0) + "</span>" +
-            "</div>" +
-          "</div>";
-      });    
-         
-      html += "</div>";
-    
-      return html;
-    }
 
     function reportBindSalesExpandEvents_() {
       const box = $("reportList");
