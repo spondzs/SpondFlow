@@ -2291,6 +2291,83 @@
       font-weight: 950;
       color: #315bc8;
     }
+
+    /* =========================================================
+     * QUOTE VIEW PATCH: SpondFlow Blue Theme
+     * ========================================================= */
+    
+    .quote-summary-item {
+      background:
+        radial-gradient(circle at 95% 0%, rgba(79,109,245,0.10), transparent 34%),
+        #ffffff;
+      border: 1px solid rgba(79, 109, 245, 0.10);
+    }
+    
+    .quote-summary-value,
+    .quote-no {
+      color: #315bc8;
+    }
+    
+    .quote-chip.sales {
+      background: #eef3ff;
+      color: #315bc8;
+    }
+    
+    .quote-card {
+      background:
+        radial-gradient(circle at 100% 0%, rgba(79,109,245,0.07), transparent 30%),
+        linear-gradient(180deg, #ffffff, #fbfcff);
+    }
+    
+    .quote-items {
+      max-height: none;
+      overflow: visible;
+    }
+    
+    .quote-item-row {
+      align-items: flex-start;
+    }
+    
+    .quote-item-name {
+      font-size: 13px;
+      line-height: 1.42;
+    }
+
+    /* Quote action buttons: ลดการแย่งกันเด่น */
+
+    .quote-actions {
+      grid-template-columns: 1fr 1.08fr 0.86fr;
+      gap: 8px;
+    }
+    
+    .quote-action-btn {
+      min-height: 48px;
+      border-radius: 17px;
+      box-shadow: none;
+    }
+    
+    .quote-action-btn.pdf {
+      background: #eef3ff;
+      color: #315bc8;
+    }
+    
+    .quote-action-btn.share {
+      background:
+        radial-gradient(circle at 92% 0%, rgba(255,255,255,0.24), transparent 30%),
+        linear-gradient(135deg, var(--blue), var(--blue2));
+      color: #ffffff;
+      box-shadow: 0 10px 20px rgba(79, 109, 245, 0.16);
+    }
+    
+    .quote-action-btn.cancel {
+      background: rgba(255, 255, 255, 0.74);
+      color: #be123c;
+      border: 1px solid rgba(190, 18, 60, 0.14);
+    }
+    
+    .quote-action-btn.cancel:active {
+      background: #fff1f2;
+    }
     
   </style>
 </head>
@@ -5553,23 +5630,19 @@
     
         if (Array.isArray(x.items) && x.items.length) {
           itemHtml += '<div class="quote-items">';
-    
-          x.items.slice(0, 5).forEach(function(it) {
+        
+          x.items.forEach(function(it) {
             itemHtml +=
               '<div class="quote-item-row">' +
-                '<div class="quote-item-name">' + escapeHtml(it.modelBase || "-") + "</div>" +
-                '<div class="quote-item-qty">' + quoteFmt_(it.qty || 0) + " เครื่อง</div>" +
+                '<div class="quote-item-name">' +
+                  escapeHtml(it.modelBase || it.model || it.displayName || "-") +
+                "</div>" +
+                '<div class="quote-item-qty">' +
+                  quoteFmt_(it.qty || 0) + " เครื่อง" +
+                "</div>" +
               "</div>";
           });
-    
-          if (x.items.length > 5) {
-            itemHtml +=
-              '<div class="quote-item-row">' +
-                '<div class="quote-item-name">และอีก ' + quoteFmt_(x.items.length - 5) + " รายการ</div>" +
-                '<div class="quote-item-qty">ดูใน PDF</div>' +
-              "</div>";
-          }
-    
+        
           itemHtml += "</div>";
         }
     
@@ -6266,7 +6339,7 @@
         return html;
       }
     
-      rows.slice(0, 30).forEach(function(r) {
+      rows.forEach(function(r) {
         if (titleKey === "bills") {
           html +=
             '<div class="report-expand-row">' +
@@ -6308,14 +6381,53 @@
           "</div>";
       });
     
-      if (rows.length > 30) {
+      html += "</div>";
+    
+      return html;
+    }
+    
+      rows.forEach(function(r) {
+        if (titleKey === "bills") {
+          html +=
+            '<div class="report-expand-row">' +
+              '<div class="report-expand-name">' +
+                escapeHtml(r.invoiceNo || r.key || "-") +
+                '<div style="margin-top:2px;color:#94a3b8;font-weight:750;">' +
+                  escapeHtml(r.customerNo || r.customerName || "-") +
+                "</div>" +
+              "</div>" +
+              '<div class="report-expand-right">' +
+                reportFmtInt_(r.qty || 0) + " เครื่อง<br>" +
+                '<span style="color:#111827;">฿' + reportFmtMoney_(r.amount || 0) + "</span>" +
+              "</div>" +
+            "</div>";
+          return;
+        }
+    
+        if (titleKey === "customers") {
+          html +=
+            '<div class="report-expand-row">' +
+              '<div class="report-expand-name">' +
+                escapeHtml(r.customerNo || r.customerName || r.key || "-") +
+              "</div>" +
+              '<div class="report-expand-right">' +
+                reportFmtInt_(r.qty || 0) + " เครื่อง<br>" +
+                reportFmtInt_(r.invoiceCount || 0) + " บิล" +
+              "</div>" +
+            "</div>";
+          return;
+        }
+    
         html +=
           '<div class="report-expand-row">' +
-            '<div class="report-expand-name">และอีก ' + reportFmtInt_(rows.length - 30) + " รายการ</div>" +
-            '<div class="report-expand-right">ย่อไว้ก่อน</div>' +
+            '<div class="report-expand-name">' + escapeHtml(r.label || r.key || "-") + "</div>" +
+            '<div class="report-expand-right">' +
+              reportFmtInt_(r.qty || 0) + " เครื่อง<br>" +
+              '<span style="color:#111827;">฿' + reportFmtMoney_(r.amount || 0) + "</span>" +
+            "</div>" +
           "</div>";
-      }
-    
+      });    
+         
       html += "</div>";
     
       return html;
