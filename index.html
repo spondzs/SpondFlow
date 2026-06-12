@@ -2909,6 +2909,7 @@
         app.classList.add("view-order");
         app.classList.remove("view-stock");
         app.classList.remove("view-quote");
+        app.classList.remove("view-report");
       }
     
       root.innerHTML = "";
@@ -2932,6 +2933,7 @@
         app.classList.add("view-stock");
         app.classList.remove("view-order");
         app.classList.remove("view-quote");
+        app.classList.remove("view-report");
       }
     
       root.innerHTML = "";
@@ -2954,6 +2956,7 @@
         app.classList.add("view-quote");
         app.classList.remove("view-order");
         app.classList.remove("view-stock");
+        app.classList.remove("view-report");
       }
     
       root.innerHTML = "";
@@ -3042,11 +3045,12 @@
     
         if (view === "quotes") view = "quote";
     
-        if (["home", "order", "stock", "quote"].indexOf(view) > -1) {
+       if (["home", "order", "stock", "quote", "report"].indexOf(view) > -1) {
           return view;
         }
     
         return "home";
+        
       } catch (err) {
         return "home";
       }
@@ -6040,12 +6044,22 @@
     
     function reportRenderSummary_() {
       const data = appState.report.data || {};
-      const sum = data.summary || {};
+      const sum = data.summary || data.totals || {};
+    
+      const customerCount =
+        sum.customerCount != null
+          ? sum.customerCount
+          : (sum.totalCustomers != null ? sum.totalCustomers : 0);
+    
+      const topProduct =
+        sum.topProduct ||
+        sum.bestProduct ||
+        "-";
     
       setTextSafe("reportTotalQty", reportFmtInt_(sum.totalQty || 0));
       setTextSafe("reportTotalAmount", "฿" + reportFmtMoney_(sum.totalAmount || 0));
-      setTextSafe("reportCustomerCount", reportFmtInt_(sum.customerCount || 0));
-      setTextSafe("reportTopProduct", sum.topProduct || "-");
+      setTextSafe("reportCustomerCount", reportFmtInt_(customerCount));
+      setTextSafe("reportTopProduct", topProduct);
     }
     
     function reportGetActiveRows_() {
