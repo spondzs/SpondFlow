@@ -2849,8 +2849,9 @@
         openView(getInitialViewFromUrl_());
     
         loadHomeDashboard();
-    
+
         preloadOrderInit_();
+        preloadAppShellData_();
     
       } catch (err) {
         console.warn("[init]", err);
@@ -3601,6 +3602,61 @@
         await ensureOrderDataLoaded_(true);
       } catch (err) {
         console.warn("[preloadOrderInit_]", err);
+      }
+    }
+
+    function preloadAppShellData_() {
+      // ทยอยโหลด ไม่ยิง GAS พร้อมกันหมด
+      // Home + Order เริ่มก่อนอยู่แล้ว
+      setTimeout(function() {
+        preloadStockData_();
+      }, 900);
+    
+      setTimeout(function() {
+        preloadQuoteData_();
+      }, 1800);
+    
+      setTimeout(function() {
+        preloadReportData_();
+      }, 3200);
+    }
+    
+    async function preloadStockData_() {
+      const st = appState.stock;
+    
+      if (st.initialized || st.loading) return;
+    
+      try {
+        await stockReload_(true);
+        console.log("[preloadStockData_] done");
+      } catch (err) {
+        console.warn("[preloadStockData_]", err);
+      }
+    }
+    
+    async function preloadQuoteData_() {
+      const st = appState.quote;
+    
+      if (st.initialized || st.loading) return;
+    
+      try {
+        await quoteReload_(true);
+        console.log("[preloadQuoteData_] done");
+      } catch (err) {
+        console.warn("[preloadQuoteData_]", err);
+      }
+    }
+    
+    async function preloadReportData_() {
+      const st = appState.report;
+    
+      if (st.initialized || st.loading || st.data) return;
+    
+      try {
+        await reportReload_(true);
+        console.log("[preloadReportData_] done");
+      } catch (err) {
+        console.warn("[preloadReportData_]", err);
       }
     }
     
@@ -4888,11 +4944,15 @@
       await stockReload_();
     }
     
-    async function stockReload_() {
+    async function stockReload_(silent) {
+      silent = !!silent;
       const st = appState.stock;
     
       st.loading = true;
-      stockRenderAll_();
+
+      if (currentView === "stock") {
+        stockRenderAll_();
+      }
     
       try {
         const data = await callGasJsonp({
@@ -4929,7 +4989,9 @@
     
       } catch (err) {
         console.error("[stockReload_]", err);
-        showToast(err.message || "โหลดสต็อกไม่สำเร็จ", "error", 2400);
+        if (!silent && currentView === "stock") {
+          showToast(err.message || "โหลดสต็อกไม่สำเร็จ", "error", 2400);
+        }
     
         st.items = [];
         st.brands = ["all"];
@@ -5499,11 +5561,15 @@
       await quoteReload_();
     }
     
-    async function quoteReload_() {
+    async function quoteReload_(silent) {
+      silent = !!silent;
       const st = appState.quote;
     
       st.loading = true;
-      quoteRenderAll_();
+
+      if (currentView === "quote") {
+        quoteRenderAll_();
+      }
     
       try {
         const data = await callGasJsonp({
@@ -5521,7 +5587,9 @@
     
       } catch (err) {
         console.error("[quoteReload_]", err);
-        showToast(err.message || "โหลดใบเสนอราคาไม่สำเร็จ", "error", 2400);
+        if (!silent && currentView === "quote") {
+          showToast(err.message || "โหลดใบเสนอราคาไม่สำเร็จ", "error", 2400);
+        }
     
         st.items = [];
     
@@ -6034,11 +6102,15 @@
       await reportReload_();
     }
     
-    async function reportReload_() {
+    async function reportReload_(silent) {
+      silent = !!silent;
       const st = appState.report;
     
       st.loading = true;
-      reportRenderAll_();
+
+      if (currentView === "report") {
+        reportRenderAll_();
+      }
     
       try {
         reportApplyModeDate_();
@@ -6061,12 +6133,16 @@
         st.data = data;
         st.initialized = true;
     
-        const label = data.period && data.period.label ? data.period.label : "จาก Invoice";
-        setAppTopbar_("สรุปยอดขาย", label + " · จาก Invoice", "↻");
+        if (currentView === "report") {
+          const label = data.period && data.period.label ? data.period.label : "จาก Invoice";
+          setAppTopbar_("สรุปยอดขาย", label + " · จาก Invoice", "↻");
+        }
     
       } catch (err) {
         console.error("[reportReload_]", err);
-        showToast(err.message || "โหลดรายงานไม่สำเร็จ", "error", 2600);
+        if (!silent && currentView === "report") {
+          showToast(err.message || "โหลดรายงานไม่สำเร็จ", "error", 2600);
+        }
     
         st.data = null;
     
