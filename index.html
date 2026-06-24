@@ -3141,12 +3141,19 @@
     
         showApp();
     
-        openView(getInitialViewFromUrl_());
+        const initialView = getInitialViewFromUrl_();
     
-        loadHomeDashboard();
-
-        preloadOrderInit_();
-        preloadAppShellData_();
+        openView(initialView);
+    
+        // สำคัญ:
+        // ถ้าเปิดเข้าหน้า home ค่อยโหลด dashboard + preload อื่น ๆ
+        // ถ้าเปิดเข้าหน้า payment/order/stock/quote/report ให้โหลดเฉพาะ view นั้นก่อน
+        if (initialView === "home") {
+          loadHomeDashboard();
+    
+          preloadOrderInit_();
+          preloadAppShellData_();
+        }
     
       } catch (err) {
         console.warn("[init]", err);
@@ -3355,6 +3362,7 @@
         app.classList.remove("view-stock");
         app.classList.remove("view-quote");
         app.classList.remove("view-report");
+        app.classList.remove("view-payment");
       }
     
       root.innerHTML = "";
