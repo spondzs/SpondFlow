@@ -2308,6 +2308,30 @@
       padding: 2px 0 24px;
     }
     
+    /* Filter Card */
+    
+    .payment-filter-card {
+      background:
+        radial-gradient(circle at 100% 0%, rgba(79,109,245,0.08), transparent 32%),
+        #ffffff;
+    }
+    
+    .payment-filter-card .search-wrap {
+      min-height: 48px;
+      border-radius: 17px;
+    }
+    
+    .payment-filter-card .search-input {
+      font-size: 15px;
+    }
+    
+    /* ไม่ใช้ tabs แล้ว เหลือ search อย่างเดียว */
+    .payment-tabs {
+      display: none;
+    }
+    
+    /* Summary */
+    
     .payment-summary-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -2319,9 +2343,9 @@
       padding: 14px;
       border-radius: 22px;
       background:
-        radial-gradient(circle at 95% 0%, rgba(249,115,22,0.10), transparent 34%),
+        radial-gradient(circle at 95% 0%, rgba(79,109,245,0.10), transparent 34%),
         #ffffff;
-      border: 1px solid rgba(249, 115, 22, 0.10);
+      border: 1px solid rgba(79, 109, 245, 0.10);
       box-shadow: var(--shadow-soft);
       min-width: 0;
     }
@@ -2329,7 +2353,7 @@
     .payment-summary-value {
       font-size: 24px;
       font-weight: 950;
-      color: #ea580c;
+      color: #315bc8;
       letter-spacing: -0.5px;
       white-space: nowrap;
       overflow: hidden;
@@ -2343,29 +2367,7 @@
       font-weight: 800;
     }
     
-    .payment-tabs {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 8px;
-      margin-top: 12px;
-    }
-    
-    .payment-tab {
-      min-height: 40px;
-      border: 1px solid rgba(249, 115, 22, 0.16);
-      border-radius: 999px;
-      background: rgba(255,255,255,0.74);
-      color: #64748b;
-      font-size: 12px;
-      font-weight: 950;
-    }
-    
-    .payment-tab.active {
-      background: linear-gradient(135deg, #f97316, #fb923c);
-      color: #ffffff;
-      border-color: rgba(255,255,255,0.42);
-      box-shadow: 0 10px 22px rgba(249, 115, 22, 0.18);
-    }
+    /* List */
     
     .payment-list {
       display: flex;
@@ -2378,7 +2380,7 @@
       border-radius: 24px;
       border: 1px solid #e2e8f0;
       background:
-        radial-gradient(circle at 100% 0%, rgba(249,115,22,0.08), transparent 30%),
+        radial-gradient(circle at 100% 0%, rgba(79,109,245,0.07), transparent 30%),
         linear-gradient(180deg, #ffffff, #fbfcff);
       box-shadow: 0 8px 20px rgba(15, 23, 42, 0.05);
     }
@@ -2407,7 +2409,7 @@
       margin-top: 3px;
       font-size: 13px;
       font-weight: 850;
-      color: #ea580c;
+      color: #315bc8;
       word-break: break-word;
     }
     
@@ -2426,6 +2428,8 @@
       font-weight: 800;
     }
     
+    /* Chips */
+    
     .payment-meta {
       margin-top: 9px;
       display: flex;
@@ -2439,7 +2443,7 @@
       min-height: 26px;
       padding: 0 9px;
       border-radius: 999px;
-      background: #f1f5ff;
+      background: #eef3ff;
       color: #334155;
       font-size: 12px;
       font-weight: 850;
@@ -2464,6 +2468,8 @@
       background: #f1f5f9;
       color: #475569;
     }
+    
+    /* Detail Box */
     
     .payment-detail {
       margin-top: 12px;
@@ -2499,6 +2505,8 @@
       word-break: break-word;
     }
     
+    /* Actions */
+    
     .payment-actions {
       margin-top: 12px;
       display: grid;
@@ -2512,9 +2520,11 @@
       border-radius: 17px;
       font-size: 13px;
       font-weight: 950;
-      background: linear-gradient(135deg, #f97316, #fb923c);
+      background:
+        radial-gradient(circle at 92% 0%, rgba(255,255,255,0.24), transparent 30%),
+        linear-gradient(135deg, var(--blue), var(--blue2));
       color: #ffffff;
-      box-shadow: 0 10px 20px rgba(249, 115, 22, 0.16);
+      box-shadow: 0 10px 20px rgba(79, 109, 245, 0.16);
     }
     
     .payment-action-btn:disabled {
@@ -2523,13 +2533,11 @@
       box-shadow: none;
     }
     
+    /* Responsive */
+    
     @media (max-width: 420px) {
       .app.view-payment .topbar {
         padding-left: 56px;
-      }
-    
-      .payment-tabs {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
       }
     
       .payment-summary-value {
@@ -2878,21 +2886,19 @@
     <button class="order-back-fab" type="button" onclick="openView('home')" aria-label="Back">‹</button>
   
     <main class="content payment-view">
-      <section class="card">
+      <section class="card payment-filter-card">
         <div class="card-title">รายการรอรับชำระ</div>
   
         <div class="search-wrap">
           <div class="search-icon">⌕</div>
-          <input id="paymentSearch" class="search-input" placeholder="ค้นหา IV / Quote / ลูกค้า / RefNo">
+          <input id="paymentSearch" class="search-input" placeholder="ค้นหาลูกค้า / IV / Quote / RefNo">
         </div>
-  
-        <div id="paymentTabs" class="payment-tabs"></div>
       </section>
   
       <section class="payment-summary-grid">
         <div class="payment-summary-card">
           <div id="paymentSummaryCount" class="payment-summary-value">—</div>
-          <div class="payment-summary-label">รายการ</div>
+          <div class="payment-summary-label">รายการทั้งหมด</div>
         </div>
   
         <div class="payment-summary-card">
@@ -3117,7 +3123,7 @@
       payment: {
         initialized: false,
         loading: false,
-        activeTab: "ready",
+        activeTab: "all",
         keyword: "",
         items: [],
         summary: null
@@ -6938,7 +6944,7 @@
           action: PAYMENT_ACTIONS.inbox,
           idToken: currentIdToken || currentUser.idToken || "",
           lineUserId: currentUser.lineUserId || "",
-          status: st.activeTab || "ready",
+          status: "all",
           limit: 120
         });
     
