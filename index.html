@@ -2293,6 +2293,251 @@
     }
 
     /* =========================================================
+     * PAYMENT VIEW
+     * ========================================================= */
+    
+    .app.view-payment {
+      padding-bottom: calc(24px + var(--safe-bottom));
+    }
+    
+    .app.view-payment .topbar {
+      padding-left: 58px;
+    }
+    
+    .payment-view {
+      padding: 2px 0 24px;
+    }
+    
+    .payment-summary-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+    
+    .payment-summary-card {
+      padding: 14px;
+      border-radius: 22px;
+      background:
+        radial-gradient(circle at 95% 0%, rgba(249,115,22,0.10), transparent 34%),
+        #ffffff;
+      border: 1px solid rgba(249, 115, 22, 0.10);
+      box-shadow: var(--shadow-soft);
+      min-width: 0;
+    }
+    
+    .payment-summary-value {
+      font-size: 24px;
+      font-weight: 950;
+      color: #ea580c;
+      letter-spacing: -0.5px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    
+    .payment-summary-label {
+      margin-top: 3px;
+      font-size: 12px;
+      color: #64748b;
+      font-weight: 800;
+    }
+    
+    .payment-tabs {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 12px;
+    }
+    
+    .payment-tab {
+      min-height: 40px;
+      border: 1px solid rgba(249, 115, 22, 0.16);
+      border-radius: 999px;
+      background: rgba(255,255,255,0.74);
+      color: #64748b;
+      font-size: 12px;
+      font-weight: 950;
+    }
+    
+    .payment-tab.active {
+      background: linear-gradient(135deg, #f97316, #fb923c);
+      color: #ffffff;
+      border-color: rgba(255,255,255,0.42);
+      box-shadow: 0 10px 22px rgba(249, 115, 22, 0.18);
+    }
+    
+    .payment-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    
+    .payment-card {
+      padding: 15px;
+      border-radius: 24px;
+      border: 1px solid #e2e8f0;
+      background:
+        radial-gradient(circle at 100% 0%, rgba(249,115,22,0.08), transparent 30%),
+        linear-gradient(180deg, #ffffff, #fbfcff);
+      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.05);
+    }
+    
+    .payment-card-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: flex-start;
+    }
+    
+    .payment-main {
+      min-width: 0;
+      flex: 1;
+    }
+    
+    .payment-customer {
+      font-size: 17px;
+      font-weight: 950;
+      color: #111827;
+      line-height: 1.35;
+      word-break: break-word;
+    }
+    
+    .payment-iv {
+      margin-top: 3px;
+      font-size: 13px;
+      font-weight: 850;
+      color: #ea580c;
+      word-break: break-word;
+    }
+    
+    .payment-amount {
+      white-space: nowrap;
+      text-align: right;
+      font-size: 17px;
+      font-weight: 950;
+      color: #111827;
+    }
+    
+    .payment-amount-sub {
+      margin-top: 3px;
+      font-size: 12px;
+      color: #64748b;
+      font-weight: 800;
+    }
+    
+    .payment-meta {
+      margin-top: 9px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    
+    .payment-chip {
+      display: inline-flex;
+      align-items: center;
+      min-height: 26px;
+      padding: 0 9px;
+      border-radius: 999px;
+      background: #f1f5ff;
+      color: #334155;
+      font-size: 12px;
+      font-weight: 850;
+    }
+    
+    .payment-chip.ready {
+      background: #ecfdf5;
+      color: #15803d;
+    }
+    
+    .payment-chip.review {
+      background: #fff7ed;
+      color: #c2410c;
+    }
+    
+    .payment-chip.waiting {
+      background: #eff6ff;
+      color: #1d4ed8;
+    }
+    
+    .payment-chip.posted {
+      background: #f1f5f9;
+      color: #475569;
+    }
+    
+    .payment-detail {
+      margin-top: 12px;
+      padding: 10px 12px;
+      border-radius: 16px;
+      background: #f8fafc;
+      border: 1px solid #e8edf6;
+    }
+    
+    .payment-detail-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 6px 0;
+      border-bottom: 1px dashed #e2e8f0;
+    }
+    
+    .payment-detail-row:last-child {
+      border-bottom: 0;
+    }
+    
+    .payment-detail-label {
+      color: #64748b;
+      font-size: 12px;
+      font-weight: 850;
+    }
+    
+    .payment-detail-value {
+      text-align: right;
+      color: #111827;
+      font-size: 12px;
+      font-weight: 900;
+      word-break: break-word;
+    }
+    
+    .payment-actions {
+      margin-top: 12px;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 8px;
+    }
+    
+    .payment-action-btn {
+      min-height: 48px;
+      border: 0;
+      border-radius: 17px;
+      font-size: 13px;
+      font-weight: 950;
+      background: linear-gradient(135deg, #f97316, #fb923c);
+      color: #ffffff;
+      box-shadow: 0 10px 20px rgba(249, 115, 22, 0.16);
+    }
+    
+    .payment-action-btn:disabled {
+      background: #eef2f7;
+      color: #94a3b8;
+      box-shadow: none;
+    }
+    
+    @media (max-width: 420px) {
+      .app.view-payment .topbar {
+        padding-left: 56px;
+      }
+    
+      .payment-tabs {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    
+      .payment-summary-value {
+        font-size: 22px;
+      }
+    }
+
+    /* =========================================================
      * QUOTE VIEW PATCH: SpondFlow Blue Theme
      * ========================================================= */
     
@@ -2629,6 +2874,37 @@
     </main>
   </template>
 
+  <template id="paymentViewTemplate">
+    <button class="order-back-fab" type="button" onclick="openView('home')" aria-label="Back">‹</button>
+  
+    <main class="content payment-view">
+      <section class="card">
+        <div class="card-title">รายการรอรับชำระ</div>
+  
+        <div class="search-wrap">
+          <div class="search-icon">⌕</div>
+          <input id="paymentSearch" class="search-input" placeholder="ค้นหา IV / Quote / ลูกค้า / RefNo">
+        </div>
+  
+        <div id="paymentTabs" class="payment-tabs"></div>
+      </section>
+  
+      <section class="payment-summary-grid">
+        <div class="payment-summary-card">
+          <div id="paymentSummaryCount" class="payment-summary-value">—</div>
+          <div class="payment-summary-label">รายการ</div>
+        </div>
+  
+        <div class="payment-summary-card">
+          <div id="paymentSummaryAmount" class="payment-summary-value">—</div>
+          <div class="payment-summary-label">ยอดสลิปรวม</div>
+        </div>
+      </section>
+  
+      <section id="paymentList" class="payment-list"></section>
+    </main>
+  </template>
+
   <div id="toast" class="toast"></div>
 
   <script>
@@ -2684,11 +2960,11 @@
       {
         key: "payment",
         title: "รับชำระ",
-        desc: "เช็กหนี้ รับเงิน ตัด IV และดู Payment log",
+        desc: "ตรวจสลิป จับคู่ IV และเตรียมรับชำระ",
         icon: "💰",
         tag: "Account",
         color: "orange",
-        href: CONFIG.links.payment
+        view: "payment"
       },
       {
         key: "report",
@@ -2774,6 +3050,10 @@
     const REPORT_ACTIONS = {
       summary: "liff_report_sales_summary"
     };
+
+    const PAYMENT_ACTIONS = {
+      inbox: "list_payment_inbox"
+    };
     
     const appState = {
       order: {
@@ -2832,6 +3112,15 @@
         expandedSalesKey: "",
         salesSubTab: "products",
         data: null
+      },
+
+      payment: {
+        initialized: false,
+        loading: false,
+        activeTab: "ready",
+        keyword: "",
+        items: [],
+        summary: null
       }
     };
   
@@ -3009,6 +3298,11 @@
         renderReportView_();
         return;
       }
+
+      if (currentView === "payment") {
+        renderPaymentView_();
+        return;
+      }
     
       showToast("เมนูนี้ยังไม่ได้ย้ายเข้า App Shell ครับ");
       currentView = "home";
@@ -3026,6 +3320,7 @@
         app.classList.remove("view-stock");
         app.classList.remove("view-quote");
         app.classList.remove("view-report");
+        app.classList.remove("view-payment");
       }
     
       root.innerHTML = "";
@@ -3078,6 +3373,7 @@
         app.classList.remove("view-order");
         app.classList.remove("view-quote");
         app.classList.remove("view-report");
+        app.classList.remove("view-payment");
       }
     
       root.innerHTML = "";
@@ -3101,6 +3397,7 @@
         app.classList.remove("view-order");
         app.classList.remove("view-stock");
         app.classList.remove("view-report");
+        app.classList.remove("view-payment");
       }
     
       root.innerHTML = "";
@@ -3124,6 +3421,7 @@
         app.classList.remove("view-order");
         app.classList.remove("view-stock");
         app.classList.remove("view-quote");
+        app.classList.remove("view-payment");
       }
     
       root.innerHTML = "";
@@ -3135,6 +3433,30 @@
       reportInitPicker_();
       reportRenderAll_();
       ensureReportLoaded_();
+    }
+
+    function renderPaymentView_() {
+      const root = document.getElementById("viewRoot");
+      const tpl = document.getElementById("paymentViewTemplate");
+      if (!root || !tpl) return;
+    
+      const app = document.getElementById("app");
+      if (app) {
+        app.classList.add("view-payment");
+        app.classList.remove("view-order");
+        app.classList.remove("view-stock");
+        app.classList.remove("view-quote");
+        app.classList.remove("view-report");
+      }
+    
+      root.innerHTML = "";
+      root.appendChild(tpl.content.cloneNode(true));
+    
+      setAppTopbar_("รับชำระ", "Payment Inbox · รอตรวจรับเงิน", "↻");
+    
+      bindPaymentEvents_();
+      paymentRenderAll_();
+      ensurePaymentLoaded_();
     }
     
     function setAppTopbar_(title, subtitle, actionText) {
@@ -3167,6 +3489,11 @@
         reportReload_();
         return;
       }
+
+      if (currentView === "payment") {
+        paymentReload_();
+        return;
+      }
     
       openView("home");
     }
@@ -3189,7 +3516,7 @@
     
         if (view === "quotes") view = "quote";
     
-       if (["home", "order", "stock", "quote", "report"].indexOf(view) > -1) {
+       if (["home", "order", "stock", "quote", "report", "payment"].indexOf(view) > -1) {
           return view;
         }
     
@@ -6575,6 +6902,284 @@
       return Number(n || 0).toLocaleString("th-TH", {
         maximumFractionDigits: 0
       });
+    }
+
+    const PAYMENT_TABS = [
+      { key: "ready", label: "พร้อมรับ" },
+      { key: "review", label: "ต้องตรวจ" },
+      { key: "waiting", label: "รอจับคู่" },
+      { key: "posted", label: "ลงรับแล้ว" },
+      { key: "all", label: "ทั้งหมด" }
+    ];
+    
+    async function ensurePaymentLoaded_() {
+      const st = appState.payment;
+    
+      if (st.initialized && st.items.length) {
+        paymentRenderAll_();
+        return;
+      }
+    
+      await paymentReload_();
+    }
+    
+    async function paymentReload_(silent) {
+      silent = !!silent;
+    
+      const st = appState.payment;
+      st.loading = true;
+    
+      if (currentView === "payment") {
+        paymentRenderAll_();
+      }
+    
+      try {
+        const data = await callGasJsonp({
+          action: PAYMENT_ACTIONS.inbox,
+          idToken: currentIdToken || currentUser.idToken || "",
+          lineUserId: currentUser.lineUserId || "",
+          status: st.activeTab || "ready",
+          limit: 120
+        });
+    
+        if (!data || data.ok === false) {
+          throw new Error((data && (data.error || data.message)) || "โหลด Payment_Inbox ไม่สำเร็จ");
+        }
+    
+        st.items = paymentNormalizeList_(data.items || data.data || []);
+        st.summary = data.summary || null;
+        st.initialized = true;
+    
+      } catch (err) {
+        console.error("[paymentReload_]", err);
+    
+        if (!silent && currentView === "payment") {
+          showToast(err.message || "โหลดรายการรับชำระไม่สำเร็จ", "error", 2600);
+        }
+    
+        st.items = [];
+        st.summary = null;
+    
+      } finally {
+        st.loading = false;
+    
+        if (currentView === "payment") {
+          paymentRenderAll_();
+        }
+      }
+    }
+    
+    function paymentNormalizeList_(items) {
+      return (items || []).map(function(x) {
+        return {
+          rowNo: x.rowNo || x.row || "",
+          slipId: String(x.slipId || x.SlipId || "").trim(),
+          status: String(x.status || x.Status || "").trim(),
+          refNo: String(x.refNo || x.RefNo || "").trim(),
+          amount: Number(x.amount || x.Amount || 0),
+          expectedAmount: Number(x.expectedAmount || x.ExpectedAmount || 0),
+          diffAmount: Number(x.diffAmount || x.DiffAmount || 0),
+          slipDateText: String(x.slipDateText || x.SlipDateText || "").trim(),
+    
+          receiveBankName: String(x.receiveBankName || x.ReceiveBankName || "").trim(),
+          receiveAccountNo: String(x.receiveAccountNo || x.ReceiveAccountNo || "").trim(),
+          receiveAccountName: String(x.receiveAccountName || x.ReceiveAccountName || "").trim(),
+    
+          quoteNo: String(x.quoteNo || x.QuoteNo || "").trim(),
+          invoiceNo: String(x.invoiceNo || x.InvoiceNo || "").trim(),
+          customerNo: String(x.customerNo || x.CustomerNo || "").trim(),
+          customerName: String(x.customerName || x.CustomerName || "").trim(),
+          customerHint: String(x.customerHint || x.CustomerHint || "").trim(),
+    
+          matchedBy: String(x.matchedBy || x.MatchedBy || "").trim(),
+          matchedAt: String(x.matchedAt || x.MatchedAt || "").trim(),
+          createdAt: String(x.createdAt || x.CreatedAt || "").trim(),
+          updatedAt: String(x.updatedAt || x.UpdatedAt || "").trim(),
+          note: String(x.note || x.Note || "").trim()
+        };
+      });
+    }
+    
+    function paymentRenderAll_() {
+      paymentRenderTabs_();
+      paymentRenderSummary_();
+      paymentRenderList_();
+    }
+    
+    function paymentRenderTabs_() {
+      const st = appState.payment;
+      const box = $("paymentTabs");
+      if (!box) return;
+    
+      box.innerHTML = PAYMENT_TABS.map(function(t) {
+        const active = t.key === st.activeTab ? " active" : "";
+    
+        return '<button class="payment-tab' + active + '" type="button" data-tab="' + escapeHtml(t.key) + '">' +
+          escapeHtml(t.label) +
+        "</button>";
+      }).join("");
+    }
+    
+    function paymentGetFilteredItems_() {
+      const st = appState.payment;
+      const keyword = String(st.keyword || "").trim().toLowerCase();
+    
+      return (st.items || []).filter(function(x) {
+        if (!keyword) return true;
+    
+        return [
+          x.status,
+          x.refNo,
+          x.quoteNo,
+          x.invoiceNo,
+          x.customerNo,
+          x.customerName,
+          x.customerHint,
+          x.receiveBankName,
+          x.receiveAccountNo
+        ].join(" ").toLowerCase().indexOf(keyword) > -1;
+      });
+    }
+    
+    function paymentRenderSummary_() {
+      const items = paymentGetFilteredItems_();
+    
+      const totalAmount = items.reduce(function(sum, x) {
+        return sum + Number(x.amount || 0);
+      }, 0);
+    
+      setTextSafe("paymentSummaryCount", reportFmtInt_(items.length));
+      setTextSafe("paymentSummaryAmount", "฿" + reportFmtMoney_(totalAmount));
+    }
+    
+    function paymentStatusClass_(status) {
+      status = String(status || "").trim().toUpperCase();
+    
+      if (status === "LINKED_CF") return "ready";
+      if (status === "NEED_REVIEW") return "review";
+      if (status === "POSTED") return "posted";
+      if (status.indexOf("WAITING") === 0) return "waiting";
+    
+      return "";
+    }
+    
+    function paymentStatusLabel_(status) {
+      status = String(status || "").trim().toUpperCase();
+    
+      if (status === "LINKED_CF") return "พร้อมรับชำระ";
+      if (status === "NEED_REVIEW") return "ต้องตรวจ";
+      if (status === "WAITING_LINK") return "รอ #CF";
+      if (status === "WAITING_CF") return "รอ #CF";
+      if (status === "WAITING_SLIP") return "รอสลิป";
+      if (status === "POSTED") return "ลงรับแล้ว";
+    
+      return status || "-";
+    }
+    
+    function paymentRenderList_() {
+      const st = appState.payment;
+      const box = $("paymentList");
+      if (!box) return;
+    
+      if (st.loading) {
+        box.innerHTML = '<div class="empty">กำลังโหลด Payment_Inbox...</div>';
+        return;
+      }
+    
+      const items = paymentGetFilteredItems_();
+    
+      if (!items.length) {
+        box.innerHTML = '<div class="empty">ยังไม่มีรายการในหมวดนี้ครับ</div>';
+        return;
+      }
+    
+      let html = "";
+    
+      items.forEach(function(x) {
+        const statusClass = paymentStatusClass_(x.status);
+        const statusLabel = paymentStatusLabel_(x.status);
+    
+        const customer = x.customerName || x.customerNo || x.customerHint || "-";
+        const amount = Number(x.amount || 0);
+        const expected = Number(x.expectedAmount || 0);
+        const diff = Number(x.diffAmount || 0);
+    
+        const canPost = String(x.status || "").trim().toUpperCase() === "LINKED_CF";
+    
+        html +=
+          '<article class="payment-card">' +
+            '<div class="payment-card-head">' +
+              '<div class="payment-main">' +
+                '<div class="payment-customer">' + escapeHtml(customer) + "</div>" +
+                '<div class="payment-iv">' +
+                  escapeHtml(x.invoiceNo || "-") +
+                  (x.quoteNo ? " · " + escapeHtml(x.quoteNo) : "") +
+                "</div>" +
+              "</div>" +
+    
+              '<div class="payment-amount">' +
+                "฿" + reportFmtMoney_(amount) +
+                '<div class="payment-amount-sub">IV ฿' + reportFmtMoney_(expected) + "</div>" +
+              "</div>" +
+            "</div>" +
+    
+            '<div class="payment-meta">' +
+              '<span class="payment-chip ' + statusClass + '">' + escapeHtml(statusLabel) + "</span>" +
+              '<span class="payment-chip">Diff ฿' + reportFmtMoney_(diff) + "</span>" +
+              '<span class="payment-chip">' + escapeHtml(x.receiveBankName || "-") + "</span>" +
+            "</div>" +
+    
+            '<div class="payment-detail">' +
+              paymentDetailRow_("RefNo", x.refNo || "-") +
+              paymentDetailRow_("บัญชีรับ", [x.receiveAccountName, x.receiveAccountNo].filter(Boolean).join(" · ") || "-") +
+              paymentDetailRow_("วันที่สลิป", x.slipDateText || "-") +
+              paymentDetailRow_("MatchedBy", x.matchedBy || "-") +
+            "</div>" +
+    
+            '<div class="payment-actions">' +
+              '<button class="payment-action-btn" type="button" disabled>' +
+                (canPost ? "ยืนยันรับชำระ · ต่อพรุ่งนี้" : "ยังไม่พร้อมรับชำระ") +
+              "</button>" +
+            "</div>" +
+          "</article>";
+      });
+    
+      box.innerHTML = html;
+    }
+    
+    function paymentDetailRow_(label, value) {
+      return '<div class="payment-detail-row">' +
+        '<div class="payment-detail-label">' + escapeHtml(label) + "</div>" +
+        '<div class="payment-detail-value">' + escapeHtml(value) + "</div>" +
+      "</div>";
+    }
+    
+    function bindPaymentEvents_() {
+      const st = appState.payment;
+    
+      const search = $("paymentSearch");
+      const tabs = $("paymentTabs");
+    
+      if (search) {
+        search.value = st.keyword || "";
+    
+        search.addEventListener("input", function() {
+          st.keyword = String(this.value || "");
+          paymentRenderSummary_();
+          paymentRenderList_();
+        });
+      }
+    
+      if (tabs) {
+        tabs.addEventListener("click", function(e) {
+          const btn = e.target.closest(".payment-tab");
+          if (!btn) return;
+    
+          st.activeTab = btn.getAttribute("data-tab") || "ready";
+          st.initialized = false;
+          paymentReload_();
+        });
+      }
     }
 
     function handleBrandLogoError_(img) {
