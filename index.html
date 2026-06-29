@@ -2621,6 +2621,155 @@
     .quote-action-btn.cancel:active {
       background: #fff1f2;
     }
+
+    /* =========================================================
+     * QUOTE SHARE PAYMENT OPTION
+     * ========================================================= */
+    
+    .quote-pay-option {
+      margin-top: 12px;
+      padding: 11px 12px;
+      border-radius: 17px;
+      background: #f8fbff;
+      border: 1px solid #e3ecff;
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      color: #334155;
+      font-size: 13px;
+      font-weight: 900;
+      user-select: none;
+    }
+    
+    .quote-pay-option input {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--blue);
+      flex: 0 0 auto;
+    }
+    
+    .quote-pay-option span {
+      line-height: 1.35;
+    }
+    
+    .quote-share-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 99985;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+      background: rgba(15, 23, 42, 0.42);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+    
+    .quote-share-backdrop.show {
+      display: flex;
+    }
+    
+    .quote-share-modal {
+      width: min(420px, 100%);
+      border-radius: 30px;
+      background:
+        radial-gradient(circle at 100% 0%, rgba(79,109,245,0.13), transparent 32%),
+        #ffffff;
+      box-shadow: 0 28px 72px rgba(15, 23, 42, 0.28);
+      overflow: hidden;
+      animation: modalCenterPop 0.18s ease-out;
+    }
+    
+    .quote-share-head {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 18px 18px 12px;
+    }
+    
+    .quote-share-icon {
+      width: 46px;
+      height: 46px;
+      display: grid;
+      place-items: center;
+      border-radius: 18px;
+      background: linear-gradient(135deg, #eef3ff, #e9efff);
+      font-size: 22px;
+    }
+    
+    .quote-share-title-wrap {
+      flex: 1;
+      min-width: 0;
+    }
+    
+    .quote-share-title {
+      font-size: 21px;
+      font-weight: 950;
+      color: #172033;
+      line-height: 1.2;
+    }
+    
+    .quote-share-sub {
+      margin-top: 4px;
+      font-size: 13px;
+      color: #64748b;
+      font-weight: 750;
+    }
+    
+    .quote-share-close {
+      width: 44px;
+      height: 44px;
+      border: 0;
+      border-radius: 999px;
+      background: #f1f5f9;
+      color: #475569;
+      font-size: 24px;
+      line-height: 1;
+    }
+    
+    .quote-share-body {
+      padding: 6px 18px 0;
+    }
+    
+    .quote-share-info {
+      padding: 14px;
+      border-radius: 20px;
+      background: #f8fbff;
+      border: 1px solid #e3ecff;
+      color: #315bc8;
+      font-size: 14px;
+      font-weight: 950;
+      text-align: center;
+      word-break: break-word;
+    }
+    
+    .quote-share-actions {
+      display: grid;
+      grid-template-columns: 0.9fr 1.25fr;
+      gap: 10px;
+      padding: 16px 18px 18px;
+    }
+    
+    .quote-share-btn {
+      min-height: 54px;
+      border: 0;
+      border-radius: 19px;
+      font-weight: 950;
+      font-size: 15px;
+    }
+    
+    .quote-share-btn.cancel {
+      background: #eef2f7;
+      color: #334155;
+    }
+    
+    .quote-share-btn.primary {
+      background:
+        radial-gradient(circle at 92% 0%, rgba(255,255,255,0.24), transparent 30%),
+        linear-gradient(135deg, var(--blue), var(--blue2));
+      color: #ffffff;
+      box-shadow: 0 12px 24px rgba(79, 109, 245, 0.20);
+    }
     
   </style>
 </head>
@@ -2911,6 +3060,40 @@
     </main>
   </template>
 
+  <div id="quoteShareBackdrop" class="quote-share-backdrop">
+    <div class="quote-share-modal">
+      <div class="quote-share-head">
+        <div class="quote-share-icon">🔗</div>
+  
+        <div class="quote-share-title-wrap">
+          <div class="quote-share-title">แชร์ใบเสนอราคา</div>
+          <div class="quote-share-sub">เลือกก่อนส่งให้ลูกค้าครับ</div>
+        </div>
+  
+        <button id="quoteShareCloseBtn" class="quote-share-close" type="button">×</button>
+      </div>
+  
+      <div class="quote-share-body">
+        <div id="quoteShareQuoteNo" class="quote-share-info">-</div>
+  
+        <label class="quote-pay-option">
+          <input id="quoteShareIncludePayment" type="checkbox" checked>
+          <span>แนบช่องทางชำระเงินไปพร้อมใบเสนอราคา</span>
+        </label>
+      </div>
+  
+      <div class="quote-share-actions">
+        <button id="quoteShareCancelBtn" class="quote-share-btn cancel" type="button">
+          ยกเลิก
+        </button>
+  
+        <button id="quoteShareConfirmBtn" class="quote-share-btn primary" type="button">
+          แชร์เลย
+        </button>
+      </div>
+    </div>
+  </div>
+
   <div id="toast" class="toast"></div>
 
   <script>
@@ -3140,17 +3323,23 @@
         if (!ok) return;
     
         showApp();
-    
+
+        const directShared = await quoteRunDirectShareIfNeeded_();
+        
+        if (directShared) {
+          return;
+        }
+        
         const initialView = getInitialViewFromUrl_();
-    
+        
         openView(initialView);
-    
+        
         // สำคัญ:
         // ถ้าเปิดเข้าหน้า home ค่อยโหลด dashboard + preload อื่น ๆ
         // ถ้าเปิดเข้าหน้า payment/order/stock/quote/report ให้โหลดเฉพาะ view นั้นก่อน
         if (initialView === "home") {
           loadHomeDashboard();
-    
+        
           preloadOrderInit_();
           preloadAppShellData_();
         }
@@ -6094,7 +6283,12 @@
           "</div>" +
     
           itemHtml +
-    
+
+          '<label class="quote-pay-option">' +
+            '<input class="quote-pay-check" type="checkbox" checked>' +
+            '<span>แนบช่องทางชำระเงิน</span>' +
+          '</label>' +
+          
           '<div class="quote-actions">' +
             '<button class="quote-action-btn pdf" type="button"' + (pdfUrl ? "" : " disabled") + ">ดู PDF</button>" +
             '<button class="quote-action-btn share" type="button">แชร์</button>' +
@@ -6114,7 +6308,9 @@
     
         if (shareBtn) {
           shareBtn.onclick = function() {
-            quoteShare_(quoteNo, shareBtn);
+            quoteShare_(quoteNo, shareBtn, {
+              includePaymentInfo: quoteGetIncludePaymentFromCard_(card)
+            });
           };
         }
     
@@ -6166,9 +6362,126 @@
         item.pdfUrl ? "PDF: " + item.pdfUrl : ""
       ].filter(Boolean).join("\n");
     }
+
+    function quoteGetIncludePaymentFromCard_(card) {
+      const check = card ? card.querySelector(".quote-pay-check") : null;
+      return check ? check.checked !== false : true;
+    }
     
-    async function quoteShare_(quoteNo, btn) {
+    function quoteGetDirectShareQuoteNo_() {
+      try {
+        const params = new URLSearchParams(window.location.search || "");
+    
+        const mode = String(params.get("mode") || "").trim().toLowerCase();
+        const quoteNo = String(params.get("quoteNo") || params.get("quote") || "").trim();
+    
+        if (!quoteNo) return "";
+    
+        if (
+          mode === "quote" ||
+          mode === "share_quote" ||
+          mode === "quote_share"
+        ) {
+          return quoteNo;
+        }
+    
+        return "";
+      } catch (err) {
+        return "";
+      }
+    }
+    
+    function quoteAskShareOptions_(quoteNo) {
       quoteNo = String(quoteNo || "").trim();
+    
+      return new Promise(function(resolve) {
+        const backdrop = $("quoteShareBackdrop");
+        const quoteEl = $("quoteShareQuoteNo");
+        const check = $("quoteShareIncludePayment");
+        const closeBtn = $("quoteShareCloseBtn");
+        const cancelBtn = $("quoteShareCancelBtn");
+        const confirmBtn = $("quoteShareConfirmBtn");
+    
+        if (!backdrop || !confirmBtn || !cancelBtn) {
+          resolve({
+            cancelled: false,
+            includePaymentInfo: true
+          });
+          return;
+        }
+    
+        if (quoteEl) quoteEl.textContent = quoteNo || "-";
+        if (check) check.checked = true;
+    
+        function cleanup() {
+          backdrop.classList.remove("show");
+    
+          if (closeBtn) closeBtn.onclick = null;
+          if (cancelBtn) cancelBtn.onclick = null;
+          if (confirmBtn) confirmBtn.onclick = null;
+        }
+    
+        function cancel_() {
+          cleanup();
+          resolve({
+            cancelled: true,
+            includePaymentInfo: true
+          });
+        }
+    
+        backdrop.classList.add("show");
+    
+        if (closeBtn) closeBtn.onclick = cancel_;
+        if (cancelBtn) cancelBtn.onclick = cancel_;
+    
+        confirmBtn.onclick = function() {
+          const includePaymentInfo = check ? check.checked !== false : true;
+    
+          cleanup();
+    
+          resolve({
+            cancelled: false,
+            includePaymentInfo: includePaymentInfo
+          });
+        };
+      });
+    }
+    
+    async function quoteRunDirectShareIfNeeded_() {
+      const quoteNo = quoteGetDirectShareQuoteNo_();
+    
+      if (!quoteNo) return false;
+    
+      openView("quote");
+    
+      const options = await quoteAskShareOptions_(quoteNo);
+    
+      if (options && options.cancelled) {
+        showToast("ยกเลิกการแชร์ครับ", "warn", 1400);
+    
+        setTimeout(function() {
+          try {
+            if (window.liff && liffReady && liff.isInClient()) {
+              liff.closeWindow();
+            }
+          } catch (e) {}
+        }, 600);
+    
+        return true;
+      }
+    
+      await quoteShare_(quoteNo, null, {
+        includePaymentInfo: options.includePaymentInfo
+      });
+    
+      return true;
+    }
+    
+    async function quoteShare_(quoteNo, btn, options) {
+      quoteNo = String(quoteNo || "").trim();
+      options = options || {};
+    
+      const includePaymentInfo = options.includePaymentInfo !== false;
     
       if (!quoteNo) {
         showToast("ไม่พบเลขใบเสนอราคา", "warn", 1600);
@@ -6187,7 +6500,8 @@
           action: QUOTE_ACTIONS.sharePayload,
           idToken: currentIdToken || currentUser.idToken || "",
           lineUserId: currentUser.lineUserId || "",
-          quoteNo: quoteNo
+          quoteNo: quoteNo,
+          includePaymentInfo: includePaymentInfo ? "1" : "0"
         });
     
         if (messages && messages.ok === false) {
@@ -6205,6 +6519,7 @@
           (typeof canUseShareTargetPicker_ === "function" && !canUseShareTargetPicker_())
         ) {
           const text = quoteBuildFallbackText_(quoteNo);
+    
           if (navigator.clipboard && navigator.clipboard.writeText) {
             await navigator.clipboard.writeText(text);
           } else {
@@ -6219,8 +6534,15 @@
           isMultiple: true
         });
     
-        if (result && result.status === "success") {
-          showToast("แชร์ใบเสนอราคาแล้วครับ", "success", 1600);
+        if (result && (result.status === "success" || result === true)) {
+          showToast(
+            includePaymentInfo
+              ? "แชร์ใบเสนอราคา + ช่องทางชำระเงินแล้วครับ"
+              : "แชร์ใบเสนอราคาแล้วครับ",
+            "success",
+            1600
+          );
+    
           return;
         }
     
