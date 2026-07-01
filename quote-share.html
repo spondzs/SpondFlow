@@ -285,15 +285,59 @@
 
     function getQuoteNo_() {
       try {
-        const params = new URLSearchParams(window.location.search || "");
-        return String(
-          params.get("quoteNo") ||
-          params.get("quote") ||
-          params.get("po") ||
+        // 1) อ่านจาก URL ปกติ เช่น ?quoteNo=POVV-...
+        var direct = getQuoteNoFromText_(window.location.search || "");
+        if (direct) return direct;
+    
+        // 2) อ่านจาก hash เผื่อบาง host/redirect เอาไปไว้หลัง #
+        var fromHash = getQuoteNoFromText_(window.location.hash || "");
+        if (fromHash) return fromHash;
+    
+        // 3) อ่านจาก liff.state
+        // บางครั้งเปิดผ่าน https://liff.line.me/{LIFF_ID}?quoteNo=...
+        // LINE จะห่อ path/query เดิมไว้ใน liff.state
+        var params = new URLSearchParams(window.location.search || "");
+        var liffState = String(
+          params.get("liff.state") ||
+          params.get("liffState") ||
           ""
         ).trim();
-      } catch (err) {
+    
+        if (liffState) {
+          var decoded = safeDecodeURIComponent_(liffState);
+          var fromState = getQuoteNoFromText_(decoded);
+          if (fromState) return fromState;
+        }
+    
         return "";
+    
+      } catch (err) {
+        console.warn("[getQuoteNo_]", err);
+        return "";
+      }
+    }
+    
+    function getQuoteNoFromText_(text) {
+      text = String(text || "").trim();
+    
+      if (!text) return "";
+    
+      // รองรับทั้ง ?quoteNo=, &quoteNo=, /path?quoteNo=
+      var m = text.match(/[?&#](?:quoteNo|quote|po)=([^&#]+)/i);
+      if (m && m[1]) {
+        return safeDecodeURIComponent_(m[1]).trim();
+      }
+    
+      return "";
+    }
+    
+    function safeDecodeURIComponent_(value) {
+      value = String(value || "");
+    
+      try {
+        return decodeURIComponent(value.replace(/\+/g, "%20"));
+      } catch (err) {
+        return value;
       }
     }
 
